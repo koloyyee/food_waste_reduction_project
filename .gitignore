@@ -1,10 +1,5 @@
-#application-production.yml
-#docker-compose.yml
-application-production.properties
-docker-compose-dev.yml
-### IDE/ Editor ###
-.vscode
-.zed
+apache-tomcat-10.1.25/
+
 
 ### mac ###
 .DS_Store
