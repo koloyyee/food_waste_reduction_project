@@ -12,8 +12,15 @@ https://algonquinlivecom-my.sharepoint.com/:u:/g/personal/ko000029_algonquinlive
 ### Entities
 
 Item: id, name, price, expiry_date, status, discount_rate, category_id
+
+
+
 Category: id, name
+
+
 Users: id, name, email, phone, password, role
+
+
 Preferences: user_id, category_id  (for email notification)
 
 ### Patterns
