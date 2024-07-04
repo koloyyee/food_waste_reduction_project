@@ -1,14 +1,24 @@
 # Design Document for Food Waste Reduction Platform
-Table of Content
 
 
+Model      - assignee: 
+View       - assignee: 
+Controller - assignee: 
 
-## Goal
 
-## Non-Goal
-## Design Detail
 ### Architecture
-### Security
+https://algonquinlivecom-my.sharepoint.com/:u:/g/personal/ko000029_algonquinlive_com/ESQmbbPdiQBDmyel49bBLWMBQ-jeUgHKUSCSYUm_I_Cx3Q?e=6c7Qdy
+
+### Entities
+
+Item: id, name, price, expiry_date, status, discount_rate, category_id
+Category: id, name
+Users: id, name, email, phone, password, role
+Preferences: user_id, category_id  (for email notification)
+
+### Patterns
+
+Observer
 
 ---------------------------
 

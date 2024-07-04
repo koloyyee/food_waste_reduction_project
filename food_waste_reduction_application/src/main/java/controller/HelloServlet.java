@@ -30,6 +30,7 @@ public class HelloServlet extends HttpServlet {
 		
 	
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
 
 		String yourName = request.getParameter("name");
 		PrintWriter writer = response.getWriter();
