@@ -1,7 +1,9 @@
 # Design Document for Food Waste Reduction Platform
 
-Model      - assignee:
+Model      - assignee: 
+
 View       - assignee:
+
 Controller - assignee:
 
 ### Architecture
@@ -19,6 +21,31 @@ Users: id, name, email, phone, password, role
 Preferences: user_id, category_id
 
 Notification: user_id, type, topic, message (not sure)
+
+### Classes:
+
+#### User
+- User
+- Retailed -> User : addItems(), updateQuantity(), setExpiryDate()
+- Charitable Org -> User: claim();
+- Consumer -> User;
+
+------------
+
+#### Item;
+- Item;
+  
+- DiscountedItemDTO;
+
+- DonationItemDTO;
+
+------
+#### Utils 
+
+- Notifications
+
+- Validations
+
 
 ### Patterns
 
