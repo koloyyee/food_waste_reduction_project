@@ -16,7 +16,9 @@ Category: id, name
 
 Users: id, name, email, phone, password, role
 
-Preferences: user_id, category_id  (for email notification)
+Preferences: user_id, category_id
+
+Notification: user_id, type, topic, message (not sure)
 
 ### Patterns
 
