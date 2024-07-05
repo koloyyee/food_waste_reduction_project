@@ -1,10 +1,12 @@
-# Design Document for Food Waste Reduction Platform
+# Design Document for the Food Waste Reduction Platform
 
-Model      - assignee: 
+Model      - assignee: Adam, Josh
 
-View       - assignee:
+View       - assignee: Tony, Josh
 
-Controller - assignee:
+Controller - assignee: David: DB Connection, create project architecture, Controller
+
+
 
 ### Architecture
 
