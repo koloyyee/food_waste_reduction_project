@@ -4,13 +4,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
-import java.util.logging.Logger;
 
+import utils.Logger;
+import utils.LoggerFactory;
 import utils.PropertiesLoader;
 
 public class DBConnection {
 
-	private static Logger log = Logger.getLogger(DBConnection.class.getName());
+	private Logger log = LoggerFactory.getLogger();
 
 	private Connection connection;
 	private static DBConnection instance;
@@ -42,7 +43,7 @@ public class DBConnection {
 		} catch (SQLException | ClassNotFoundException e) {
 
 			// log
-			log.info(e.getLocalizedMessage());
+			log.warn(e.getLocalizedMessage());
 		}
 	}
 

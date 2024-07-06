@@ -50,6 +50,7 @@ public class Logger {
 		System.out.print(content);
 		return content;
 	}
+	
 
 	public void setFile(String file) {
 		this.file = Path.of("src/main/resources/log/" + file);
