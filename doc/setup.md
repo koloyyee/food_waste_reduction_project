@@ -1,5 +1,8 @@
 # Setting up the project
-### Steps:
+
+### Database
+
+#### Steps
 
 1. Go to MySQL Workbench create a new Database "FWRP"
 
@@ -9,3 +12,18 @@
 
 4. A new Database named FWRP and related tables will be created.
 
+
+### Properties File
+
+#### Steps
+
+1. Create a `application.properties` in `src/main/resources`
+
+```properties
+user=<your_db_username>
+pass=<your_db_password>
+db=mysql
+host=localhost
+port=3306
+dbname=FWRP
+```

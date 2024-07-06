@@ -17,7 +17,7 @@ public class PropertiesLoader {
 
 	public static Properties load() {
 
-		Path file = Paths.get("src/main/resources/application.properties");
+		Path file = Paths.get("src/main/java/resources/application.properties");
 		try {
 			if (!Files.isRegularFile(file)) {
 				Files.createFile(file);
