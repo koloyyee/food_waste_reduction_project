@@ -9,6 +9,12 @@ import utils.Logger;
 import utils.LoggerFactory;
 import utils.PropertiesLoader;
 
+
+/**
+ * <h3>DBConnection:</h3>
+ * <br>
+ *	Singleton JDBC connection to MySQL. 
+ * */
 public class DBConnection {
 
 	private Logger log = LoggerFactory.getLogger();
@@ -20,10 +26,6 @@ public class DBConnection {
 	private String url = "";
 	private Properties properties;
 
-	public static void main(String[] args) {
-		Connection conn = DBConnection.getInstance().getConnection();
-
-	}
 
 	private DBConnection() {
 		properties = PropertiesLoader.load();
