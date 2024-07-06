@@ -15,6 +15,7 @@ target/
 .sts4-cache
 
 *.properties
+.DS_Store
 
 
 ### IntelliJ IDEA ###
