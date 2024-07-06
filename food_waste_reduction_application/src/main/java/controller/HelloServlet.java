@@ -1,5 +1,6 @@
 package controller;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -33,9 +34,13 @@ public class HelloServlet extends HttpServlet {
 		
 
 		String yourName = request.getParameter("name");
-		PrintWriter writer = response.getWriter();
-		writer.println("<h1>Hello " + yourName + "</h1>");
-		writer.close();
+//		PrintWriter writer = response.getWriter();
+//		writer.println("<h1>Hello " + yourName + "</h1>");
+//		writer.close();
+
+		request.setAttribute("userName", yourName);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/greetings.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	/**

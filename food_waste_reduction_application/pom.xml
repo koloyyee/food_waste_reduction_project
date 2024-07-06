@@ -2,14 +2,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>food_waste_reduction_application</groupId>
-	<artifactId>food_waste_reduction_application</artifactId>
+	<groupId>food_waste_reduction</groupId>
+	<artifactId>food_waste_reduction</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>food waste reduction </name>
-	<description>Final project, j2ee</description>
-
-
+	<name>Food Waste Reduction Project</name>
+	<description>
+		CST8288 Final Project</description>
 	<dependencies>
 		<dependency>
 			<groupId>jakarta.mail</groupId>
