@@ -1,4 +1,4 @@
-package utils;
+package cst8288.project.fwrp.utils;
 
 import java.io.FileNotFoundException;
 import java.io.FileWriter;

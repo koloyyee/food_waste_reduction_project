@@ -1,13 +1,15 @@
-package db;
+package cst8288.project.fwrp.db;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import utils.Logger;
-import utils.LoggerFactory;
-import utils.PropertiesLoader;
+import cst8288.project.fwrp.utils.Logger;
+import cst8288.project.fwrp.utils.LoggerFactory;
+import cst8288.project.fwrp.utils.PropertiesLoader;
+
 
 
 /**

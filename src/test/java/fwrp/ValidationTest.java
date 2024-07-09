@@ -4,7 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import utils.Validation;
+import cst8288.project.fwrp.utils.Validation;
+
 
 class ValidationTest {
 

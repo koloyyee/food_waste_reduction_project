@@ -1,4 +1,4 @@
-package model;
+package cst8288.project.fwrp.model;
 
 /**
  * User, the base class for the application. <br>

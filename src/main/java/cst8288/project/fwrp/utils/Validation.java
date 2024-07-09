@@ -1,4 +1,4 @@
-package utils;
+package cst8288.project.fwrp.utils;
 
 import java.util.regex.Pattern;
 
@@ -21,6 +21,7 @@ public class Validation {
 
 	public boolean checkPhone(String phone) {
 		// (xxx)xxx-xxxx
+		
 		return false;
 	}
 

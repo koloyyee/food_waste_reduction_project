@@ -1,10 +1,13 @@
+package fwrp;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import utils.Logger;
-import utils.LoggerFactory;
+import cst8288.project.fwrp.utils.Logger;
+import cst8288.project.fwrp.utils.LoggerFactory;
+
 
 class LoggerFactoryTest {
 
