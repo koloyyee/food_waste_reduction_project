@@ -1,5 +1,3 @@
-package food_waste_reduction;
-
 
 import static org.junit.jupiter.api.Assertions.*;
 

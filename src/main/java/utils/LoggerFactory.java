@@ -15,7 +15,7 @@ public class LoggerFactory {
 
 
 	public static void main(String[] args) {
-	System.out.print(System.getProperty("user.dir"));	
+		
 		Logger l1 = LoggerFactory.getLogger();
 		Logger l2 = LoggerFactory.getLogger("application.log");
 		l1.info("Hello from Log 1");

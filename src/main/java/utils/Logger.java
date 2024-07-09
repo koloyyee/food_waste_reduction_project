@@ -74,7 +74,7 @@ public class Logger {
 	}
 
 	private String formatter(Level level, String message) {
-		return "[%s]<<%s>>: %s%n".formatted(LocalDateTime.now(), level, message);
+		return "[%s]<<%s>>:%s%n".formatted(LocalDateTime.now(), level, message);
 	}
 
 	public static Logger getLogger() {

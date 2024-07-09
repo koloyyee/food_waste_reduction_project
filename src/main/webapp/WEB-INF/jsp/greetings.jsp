@@ -7,8 +7,13 @@
 <title>Insert title here</title>
 </head>
 <body>
+<% if(request.getAttribute("userName") != null) { 
+	String name = (String) request.getAttribute("userName");
+	%>
+	<%= name %>
 
-
-	<h1>Hello</h1>
+<% } %>
+<%= request.getAttribute("userName")  %>
+Hello
 </body>
 </html>
