@@ -13,13 +13,6 @@ public class User {
 	private final String password;
 	private final UserType type;
 
-	public static void main(String... strings) {
-		User u = new User.Builder("david@email.com", "password")
-				.setId(0L)
-				.setName("david")
-				.setUserType(UserType.Retailer)
-				.build();
-	}
 
 	private User(Builder builder) {
 		this.id = builder.id;
@@ -30,7 +23,7 @@ public class User {
 		this.type = builder.type;
 	}
 
-	static class Builder {
+	public static class Builder {
 		private Long id;
 		private String name;
 		private String email;

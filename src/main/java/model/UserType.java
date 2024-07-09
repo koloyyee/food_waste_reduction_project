@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Arrays;
+
 /**
  * Types of User
  */
@@ -14,5 +16,8 @@ public enum UserType {
 	
 	public int code() {
 		return code;
+	}
+	public static UserType getByCode(int code) {
+		return Arrays.stream(UserType.values()).filter(t -> t.code() == code).findFirst().get();
 	}
 }

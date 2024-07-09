@@ -5,6 +5,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.User;
+import model.UserType;
+
 import java.io.IOException;
 
 /**
@@ -30,14 +33,24 @@ public class UserController extends HttpServlet {
 	
 	/**
 	 * Create user:<br>
-	 * get username, password, email, phone?, type as int.
+	 * get name, password, email, phone?, type as int.
 	 * */
 	private void register(HttpServletRequest request) {
-		String username = request.getParameter("username");
+		String name = request.getParameter("name");
 		String password= request.getParameter("password");
 		String email = request.getParameter("email");
-		String phone = request.getParameter("phone")
+		String phone = request.getParameter("phone");
 		int userTypeInt = Integer.parseInt(request.getParameter("type"));
+		
+		UserType type = UserType.getByCode(userTypeInt);
+		
+		User.Builder user = new User.Builder(email, password);
+		user
+		.setId(null)
+		.setName(name)
+		.setPhone(phone)
+		.setUserType(type);
+
 	}
 
 }
