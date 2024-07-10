@@ -1,12 +1,6 @@
 package cst8288.project.fwrp.utils;
 
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.SimpleFormatter;
 
 /**
  * LoggerFactory: Factory to create Java Util Logger, also create a .log for

@@ -1,9 +1,7 @@
 package cst8288.project.fwrp.utils;
 
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -26,6 +24,10 @@ public class Logger {
 
 	public String info(String message) {
 		return info(message, false);
+
+	}
+	public String info(Object object) {
+		return info(object.toString(), false);
 
 	}
 

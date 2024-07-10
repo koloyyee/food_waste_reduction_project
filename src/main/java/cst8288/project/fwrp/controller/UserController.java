@@ -1,12 +1,7 @@
 package cst8288.project.fwrp.controller;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 
 import cst8288.project.fwrp.model.User;
@@ -16,12 +11,20 @@ import cst8288.project.fwrp.utils.Logger;
 import cst8288.project.fwrp.utils.LoggerFactory;
 import cst8288.project.fwrp.utils.Validation;
 import cst8288.project.fwrp.utils.exception.PasswordInvalidException;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+
 
 /**
  * Servlet implementation class UserController. <br>
  * Handlers user login, logout, register, delete
  */
-@WebServlet(name = "UserController", urlPatterns = "/users/*")
+@WebServlet(name = "UserController", urlPatterns = {"/users/*"})
 public class UserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -37,7 +40,12 @@ public class UserController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		logger.info(request.getPathInfo() + " " + request.getRequestURI());
+		String route = request.getPathInfo();
+		switch(route) {
+		case "/register":
+			register(request, response);
+			break;
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -49,10 +57,15 @@ public class UserController extends HttpServlet {
 	/**
 	 * Create user:<br>
 	 * get name, password, email, phone?, type as int.
+	 * @throws IOException 
+	 * @throws ServletException 
 	 */
-	private void register(HttpServletRequest request, HttpServletResponse response) {
+	private void register(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
 		try {
+			
+			
+			
 			String name = request.getParameter("name");
 			String password = request.getParameter("password");
 			String email = request.getParameter("email");
@@ -69,8 +82,14 @@ public class UserController extends HttpServlet {
 
 			User user = builder.setId(null).setName(name).setPhone(phone).setUserType(type).build();
 			userService.register(user);
+			
+    
+			
 		} catch (SQLException | RuntimeException e) {
 			logger.warn(e.getLocalizedMessage());
+			// return failed snippet?
+			PrintWriter writer = response.getWriter();
+			writer.print(e.getLocalizedMessage());
 		}
 	}
 
