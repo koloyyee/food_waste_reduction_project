@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS fwrp.order (
 	primary key (id)
 );
 
+-- not sure about the subscription and notificatin yet.
 CREATE TABLE IF NOT EXISTS fwrp.subscription (
 	id int AUTO_INCREMENT not null,
 	user_id int,

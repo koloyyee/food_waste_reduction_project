@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +17,6 @@ import cst8288.project.fwrp.utils.LoggerFactory;
 
 public class UserDaoImpl implements DBDao<User, Long> {
 
-
 	private final static Logger logger = LoggerFactory.getLogger();
 
 	@Override
@@ -27,7 +27,7 @@ public class UserDaoImpl implements DBDao<User, Long> {
 				VALUES (?, ?, ?, ?, ?);
 				""";
 		try (Connection conn = DBConnection.getInstance().getConnection()) {
-			PreparedStatement stat = conn.prepareStatement(sql);
+			PreparedStatement stat = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			stat.setString(1, user.getName());
 			stat.setString(2, user.getEmail());
 			stat.setString(3, user.getPassword());
@@ -114,6 +114,7 @@ public class UserDaoImpl implements DBDao<User, Long> {
 				User user = builder.setId(uid).setName(name).setPhone(phone).setUserType(type).build();
 				users.add(user);
 			}
+
 			return users;
 		}
 	}
