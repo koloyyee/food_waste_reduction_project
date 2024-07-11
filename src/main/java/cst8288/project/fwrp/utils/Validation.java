@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
  * must contain at least one lowercase A-Z and a-z .    <br>
  * must contain at least one symbols <br>
  * must contain a length of at least 8 characters and a maximum of 99 characters.   <br>
+ * example: P@$$word123
  */
 public class Validation {
 	
@@ -30,7 +31,6 @@ public class Validation {
 	 * symbols, number
 	 */
 	public boolean checkPassword(String password) {
-		logger.warn("Password invalid");
 		return pattern.matcher(password).find();
 	}
 }

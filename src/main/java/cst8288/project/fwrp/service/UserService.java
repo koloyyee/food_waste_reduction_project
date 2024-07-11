@@ -17,8 +17,7 @@ public class UserService{
 	private UserDaoImpl dao = new UserDaoImpl();
 	
 	public void register(User user) throws SQLException {
-		logger.info(user);
-//		dao.save(user);
+		dao.save(user);
 	}
 
 }

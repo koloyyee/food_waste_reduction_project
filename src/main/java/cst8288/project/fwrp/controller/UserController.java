@@ -68,9 +68,8 @@ public class UserController extends HttpServlet {
 			String password = request.getParameter("password");
 			String email = request.getParameter("email");
 			String phone = request.getParameter("phone");
-			int userTypeInt = Integer.parseInt(request.getParameter("type"));
+			UserType type = UserType.valueOf(request.getParameter("type"));
 
-			UserType type = UserType.getByCode(userTypeInt);
 			if (!validation.checkPassword(password)) {
 				// password invalid
 				throw new PasswordInvalidException(
@@ -81,7 +80,7 @@ public class UserController extends HttpServlet {
 			User user = builder.setId(null).setName(name).setPhone(phone).setUserType(type).build();
 			userService.register(user);
 			
-    
+			System.out.println(user);
 			
 		} catch (SQLException | RuntimeException e) {
 			logger.warn(e.getLocalizedMessage());
