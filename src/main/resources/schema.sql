@@ -1,7 +1,7 @@
 CREATE DATABASE IF NOT EXISTS fwrp;
 
 CREATE TABLE IF NOT EXISTS `fwrp`.`user` ( 
-	id int AUTO_INCREMENT not null ,
+	id int(5) NOT NULL AUTO_INCREMENT,
 	name varchar(100) not null,
 	email varchar(100) not null unique,
 	password varchar(255) not null,
@@ -12,26 +12,27 @@ CREATE TABLE IF NOT EXISTS `fwrp`.`user` (
 );
 
 CREATE TABLE IF NOT EXISTS fwrp.item (
-	id int AUTO_INCREMENT not null,
+	id int(5) NOT NULL AUTO_INCREMENT,
 	name varchar(100) not null,
 	description text,
 	expiry_date date not null,
+	price decimal(10, 2) not null default '0',
 	discount_rate float(10,1) default '0.0',
 	is_surplus boolean default false,
-	is_for_donation boolean default false,
+	is_donation boolean default false,
 	quantity int default 0,
-	status tinyint(1) default '0' comment '0 - not available, 1 - available',
+	is_available boolean default true,
 	created_at timestamp default CURRENT_TIMESTAMP,
 	update_at timestamp default null,
 	primary key (id)
 );
 
 CREATE TABLE IF NOT EXISTS fwrp.order (
-	id int AUTO_INCREMENT not null,
+	id int(5) NOT NULL AUTO_INCREMENT,
 	user_id int,
 	item_id int,
 	transaction_type tinyint(1) comment '1 - purchased, 2 - donated' not null,
-	total_price float(10,2 ) default '0.00' not null,
+	total_price decimal(10,2 ) default '0.00' not null,
 	constraint `fk_orders_user_id` foreign key (user_id) references user(id),
 	constraint `fk_orders_item_id` foreign key (item_id) references item(id),
 	primary key (id)
