@@ -3,7 +3,7 @@
 
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <c:import url="/header.jsp" />
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<%-- <c:set var="contextPath" value="${pageContext.request.contextPath}" /> --%>
 <main>
 
 	<section id="welcome-message">
@@ -12,11 +12,12 @@
 		<h2>Welcome to the Food Waste Reduction Project!</h2>
 		<h3>Let's work together to reduce food waste.</h3>
 	</section>
-	<form action="users/register" method="POST" id="login-form">
+<%  %>	
+
+	<form action="${pageContext.request.contextPath}/users/register" method="POST" id="login-form">
 		<input type="text" name="name" placeholder="name" required />
 		<input type="email" name="email" placeholder="account email" required />
-		<input type="password" name="password" placeholder="account password"
-			minlength="8" required> 
+		<input type="password" name="password" placeholder=password" minlength="8" required> 
 			
 			<select  name="type">
 			<option value="Consumer">Consumer</option>
