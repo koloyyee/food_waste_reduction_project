@@ -22,7 +22,7 @@ public class UserDaoImpl implements DBDao<User, Long> {
 	@Override
 	public User save(User user) throws SQLException {
 		String sql = """
-				INSERT INTO users
+				INSERT INTO user
 				(name,email, password, phone, type)
 				VALUES (?, ?, ?, ?, ?);
 				""";
@@ -66,7 +66,7 @@ public class UserDaoImpl implements DBDao<User, Long> {
 		String sql = """
 				SELECT id, name, email, phone, type
 				FROM
-				users
+				user
 				WHERE
 				id = ?
 				""";
