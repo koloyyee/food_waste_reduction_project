@@ -18,7 +18,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-
+// for login we will need to do authentication with doFilter 
+// https://www.geeksforgeeks.org/servlet-authentication-filter/
 
 /**
  * Servlet implementation class UserController. <br>

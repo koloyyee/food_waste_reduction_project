@@ -6,7 +6,8 @@ CREATE TABLE IF NOT EXISTS `fwrp`.`user` (
 	email varchar(100) not null unique,
 	password varchar(255) not null,
 	phone char(13) default null,
-	type tinyint(1) comment '1 - retailer, 2 - charitable org, 3 - consumer',
+	-- type tinyint(1) comment '1 - retailer, 2 - charitable org, 3 - consumer',
+	type varchar(10) comment 'Retail, ChartiableOrg, Consumer, '
 	created_at timestamp default CURRENT_TIMESTAMP,
 	 primary key (id)
 );
