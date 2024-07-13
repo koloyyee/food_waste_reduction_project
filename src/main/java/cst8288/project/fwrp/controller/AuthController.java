@@ -64,8 +64,6 @@ public class AuthController extends HttpServlet {
 
 		if (isValid) {
 			User user = (User) request.getAttribute("user");
-			log.info("isValid: " + isValid);
-			System.out.println(user);
 			request.getSession().setAttribute("user", user);
 
 			String userTypeJsp = request.getContextPath() + "/pages";
@@ -92,8 +90,7 @@ public class AuthController extends HttpServlet {
 			try {
 				response.sendRedirect("index.jsp");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.warn(e.getLocalizedMessage());
 			}
 			
 		}

@@ -108,7 +108,6 @@ public class UserDaoImpl implements DBDao<User, Long> {
 				String password = rs.getString(2);
 				UserType type = UserType.valueOf(rs.getString(3));
 				String name = rs.getString(4);
-				log.info(email + " " + password);
 				return Optional.of(new User.Builder(email, password).setName(name).setUserType(type).build());
 
 			}
