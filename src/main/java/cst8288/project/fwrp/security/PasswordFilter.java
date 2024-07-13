@@ -36,6 +36,7 @@ public class PasswordFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
 
+		// clean up any previous error message
 		req.getSession().setAttribute("errMsg", null);
 
 		String inputPassword = request.getParameter("password");
@@ -44,27 +45,17 @@ public class PasswordFilter implements Filter {
 		log.info(inputPassword + " " + inputEmail);
 		try {
 			User user = userService.loadUserByEmail(inputEmail);
-			log.info(user.toString());
 
-			if (inputEmail.equals(user.getEmail()) && inputPassword.equals(user.getPassword())) {
+			if (user != null && inputEmail.equals(user.getEmail()) && inputPassword.equals(user.getPassword())) {
 				// pass the request along the filter chain
 				request.setAttribute("user", user);
 				request.setAttribute("isValid", true);
 				chain.doFilter(req, resp);
 
 			} else {
-				request.setAttribute("errMsg", "username or password is wrong");
-				request.setAttribute("isValid", false);
-//				out.print("username or password is wrong");
-//				RequestDispatcher rd = req.getRequestDispatcher(req.getContextPath() + "/index.jsp");
-//				RequestDispatcher rd = req.getRequestDispatcher("/index.jsp");
-//				rd.forward(req, resp);
-				
 				String msg = "username or password is wrong";
 				req.getSession().setAttribute("errMsg",msg );
-
 				resp.sendRedirect(req.getContextPath() + "/index.jsp");
-				out.println(msg);
 			}
 
 		} catch (SQLException e) {
