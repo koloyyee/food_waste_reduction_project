@@ -18,6 +18,26 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>AuthController</servlet-name>
-    <url-pattern>/AuthController</url-pattern>
+    <url-pattern>/auth/*</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>PasswordFilter</display-name>
+    <servlet-name>PasswordFilter</servlet-name>
+    <servlet-class>cst8288.project.fwrp.utils.PasswordFilter</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PasswordFilter</servlet-name>
+    <url-pattern>/PasswordFilter</url-pattern>
+  </servlet-mapping>
+  <filter>
+    <display-name>PasswordFilter</display-name>
+    <filter-name>PasswordFilter</filter-name>
+    <filter-class>cst8288.project.fwrp.utils.PasswordFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>PasswordFilter</filter-name>
+    <servlet-name>PasswordFilter</servlet-name>
+    <url-pattern>/auth/login</url-pattern>
+  </filter-mapping>
 </web-app>

@@ -12,7 +12,7 @@
 		<h2>Welcome to the Food Waste Reduction Project!</h2>
 		<h3>Let's work together to reduce food waste.</h3>
 	</section>
-	<form action="users/login" method="POST" id="login-form">
+	<form action="auth/login" method="POST" id="login-form">
 		<input type="email" name="email" placeholder="account email" required />
 		<input type="password" name="password" placeholder="account password"
 			minlength="8" />

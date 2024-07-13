@@ -20,4 +20,8 @@ public class UserService{
 		dao.save(user);
 	}
 
+	public User loadUserByEmail(String email) throws SQLException {
+		return dao.loadUserByEmail(email).get();
+	}
+
 }
