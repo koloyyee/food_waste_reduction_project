@@ -1,12 +1,14 @@
 package cst8288.project.fwrp.service;
 
 import java.sql.SQLException;
+import java.util.Optional;
 
 import cst8288.project.fwrp.dao.DBDao;
 import cst8288.project.fwrp.dao.UserDaoImpl;
 import cst8288.project.fwrp.model.User;
 import cst8288.project.fwrp.utils.Logger;
 import cst8288.project.fwrp.utils.LoggerFactory;
+import cst8288.project.fwrp.utils.exception.NoSuchUserException;
 
 /**
  * Process User Registration, Login.
@@ -21,7 +23,13 @@ public class UserService{
 	}
 
 	public User loadUserByEmail(String email) throws SQLException {
-		return dao.loadUserByEmail(email).get();
+		Optional<User> user = dao.loadUserByEmail(email);
+		if(user.isPresent()) { 
+			return user.get();
+		} else {
+			String message = "No user found with email: " + email;
+			throw new NoSuchUserException(message);
+		}
 	}
 
 }

@@ -1,4 +1,4 @@
-package cst8288.project.fwrp.utils;
+package cst8288.project.fwrp.security;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -26,19 +26,6 @@ public class PasswordFilter implements Filter {
 	private UserService userService = new UserService();
 
 	/**
-	 * @see HttpFilter#HttpFilter()
-	 */
-	public PasswordFilter() {
-		super();
-	}
-
-	/**
-	 * @see Filter#destroy()
-	 */
-	public void destroy() {
-	}
-
-	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -53,11 +40,14 @@ public class PasswordFilter implements Filter {
 
 			if (inputEmail.equals(user.getEmail()) && inputPassword.equals(user.getPassword())) {
 				// pass the request along the filter chain
+				request.setAttribute("user", user);
+				request.setAttribute("isValid", true);
 				chain.doFilter(request, response);
 
 			} else {
-				out.print("username or password is wrong");
-				RequestDispatcher rd = request.getRequestDispatcher("index.html");
+				request.setAttribute("errMsg","username or password is wrong" );
+				request.setAttribute("isValid", false);
+				RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 				rd.include(request, response);
 			}
 
@@ -66,6 +56,19 @@ public class PasswordFilter implements Filter {
 		}
 
 	}
+	/**
+	 * @see HttpFilter#HttpFilter()
+	 */
+	public PasswordFilter() {
+		super();
+	}
+
+	/**
+	 * @see Filter#destroy()
+	 */
+	public void destroy() {
+	}
+
 
 	/**
 	 * @see Filter#init(FilterConfig)

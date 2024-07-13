@@ -24,7 +24,7 @@
     <description></description>
     <display-name>PasswordFilter</display-name>
     <servlet-name>PasswordFilter</servlet-name>
-    <servlet-class>cst8288.project.fwrp.utils.PasswordFilter</servlet-class>
+    <servlet-class>cst8288.project.fwrp.security.PasswordFilter</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>PasswordFilter</servlet-name>
@@ -33,7 +33,7 @@
   <filter>
     <display-name>PasswordFilter</display-name>
     <filter-name>PasswordFilter</filter-name>
-    <filter-class>cst8288.project.fwrp.utils.PasswordFilter</filter-class>
+    <filter-class>cst8288.project.fwrp.security.PasswordFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>PasswordFilter</filter-name>

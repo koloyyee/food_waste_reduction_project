@@ -17,7 +17,7 @@ import cst8288.project.fwrp.utils.LoggerFactory;
 
 public class UserDaoImpl implements DBDao<User, Long> {
 
-	private final static Logger log= LoggerFactory.getLogger();
+	private final static Logger log = LoggerFactory.getLogger();
 
 	@Override
 	public User save(User user) throws SQLException {
@@ -34,7 +34,6 @@ public class UserDaoImpl implements DBDao<User, Long> {
 			stat.setString(4, user.getPhone());
 			stat.setString(5, user.getType().name());
 
-			
 			int rowAffected = stat.executeUpdate();
 
 			assert (rowAffected > 0);
@@ -42,20 +41,19 @@ public class UserDaoImpl implements DBDao<User, Long> {
 				throw new SQLException("Failed to regsiter new user: " + user.getEmail());
 			}
 			log.info("New user: %s registered.".formatted(user.getEmail()));
-			
+
 			User.Builder builder = new User.Builder(user.getEmail(), user.getPassword());
 			builder.setName(user.getName()).setPhone(user.getPhone()).setUserType(user.getType());
 
-			
-		      try (ResultSet generatedKeys = stat.getGeneratedKeys()) {
-		        if (generatedKeys.next()) {
-		          builder.setId(generatedKeys.getLong(1));
-		        } else {
-		          throw new SQLException("Creating user failed, no ID obtained.");
-		        }
-		      }
-			
-			return  builder.build();
+			try (ResultSet generatedKeys = stat.getGeneratedKeys()) {
+				if (generatedKeys.next()) {
+					builder.setId(generatedKeys.getLong(1));
+				} else {
+					throw new SQLException("Creating user failed, no ID obtained.");
+				}
+			}
+
+			return builder.build();
 
 		}
 
@@ -91,9 +89,9 @@ public class UserDaoImpl implements DBDao<User, Long> {
 		return Optional.empty();
 	}
 
-	public Optional<User> loadUserByEmail(String reqEmail ) throws SQLException {
+	public Optional<User> loadUserByEmail(String reqEmail) throws SQLException {
 		String sql = """
-				SELECT email, password
+				SELECT email, password, type
 				FROM
 				user
 				WHERE
@@ -108,13 +106,15 @@ public class UserDaoImpl implements DBDao<User, Long> {
 			while (rs.next()) {
 				String email = rs.getString(1);
 				String password = rs.getString(2);
+				UserType type = UserType.valueOf(rs.getString(3));
 				log.info(email + " " + password);
-				return Optional.of( new User.Builder(email, password).build());
+				return Optional.of(new User.Builder(email, password).setUserType(type).build());
 
 			}
 		}
 		return Optional.empty();
 	}
+
 	@Override
 	public List<User> findAll() throws SQLException {
 		String sql = """
@@ -126,7 +126,7 @@ public class UserDaoImpl implements DBDao<User, Long> {
 		try (Connection conn = DBConnection.getInstance().getConnection()) {
 			PreparedStatement stat = conn.prepareStatement(sql);
 			ResultSet rs = stat.executeQuery();
-			
+
 			List<User> users = new ArrayList<>();
 			while (rs.next()) {
 				Long uid = Long.valueOf(rs.getInt(1));
@@ -154,12 +154,12 @@ public class UserDaoImpl implements DBDao<User, Long> {
 				phone = ?
 				type = ?
 				""";
-		try(Connection conn = DBConnection.getInstance().getConnection()) {
+		try (Connection conn = DBConnection.getInstance().getConnection()) {
 
 			PreparedStatement stat = conn.prepareStatement(sql);
 
 		}
-		
+
 		return -1;
 	}
 
