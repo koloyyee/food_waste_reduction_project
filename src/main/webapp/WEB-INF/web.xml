@@ -40,4 +40,51 @@
     <servlet-name>PasswordFilter</servlet-name>
     <url-pattern>/auth/login</url-pattern>
   </filter-mapping>
+  <servlet>
+    <description></description>
+    <display-name>RetailerController</display-name>
+    <servlet-name>RetailerController</servlet-name>
+    <servlet-class>cst8288.project.fwrp.controller.RetailerController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RetailerController</servlet-name>
+    <url-pattern>/retailers/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ConsumerController</display-name>
+    <servlet-name>ConsumerController</servlet-name>
+    <servlet-class>cst8288.project.fwrp.controller.ConsumerController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ConsumerController</servlet-name>
+    <url-pattern>/consumers/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CharitableOrgController</display-name>
+    <servlet-name>CharitableOrgController</servlet-name>
+    <servlet-class>cst8288.project.fwrp.controller.CharitableOrgController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CharitableOrgController</servlet-name>
+    <url-pattern>/charitable_orgs/*</url-pattern>
+  </servlet-mapping>
+  <filter>
+    <display-name>UserTypeFilter</display-name>
+    <filter-name>UserTypeFilter</filter-name>
+    <filter-class>cst8288.project.fwrp.security.UserTypeFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>UserTypeFilter</filter-name>
+    <url-pattern>/retailers/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>UserTypeFilter</filter-name>
+    <url-pattern>/consumers/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>UserTypeFilter</filter-name>
+    <url-pattern>/charitable_orgs/*</url-pattern>
+  </filter-mapping>
 </web-app>

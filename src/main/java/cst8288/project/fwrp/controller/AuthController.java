@@ -1,6 +1,5 @@
 package cst8288.project.fwrp.controller;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,7 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import cst8288.project.fwrp.model.User;
 import cst8288.project.fwrp.utils.Logger;
@@ -106,8 +104,7 @@ public class AuthController extends HttpServlet {
 		try {
 			response.sendRedirect(request.getContextPath() + "/index.jsp");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.warn(e.getLocalizedMessage());
 		}
 	}
 
