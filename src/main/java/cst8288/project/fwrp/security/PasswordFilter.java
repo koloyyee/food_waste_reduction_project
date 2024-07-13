@@ -9,6 +9,9 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpFilter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -30,10 +33,15 @@ public class PasswordFilter implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
+		HttpServletRequest req = (HttpServletRequest) request;
+		HttpServletResponse resp = (HttpServletResponse) response;
+
+		req.getSession().setAttribute("errMsg", null);
+
 		String inputPassword = request.getParameter("password");
-		String inputEmail = request.getParameter("email");
-		PrintWriter out = response.getWriter();
-		log.info(inputPassword  + " " + inputEmail);
+		String inputEmail = req.getParameter("email");
+		PrintWriter out = resp.getWriter();
+		log.info(inputPassword + " " + inputEmail);
 		try {
 			User user = userService.loadUserByEmail(inputEmail);
 			log.info(user.toString());
@@ -42,13 +50,21 @@ public class PasswordFilter implements Filter {
 				// pass the request along the filter chain
 				request.setAttribute("user", user);
 				request.setAttribute("isValid", true);
-				chain.doFilter(request, response);
+				chain.doFilter(req, resp);
 
 			} else {
-				request.setAttribute("errMsg","username or password is wrong" );
+				request.setAttribute("errMsg", "username or password is wrong");
 				request.setAttribute("isValid", false);
-				RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-				rd.include(request, response);
+//				out.print("username or password is wrong");
+//				RequestDispatcher rd = req.getRequestDispatcher(req.getContextPath() + "/index.jsp");
+//				RequestDispatcher rd = req.getRequestDispatcher("/index.jsp");
+//				rd.forward(req, resp);
+				
+				String msg = "username or password is wrong";
+				req.getSession().setAttribute("errMsg",msg );
+
+				resp.sendRedirect(req.getContextPath() + "/index.jsp");
+				out.println(msg);
 			}
 
 		} catch (SQLException e) {
@@ -56,6 +72,7 @@ public class PasswordFilter implements Filter {
 		}
 
 	}
+
 	/**
 	 * @see HttpFilter#HttpFilter()
 	 */
@@ -68,7 +85,6 @@ public class PasswordFilter implements Filter {
 	 */
 	public void destroy() {
 	}
-
 
 	/**
 	 * @see Filter#init(FilterConfig)

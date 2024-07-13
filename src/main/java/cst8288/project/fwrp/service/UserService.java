@@ -14,7 +14,7 @@ import cst8288.project.fwrp.utils.exception.NoSuchUserException;
  * Process User Registration, Login.
  * */
 public class UserService{
-	private final static Logger logger = LoggerFactory.getLogger();
+	private final static Logger log = LoggerFactory.getLogger();
 	
 	private UserDaoImpl dao = new UserDaoImpl();
 	
@@ -28,7 +28,8 @@ public class UserService{
 			return user.get();
 		} else {
 			String message = "No user found with email: " + email;
-			throw new NoSuchUserException(message);
+			log.warn(message);
+			return null;
 		}
 	}
 

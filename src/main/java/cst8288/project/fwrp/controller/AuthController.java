@@ -20,7 +20,7 @@ import cst8288.project.fwrp.utils.LoggerFactory;
  */
 @WebServlet(name = "AuthController", urlPatterns = "/auth/*")
 public class AuthController extends HttpServlet {
-	private static Logger logger = LoggerFactory.getLogger();
+	private static Logger log = LoggerFactory.getLogger();
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -64,7 +64,7 @@ public class AuthController extends HttpServlet {
 
 		if (isValid) {
 			User user = (User) request.getAttribute("user");
-			logger.info("isValid: " + isValid);
+			log.info("isValid: " + isValid);
 			System.out.println(user);
 			request.getSession().setAttribute("user", user);
 
@@ -84,16 +84,20 @@ public class AuthController extends HttpServlet {
 			try {
 				response.sendRedirect(userTypeJsp);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.warn(e.getLocalizedMessage());
 			}
 
 		} else {
 			response.setContentType("text/html");
-//				PrintWriter out = response.getWriter();
-//				out.print("welcome to GEEKSFORGEEKS");
-
+			try {
+				response.sendRedirect("index.jsp");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
+
 	}
 
 }

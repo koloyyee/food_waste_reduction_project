@@ -16,6 +16,10 @@
 		<input type="email" name="email" placeholder="account email" required />
 		<input type="password" name="password" placeholder="account password"
 			minlength="8" />
+		<% String err = (String) request.getSession().getAttribute("errMsg"); %>
+		<% if(err != null) { %>
+		<span class="err-msg" ><%= err %> </span>
+		<% } %>
 		<div class="btn-group">
 			<button type="submit">Login</button>
 			<button type="reset" class="btn-cancel">Cancel</button>

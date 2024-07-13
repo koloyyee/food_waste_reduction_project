@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Welcome to Charitable Organization Page!</h1>
+	<h1>Welcome to Consumer Page!</h1>
 	<%
 	if (request.getSession() != null) {
 	%>

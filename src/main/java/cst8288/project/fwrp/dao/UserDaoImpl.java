@@ -19,6 +19,8 @@ public class UserDaoImpl implements DBDao<User, Long> {
 
 	private final static Logger log = LoggerFactory.getLogger();
 
+	private Connection conn = DBConnection.getInstance().getConnection();
+
 	@Override
 	public User save(User user) throws SQLException {
 		String sql = """
@@ -26,8 +28,7 @@ public class UserDaoImpl implements DBDao<User, Long> {
 				(name,email, password, phone, type)
 				VALUES (?, ?, ?, ?, ?);
 				""";
-		try (Connection conn = DBConnection.getInstance().getConnection()) {
-			PreparedStatement stat = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		try (PreparedStatement stat = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
 			stat.setString(1, user.getName());
 			stat.setString(2, user.getEmail());
 			stat.setString(3, user.getPassword());
@@ -54,7 +55,6 @@ public class UserDaoImpl implements DBDao<User, Long> {
 			}
 
 			return builder.build();
-
 		}
 
 	}
@@ -69,8 +69,7 @@ public class UserDaoImpl implements DBDao<User, Long> {
 				id = ?
 				""";
 
-		try (Connection conn = DBConnection.getInstance().getConnection()) {
-			PreparedStatement stat = conn.prepareStatement(sql);
+		try (PreparedStatement stat = conn.prepareStatement(sql);) {
 			stat.setLong(1, id);
 			ResultSet rs = stat.executeQuery();
 
@@ -85,7 +84,9 @@ public class UserDaoImpl implements DBDao<User, Long> {
 				return Optional.of(builder.setId(uid).setName(name).setPhone(phone).setUserType(type).build());
 
 			}
+			rs.close();
 		}
+		conn.close();
 		return Optional.empty();
 	}
 
@@ -98,8 +99,7 @@ public class UserDaoImpl implements DBDao<User, Long> {
 				email = ?
 				""";
 
-		try (Connection conn = DBConnection.getInstance().getConnection()) {
-			PreparedStatement stat = conn.prepareStatement(sql);
+		try (PreparedStatement stat = conn.prepareStatement(sql);) {
 			stat.setString(1, reqEmail);
 			ResultSet rs = stat.executeQuery();
 
@@ -107,13 +107,14 @@ public class UserDaoImpl implements DBDao<User, Long> {
 				String email = rs.getString(1);
 				String password = rs.getString(2);
 				UserType type = UserType.valueOf(rs.getString(3));
-				String name= rs.getString(4);
+				String name = rs.getString(4);
 				log.info(email + " " + password);
 				return Optional.of(new User.Builder(email, password).setName(name).setUserType(type).build());
 
 			}
+			rs.close();
+			return Optional.empty();
 		}
-		return Optional.empty();
 	}
 
 	@Override
@@ -124,8 +125,7 @@ public class UserDaoImpl implements DBDao<User, Long> {
 				users;
 				""";
 
-		try (Connection conn = DBConnection.getInstance().getConnection()) {
-			PreparedStatement stat = conn.prepareStatement(sql);
+		try (PreparedStatement stat = conn.prepareStatement(sql);) {
 			ResultSet rs = stat.executeQuery();
 
 			List<User> users = new ArrayList<>();
