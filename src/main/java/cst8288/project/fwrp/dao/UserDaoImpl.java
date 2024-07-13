@@ -91,7 +91,7 @@ public class UserDaoImpl implements DBDao<User, Long> {
 
 	public Optional<User> loadUserByEmail(String reqEmail) throws SQLException {
 		String sql = """
-				SELECT email, password, type
+				SELECT email, password, type, name
 				FROM
 				user
 				WHERE
@@ -107,8 +107,9 @@ public class UserDaoImpl implements DBDao<User, Long> {
 				String email = rs.getString(1);
 				String password = rs.getString(2);
 				UserType type = UserType.valueOf(rs.getString(3));
+				String name= rs.getString(4);
 				log.info(email + " " + password);
-				return Optional.of(new User.Builder(email, password).setUserType(type).build());
+				return Optional.of(new User.Builder(email, password).setName(name).setUserType(type).build());
 
 			}
 		}

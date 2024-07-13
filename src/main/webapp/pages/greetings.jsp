@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ page import="cst8288.project.fwrp.model.User" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,13 +8,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-<% if(request.getAttribute("userName") != null) { 
-	String name = (String) request.getAttribute("userName");
-	%>
-	<%= name %>
+<% if(request.getSession() != null) { 
+/* 	User user = (User) request.getAttribute("user");
+ */	%>
+	<%= request.getSession().getAttribute("user") %>
 
 <% } %>
-<%= request.getAttribute("userName")  %>
 Hello
 </body>
 </html>
