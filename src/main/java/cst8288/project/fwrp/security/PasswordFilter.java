@@ -42,7 +42,7 @@ public class PasswordFilter implements Filter {
 		try {
 			User user = userService.loadUserByEmail(inputEmail);
 
-			if (user != null && inputEmail.equals(user.getEmail()) && inputPassword.equals(user.getPassword())) {
+			if (inputEmail.equals(user.getEmail()) && inputPassword.equals(user.getPassword())) {
 				// pass the request along the filter chain
 				request.setAttribute("user", user);
 				request.setAttribute("isValid", true);
