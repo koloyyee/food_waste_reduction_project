@@ -17,7 +17,7 @@
 				<form action="${pageContext.request.contextPath}/auth/logout" method="POST">
 					<button class="btn btn-warning"> Logout </button>	
 				</form>
-			<%} else {%>
+			<%} else if ( request.getAttribute("errMsg") == null ) {%>
 				<% response.sendRedirect(request.getContextPath() + "/index.jsp"); %>
 			<%} %>
 

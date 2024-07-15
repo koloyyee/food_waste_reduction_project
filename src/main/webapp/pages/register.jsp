@@ -12,7 +12,11 @@
 		<h2>Welcome to the Food Waste Reduction Project!</h2>
 		<h3>Let's work together to reduce food waste.</h3>
 	</section>
-<%  %>	
+	<% String errMsg =  (String) request.getAttribute("errMsg"); %>
+	<% if (errMsg != null ) { %>
+		<p class="err-msg"> ${errMsg } </p>
+	<% } %>
+	<%= errMsg %>
 
 	<form action="${pageContext.request.contextPath}/users/register" method="POST" id="login-form">
 		<input type="text" name="name" placeholder="name" required />

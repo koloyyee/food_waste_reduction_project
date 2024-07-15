@@ -46,7 +46,9 @@ public class DBConnection {
 		} catch (SQLException | ClassNotFoundException e) {
 
 			// log
-			log.warn(e.getLocalizedMessage());
+//			log.warn(e.getLocalizedMessage());
+			e.printStackTrace();
+//			log.warn(e.getMessage());
 		}
 	}
 
