@@ -6,22 +6,31 @@ import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
-import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpFilter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
+import java.util.logging.Logger;
+
+import cst8288.project.fwrp.model.User;
+import cst8288.project.fwrp.service.UserService;
 
 /**
  * Servlet Filter implementation class UserTypeFilter
+ * This the role based authorization
  */
 public class UserTypeFilter extends HttpFilter implements Filter {
-       
-    /**
-     * @see HttpFilter#HttpFilter()
-     */
-    public UserTypeFilter() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	private Logger log = Logger.getLogger(UserTypeFilter.class.getName());
+	private UserService userService = new UserService();
+
+	/**
+	 * @see HttpFilter#HttpFilter()
+	 */
+	public UserTypeFilter() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see Filter#destroy()
@@ -32,10 +41,26 @@ public class UserTypeFilter extends HttpFilter implements Filter {
 
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
+	 *      req.getContextPath() -> /fwrp <br>
+	 *      req.getServletPath() -> /retailers or consumers or charitable_org <br>
+	 *      req.getPathInfo() -> /hello or /anything
 	 */
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		// place your code here
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+
+		HttpServletRequest req = (HttpServletRequest) request;
+		HttpServletResponse resp = (HttpServletResponse) response;
+		
+		User user = (User) req.getSession().getAttribute("user");
+
+		/**
+		 * check if the user type is correct with the email, 
+		 * if not just send it back to
+		 * home page.
+		 */
+		if (user == null || !req.getServletPath().contains(user.getType().name().toLowerCase())) {
+			resp.sendRedirect(req.getContextPath() + "/index.jsp");
+		}
 
 		// pass the request along the filter chain
 		chain.doFilter(request, response);

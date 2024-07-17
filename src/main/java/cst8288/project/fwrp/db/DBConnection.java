@@ -44,11 +44,7 @@ public class DBConnection {
 			connection = DriverManager.getConnection(url, user, pass);
 
 		} catch (SQLException | ClassNotFoundException e) {
-
-			// log
-//			log.warn(e.getLocalizedMessage());
-			e.printStackTrace();
-//			log.warn(e.getMessage());
+			log.warn(e.getLocalizedMessage());
 		}
 	}
 

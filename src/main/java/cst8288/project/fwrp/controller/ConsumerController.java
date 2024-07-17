@@ -7,11 +7,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import cst8288.project.fwrp.utils.Logger;
+
 /**
  * Servlet implementation class ConsumerController
  */
 @WebServlet(name = "ConsumerController", urlPatterns = {"/consumers/*"})
 public class ConsumerController extends HttpServlet {
+	private Logger log = Logger.getLogger();
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -28,6 +31,9 @@ public class ConsumerController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String path = request.getPathInfo();
+
+		log.info(path);
 	}
 
 	/**

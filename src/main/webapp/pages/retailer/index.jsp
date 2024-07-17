@@ -14,5 +14,9 @@
 	<%
 	}
 	%>
+	<form action="retailers/hello">
+		<input type="text" name="test" > 
+		<button type="submit"> submit </button>
+	</form>
 </body>
 </html>
