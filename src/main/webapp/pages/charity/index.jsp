@@ -4,15 +4,10 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <c:import url="/header.jsp" />
 	<h1>Welcome to Charitable Organization Page!</h1>
-	<%
-	if (request.getSession() != null) {
-	%>
-	<%
-	User user = (User) request.getSession().getAttribute("user");
-	%>
+	<% User user = (User) request.getSession().getAttribute("user");	%>
+			<% if ( user != null && !user.getType().name().contains(request.getServletPath())){ %>
+				<% response.sendRedirect(request.getContextPath() + "/index.jsp"); %>
 	<p>Hello! Welcome back! ${user.getName()}</p>
-	<%
-	}
-	%>
+	<%}%>
 </body>
 </html>
