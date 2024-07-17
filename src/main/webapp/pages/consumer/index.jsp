@@ -14,5 +14,9 @@
 	<%
 	}
 	%>
+	<form action="${pageContext.request.contextPath}/consumers/hello">
+		<input type="text" name="test" > 
+		<button type="submit"> submit </button>
+	</form>
 </body>
 </html>
