@@ -15,7 +15,7 @@ body {
 nav {
 	padding: 1rem;
 }
-
+/* 
 input, select {
 	border-radius: 0.3rem;
 }
@@ -25,7 +25,7 @@ input, select {
 	width: 12rem;
 	border: 1px solid;
 }
-
+ */
 /* button {
 	height: 2rem;
 	width: 5rem;
@@ -38,17 +38,15 @@ input, select {
 	color: white;
 }
  */
-.btn-group {
+/* .btn-group {
 	display:flex;
 	gap: 1rem;
 }
-.err-msg {
+ */
+ .err-msg {
 	color: red;
 }
 
-#header-logo {
-	width: 12rem;
-}
 
 @media screen and (min-width: 768px) {
 	nav {

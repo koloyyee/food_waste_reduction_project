@@ -8,7 +8,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 
+import cst8288.project.fwrp.dao.ItemDaoImpl;
+import cst8288.project.fwrp.model.Item;
 import cst8288.project.fwrp.model.User;
 import cst8288.project.fwrp.utils.Logger;
 import cst8288.project.fwrp.utils.LoggerFactory;
@@ -22,12 +26,14 @@ import cst8288.project.fwrp.utils.LoggerFactory;
 public class AuthController extends HttpServlet {
 	private static Logger log = LoggerFactory.getLogger();
 	private static final long serialVersionUID = 1L;
+	private ItemDaoImpl itemDao;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public AuthController() {
 		super();
+		this.itemDao = new ItemDaoImpl();
 	}
 
 	/**
@@ -64,25 +70,36 @@ public class AuthController extends HttpServlet {
 		boolean isValid = (boolean) request.getAttribute("isValid");
 
 		if (isValid) {
+			try {
 			User user = (User) request.getAttribute("user");
 			request.getSession().setAttribute("user", user);
 
 			String userTypeJsp = request.getContextPath() + "/pages";
+			
+			
 			switch (user.getType()) {
 			case Retailer:
 				userTypeJsp += "/retailer/index.jsp";
+				List<Item> items = itemDao.findAll();
+				log.info(items);
+				request.getSession().setAttribute("items", items);
 				break;
 			case CharitableOrg:
 				userTypeJsp += "/charity/index.jsp";
+				List<Item> donations = itemDao.findDonations();
+				request.getSession().setAttribute("items", donations);
+				log.info(donations);
 				break;
 			default:
 				userTypeJsp += "/consumer/index.jsp";
+				List<Item> surplus = itemDao.findSurplus();
+				log.info(surplus);
+				request.getSession().setAttribute("items", surplus);
 				break;
 			}
-
-			try {
+			
 				response.sendRedirect(userTypeJsp);
-			} catch (IOException e) {
+			} catch (IOException | SQLException e) {
 				log.warn(e.getLocalizedMessage());
 			}
 
