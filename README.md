@@ -1,112 +1,46 @@
-# Design Document for the Food Waste Reduction Platform
+# Food Waste Reduction Project
+CST8288 Final Project
 
-Model      - assignee: Adam, Josh
+Documentation Link: Currently using OneDrive shared url, before submission will move `/doc` directory.
 
-View       - assignee: Tony, Josh
+[High Level Desing Document](https://algonquinlivecom-my.sharepoint.com/:w:/g/personal/ko000029_algonquinlive_com/EVQ5xfhUNaFMoQyKD7muIwgBi2QLg9I28wtfvWoJ-joTlA?e=waj8BG)
 
-Controller - assignee: David: DB Connection, create project architecture, Controller
+[Class and Use Case Diagrams](https://algonquinlivecom-my.sharepoint.com/:u:/g/personal/ko000029_algonquinlive_com/EahOpQ2eXohHia3-2ofUVjMBMZLIqCfcU0Vd_6Zv1ZkM4w?e=8krcue)
 
+[Place Holder]
+## Overview
+## How to Run on Local Machine
+### Database
 
+#### Steps
 
-### Architecture
+1. Go to MySQL Workbench create a new Database "FWRP"
 
-![Architecture](food_waste_reduction.drawio.png)
+2. create a new SQL File in MySQL Workbench
 
-### Entities
+3. Copy the `src/main/resources/schema.sql` content and paste in the MySQL SQL File and run.
 
-Item: id, name, price, expiry_date, status, discount_rate, category_id
-
-Category: id, name
-
-Users: id, name, email, phone, password, role
-
-Preferences: user_id, category_id
-
-Notification: user_id, type, topic, message (not sure)
-
-### Classes:
-
-#### User
-- User
-- Retailed -> User : addItems(), updateQuantity(), setExpiryDate()
-- Charitable Org -> User: claim();
-- Consumer -> User;
-
-------------
-
-#### Item;
-- Item;
-  
-- DiscountedItemDTO;
-
-- DonationItemDTO;
-
-------
-#### Utils 
-
-- Notifications
-
-- Validations
+4. A new Database named FWRP and related tables will be created.
 
 
-### Patterns
+### Properties File
 
-Observer
+#### Steps
+1. Create a `application.properties` in `src/main/resources`
 
----
+```properties
+user=<your_db_username>
+pass=<your_db_password>
+db=mysql
+host=localhost
+port=3306
+dbname=FWRP
+```
+## Screen Shots
+#### Login
+#### Register
+#### Retailer
+#### Charitable Organization
+#### Consumer
 
-Program requirements
-
-### 01 - User Registration
-
-1. Ability to create account on platform by providing
-   1. name
-   2. email
-   3. password
-   4. selecting a user type of
-      1. retailer
-      2. consumer
-      3. charitable organization
-2. Authentication by allowing to user to
-   1. log in
-   2. log out
-
-### 02 - Retailers
-
-1. Inventory management capability by allowing the user to
-   1. add items
-   2. update quantities of items
-   3. set exp dates for each item
-2. Identify surplus items by expiry date
-   1. if expiry date is within one week of current day the food is considered surplus
-3. list surplus food items to platform for donation or a discount price
-   1. retailer can select reduced price
-   2. retailer inventory must update after food is purchased or donated
-
-### 03 - Charitable Organization
-
-1. Claim food items listed for donation by retailers
-
-### 04 - Consumers
-
-1. Can purchase items listed by retailers
-
-### Additional Functionality
-
-1. User Subscription
-   1. can subscribe to receive surplus food alerts based on their
-      1. location
-      2. communication method
-         1. email
-         2. phone (either or)
-      3. food preferences
-2. Automatic Notifications
-   1. users subscribed to alerts are notified when retailers list surplus food items on the platform
-3. Bonus Functionality
-   1. we must introduce one functionality of our own design
-
-### DataBase
-
-1. Use a relational database
-2. Title the system FWRP
-3. Design schema by introducing entities that are required
+#### References

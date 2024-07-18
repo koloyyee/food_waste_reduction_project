@@ -1,0 +1,84 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class Builder {
+  - item: Item
+  - sentTime: LocalDateTime
+  - user: User
+  - commMethod: CommMethodType
+  - message: String
+  + build(): Notification
+   item: Item
+   commMethod: CommMethodType
+   sentTime: LocalDateTime
+   message: String
+   user: User
+}
+class Item {
+  - expiryDate: LocalDate
+  - price: BigDecimal
+  - updatedAt: LocalDateTime
+  - quantity: int
+  - createdAt: LocalDateTime
+  - name: String
+  - id: Long
+  - description: String
+  - discountRate: double
+  - isDonation: boolean
+  - isAvailable: boolean
+  - isSurplus: boolean
+  + toString(): String
+  + checkSurplus(): boolean
+   name: String
+   description: String
+   isDonation: boolean
+   updatedAt: LocalDateTime
+   createdAt: LocalDateTime
+   id: Long
+   isAvailable: boolean
+   isSurplus: boolean
+   expiryDate: LocalDate
+   quantity: int
+   price: BigDecimal
+   discountRate: double
+}
+class Notification {
+  - message: String
+  - item: Item
+  - user: User
+  - commMethod: CommMethodType
+  - sentTime: LocalDateTime
+  + toString(): String
+   item: Item
+   commMethod: CommMethodType
+   sentTime: LocalDateTime
+   message: String
+   user: User
+}
+class Order {
+  - createdAt: LocalDateTime
+  - quantity: int
+  - user: User
+  - item: Item
+  - id: Long
+  - transactionType: TransactionType
+  - totalAmount: BigDecimal
+  + toString(): String
+   item: Item
+   totalAmount: BigDecimal
+   createdAt: LocalDateTime
+   id: Long
+   transactionType: TransactionType
+   quantity: int
+   user: User
+}
+enum TransactionType << enumeration >> {
+  + values(): TransactionType[]
+  + valueOf(String): TransactionType
+}
+
+Builder          +-[#820000,plain]-  Notification
+@enduml
