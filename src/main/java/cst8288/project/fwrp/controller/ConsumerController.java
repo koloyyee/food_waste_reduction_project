@@ -30,10 +30,19 @@ public class ConsumerController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		String path = request.getPathInfo();
 
-		log.info(path);
+		switch (path) {
+		case "/hello":
+			log.info(path);
+			break;
+		default:
+			log.info(path);
+			break;
+			
+		}
 	}
 
 	/**

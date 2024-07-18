@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 main {
-	background: linear-gradient(to bottom, #fffacd, #fada9d);
+	/* background: linear-gradient(to bottom, #fffacd, #fada9d); */
 	height:100vh;
 	display:flex;
 	flex-direction: column;

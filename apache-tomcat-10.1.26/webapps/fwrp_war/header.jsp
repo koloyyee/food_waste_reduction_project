@@ -1,4 +1,4 @@
-
+<%@page import="cst8288.project.fwrp.model.User" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,12 +13,16 @@
 	
 			<img src="${pageContext.request.contextPath}/asset/logo_trans.png"
 				id="header-logo" />
-			<% if(request.getSession().getAttribute("user") != null) { %>
+			<%  User user =  (User) request.getSession().getAttribute("user"); %>
+			<% user.getType(); %>
+			<% if( user != null ) { %>
 				<form action="${pageContext.request.contextPath}/auth/logout" method="POST">
 					<button class="btn btn-warning"> Logout </button>	
 				</form>
-			<%} else {%>
+			<%} else if ( request.getAttribute("errMsg") == null ) {%>
 				<% response.sendRedirect(request.getContextPath() + "/index.jsp"); %>
-			<%} %>
+			<%} %> 
+			
+
 
 </nav>
