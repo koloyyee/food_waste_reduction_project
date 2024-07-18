@@ -1,4 +1,6 @@
+
 <%@page import="cst8288.project.fwrp.model.User"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +17,7 @@
 <title>Food Waste Reduction Project</title>
 </head>
 <body>
+
 	<nav class="d-flex justify-content-between">
 
 		<img src="${pageContext.request.contextPath}/asset/logo_trans.png"
@@ -51,7 +54,6 @@
 		<%
 		}
 		%>
-
 
 
 	</nav>
