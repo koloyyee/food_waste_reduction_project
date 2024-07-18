@@ -1,6 +1,7 @@
 package cst8288.project.fwrp.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -84,7 +85,8 @@ public class Item {
     public BigDecimal getPrice() {
 
         var bdDiscountRate = BigDecimal.valueOf(1 - discountRate);
-        return price.multiply(bdDiscountRate);
+        // round the price to 2 decimals
+        return price.multiply(bdDiscountRate).setScale(2, RoundingMode.HALF_EVEN);
     }
 
     public void setPrice(BigDecimal price) {

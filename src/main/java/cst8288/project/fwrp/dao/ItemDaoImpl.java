@@ -2,6 +2,7 @@ package cst8288.project.fwrp.dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -151,6 +152,7 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 				is_available = true AND
 				quantity > 0
 				""";
+		List<Item> items = new ArrayList<>();
 		try (var statement = connection.prepareStatement(sql)) {
 			var result = statement.executeQuery();
 			while (result.next()) {
@@ -167,10 +169,10 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 				item.setAvailable(result.getBoolean("is_available"));
 				item.setCreatedAt(result.getTimestamp("created_at").toLocalDateTime());
 				item.setUpdatedAt(result.getTimestamp("updated_at").toLocalDateTime());
-				return List.of(item);
+			    items.add(item);	
 			}
+			return items;
 		}
-		return List.of();
 	}
 	
 	/**

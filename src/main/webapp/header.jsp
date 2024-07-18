@@ -25,9 +25,6 @@
 		<%
 		User user = (User) request.getSession().getAttribute("user");
 		%>
-		<%
-		user.getType();
-		%>
 
 		<%
 		boolean sameType = request.getServletPath().contains(user.getType().name().toLowerCase());
