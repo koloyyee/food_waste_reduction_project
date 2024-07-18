@@ -25,12 +25,22 @@
 		<%
 		User user = (User) request.getSession().getAttribute("user");
 		%>
+		<%
+		if (user == null) {
+		%>
+		<%
+		response.sendRedirect(request.getContextPath() + "/index.jsp");
+		%>
+
+		<%
+		}
+		%>
 
 		<%
 		boolean sameType = request.getServletPath().contains(user.getType().name().toLowerCase());
 		%>
 		<%
-		if (user != null && !sameType) {
+		if (!sameType) {
 		%>
 		<%
 		response.sendRedirect(request.getContextPath() + "/index.jsp");

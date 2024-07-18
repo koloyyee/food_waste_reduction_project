@@ -1,5 +1,6 @@
 package cst8288.project.fwrp.controller;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -37,40 +38,18 @@ public class ConsumerController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-
-		response.getWriter().append("Served at: ").append(request.getContextPath());
 		String path = request.getPathInfo();
-		String param = request.getParameter("id");
 
+		switch (path) {
+		case "/items":
+			handleGetItem(request, response);
+			break;
+		default:
+			log.info(path);
+			break;
 
-//		String[] pathArray = path.split("/");
-//		System.out.println(pathArray.length);
-//		String endpoint = "";
-//		String param = "";
-
-//		if (pathArray.length > 1) {
-//			endpoint = pathArray[1];
-//			param = pathArray[2];
-//		}
-//
-		log.info(path);
-		log.info(param);
-		try {
-			switch (path) {
-			case "/items":
-				Item it = itemDaoIml.find(Long.parseLong(param)).get();
-				log.info(it.toString());
-				break;
-			default:
-				log.info(path);
-				break;
-
-			}
-
-		} catch (SQLException e) {
-			log.warn(e.getMessage());
 		}
+
 	}
 
 	/**
@@ -84,4 +63,17 @@ public class ConsumerController extends HttpServlet {
 		log.info("POST");
 	}
 
+	private void handleGetItem(HttpServletRequest request, HttpServletResponse response) {
+		String param = request.getParameter("id");
+		try {
+			Item item = itemDaoIml.find(Long.parseLong(param)).get();
+			log.info(item.toString());
+			request.setAttribute("item", item);
+			RequestDispatcher dispatcher = request
+					.getRequestDispatcher("/pages/consumer/item.jsp");
+			dispatcher.forward(request, response);
+		} catch (NumberFormatException | SQLException | ServletException | IOException e) {
+			log.warn(e.getLocalizedMessage());
+		}
+	}
 }
