@@ -89,6 +89,10 @@ public class Item {
         return price.multiply(bdDiscountRate).setScale(2, RoundingMode.HALF_EVEN);
     }
 
+	public BigDecimal getOriginalPrice() {
+		return price;
+	}
+
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
