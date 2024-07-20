@@ -51,9 +51,19 @@ if (items != null && items.size() > 0) {
 	%>
 </table>
 
-<form action="${pageContext.request.contextPath}/consumers/items/get/1">
-	<button type="submit" class="btn btn-primary">View Items</button>
+<% if (user != null) { %>
+<form action="${pageContext.request.contextPath}/pages/consumer/index.jsp">
+	<button type="submit" class="btn btn-primary">refresh list</button>
 </form>
+<%
+} else {
+	%>
+	<a href="${pageContext.request.contextPath}/index.jsp"> 
+		<button class="btn btn-primary">Please login first</button>
+	</a>
+<%
+    }
+%>
 
 </body>
 </html>

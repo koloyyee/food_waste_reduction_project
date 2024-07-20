@@ -28,7 +28,6 @@ public class PropertiesLoader {
 			// inputStream 
 		InputStream in = PropertiesLoader.class.getClassLoader().getResourceAsStream("/application.properties");
 		properties.load(in);
-		log.info(properties.toString());
 		} catch (IOException e) {
 			// logger
 			log.warn(e.getLocalizedMessage());

@@ -29,7 +29,6 @@ public class UserTypeFilter extends HttpFilter implements Filter {
 	 */
 	public UserTypeFilter() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
