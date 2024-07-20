@@ -38,7 +38,7 @@ public class PasswordFilter implements Filter {
 
 		String inputPassword = request.getParameter("password");
 		String inputEmail = req.getParameter("email");
-		log.info(inputPassword + " " + inputEmail);
+//		log.info(inputPassword + " " + inputEmail);
 		try {
 			User user = userService.loadUserByEmail(inputEmail);
 
