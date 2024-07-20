@@ -46,18 +46,38 @@ if (item != null) {
 					method="POST">
 					<label for="quantity">Quantity:</label> <input type="number"
 						name="quantity" min="1" max="<%=item.getQuantity()%>" required>
-					<input type="hidden" name="id" value="<%=item.getId()%>">
-					<input type="hidden" name="price" value="<%=item.getPrice()%>">
+					<input type="hidden" name="id" value="<%=item.getId()%>"> <input
+						type="hidden" name="price" value="<%=item.getPrice()%>">
 					<button type="submit" class="btn btn-primary">Order it
 						now!</button>
 				</form>
 			</blockquote>
 		</div>
+		<%
+		}
+		%>
+
 	</div>
 	<%
-}
-%>
-</main>
+	String errMsg = (String) request.getAttribute("errMsg");
+	%>
+	<%
+	if (errMsg != null) {
+	%>
+	<div class="alert alert-danger" role="alert">
+		<%=errMsg%>
+	</div>
 
+	<%
+	}
+	%>
+
+	<div class="back-btn">
+		<a href="${pageContext.request.contextPath}/pages/consumer/index.jsp">
+			<button class="btn btn-primary">Back</button>
+		</a>
+
+	</div>
+</main>
 </body>
 </html>

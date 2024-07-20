@@ -255,7 +255,6 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 
 			itemStat.setInt(1, quantity);
 			itemStat.setLong(2, itemId);
-			int itemUpdateRow = itemStat.executeUpdate();
 
 			orderStat.setLong(1, userId);
 			orderStat.setLong(2, itemId);
@@ -263,15 +262,16 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 			orderStat.setDouble(4, itemPrice);
 			orderStat.setInt(5, type.code());
 			
-			int orderInsertRow = orderStat.executeUpdate();
-
-			if (orderInsertRow + itemUpdateRow == 2) {
-				connection.commit();
-				return orderInsertRow + itemUpdateRow;
-			} else {
-				connection.rollback();
-				throw new SQLException("Transaction failed");
-			}
+//			int itemUpdateRow = itemStat.executeUpdate();
+//			int orderInsertRow = orderStat.executeUpdate();
+//
+//			if (orderInsertRow + itemUpdateRow == 2) {
+//				connection.commit();
+//				return orderInsertRow + itemUpdateRow;
+//			} else {
+//				connection.rollback();
+//				throw new SQLException("Transaction failed");
+//			}
 
 		} catch (SQLException e) {
 			log.warn(e.getLocalizedMessage());
