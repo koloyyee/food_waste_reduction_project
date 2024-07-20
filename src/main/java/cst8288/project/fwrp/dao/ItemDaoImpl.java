@@ -8,9 +8,11 @@ import java.util.Optional;
 
 import cst8288.project.fwrp.db.DBConnection;
 import cst8288.project.fwrp.model.Item;
+import cst8288.project.fwrp.model.TransactionType;
+import cst8288.project.fwrp.utils.Logger;
 
 public class ItemDaoImpl implements DBDao<Item, Long> {
-
+	private Logger log = Logger.getLogger();
 	private Connection connection;
 
 	public ItemDaoImpl() {
@@ -84,10 +86,10 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 		}
 		return List.of();
 	}
-	
+
 	/**
 	 * Update will handle update item in general, including price, discount rate.
-	 * */
+	 */
 	@Override
 	public int update(Long id, Item object) throws SQLException {
 		String sql = """
@@ -119,10 +121,30 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 			return statement.executeUpdate();
 		}
 	}
-	
+
+	/**
+	 * This is a soft delete, it will set is_available to false.
+	 */
+	@Override
+	public int delete(Long id) throws SQLException {
+		String sql = """
+				UPDATE Items
+				SET
+				is_available = false
+				WHERE
+				id = ?
+				""";
+		try (var statement = connection.prepareStatement(sql)) {
+			statement.setLong(1, id);
+			return statement.executeUpdate();
+		}
+	}
+
+	/* Methods unique to Item and related tables */
+
 	/**
 	 * updateQuantity will handle update quantity only.
-	 * */
+	 */
 	public int updateQuantity(Long id, int newQuant) {
 		String sql = """
 				UPDATE Items
@@ -143,7 +165,7 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 
 	/**
 	 * findSurplus will used to by both Retailer and Consumer to find surplus items.
-	 * */
+	 */
 	public List<Item> findSurplus() throws SQLException {
 		String sql = """
 				SELECT * FROM item
@@ -169,15 +191,16 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 				item.setAvailable(result.getBoolean("is_available"));
 				item.setCreatedAt(result.getTimestamp("created_at").toLocalDateTime());
 				item.setUpdatedAt(result.getTimestamp("updated_at").toLocalDateTime());
-			    items.add(item);	
+				items.add(item);
 			}
 			return items;
 		}
 	}
-	
+
 	/**
-	 * findDonations will used to by both Retailer and Charitable Organization to find donation items.
-	 * */
+	 * findDonations will used to by both Retailer and Charitable Organization to
+	 * find donation items.
+	 */
 	public List<Item> findDonations() throws SQLException {
 		String sql = """
 				SELECT * FROM item
@@ -207,24 +230,56 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 		}
 		return List.of();
 	}
-	
 
 	/**
-	 * This is a soft delete, it will set is_available to false.
-	 * */
-	@Override
-	public int delete(Long id) throws SQLException {
-		String sql = """
-				UPDATE Items
+	 * Transaction method for ordering, When a consumer order an item, the quantity
+	 * of the item will be reduced. then insert into the order table.
+	 */
+	public int orderItem(Long userId, Long itemId, int quantity, double itemPrice, TransactionType type) {
+		String updateItemSql = """
+				UPDATE Item
 				SET
-				is_available = false
+				quantity = quantity - ?
 				WHERE
 				id = ?
 				""";
-		try (var statement = connection.prepareStatement(sql)) {
-			statement.setLong(1, id);
-			return statement.executeUpdate();
+		String insertOrderSql = """
+				INSERT INTO `Order` 
+				(user_id, item_id, quantity, item_price, transaction_type)
+				VALUES (?, ?, ?, ?, ?)
+				""";
+		try (var itemStat = connection.prepareStatement(updateItemSql);
+				var orderStat = connection.prepareStatement(insertOrderSql);) {
+
+			connection.setAutoCommit(false);
+
+			itemStat.setInt(1, quantity);
+			itemStat.setLong(2, itemId);
+//			int itemUpdateRow = itemStat.executeUpdate();
+
+			orderStat.setLong(1, userId);
+			orderStat.setLong(2, itemId);
+			orderStat.setInt(3, quantity);
+			orderStat.setDouble(4, itemPrice);
+			orderStat.setInt(5, type.code());
+			
+			return 2;
+//			int orderInsertRow = orderStat.executeUpdate();
+
+//			if (orderInsertRow > 0 && itemUpdateRow > 0) {
+//				connection.commit();
+//				return orderInsertRow + itemUpdateRow;
+//			} else {
+//				connection.rollback();
+//				throw new SQLException("Transaction failed");
+//			}
+
+		} catch (SQLException e) {
+			log.warn(e.getLocalizedMessage());
 		}
+
+		return -1;
+
 	}
 
 }

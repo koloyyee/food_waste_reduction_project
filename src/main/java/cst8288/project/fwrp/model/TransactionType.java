@@ -1,11 +1,15 @@
 package cst8288.project.fwrp.model;
 
 public enum TransactionType {
-    Purchased(1), Donated(2);
+	Purchased(1), Donated(2);
 
-    final int code;
+	final int code;
 
-    TransactionType(int code) {
-        this.code = code;
-    }
+	TransactionType(int code) {
+		this.code = code;
+	}
+
+	public int code() {
+		return code;
+	}
 }

@@ -92,7 +92,7 @@ public class UserDaoImpl implements DBDao<User, Long> {
 
 	public Optional<User> loadUserByEmail(String reqEmail) throws SQLException {
 		String sql = """
-				SELECT email, password, type, name
+				SELECT id, email, password, type, name
 				FROM
 				user
 				WHERE
@@ -104,11 +104,12 @@ public class UserDaoImpl implements DBDao<User, Long> {
 			ResultSet rs = stat.executeQuery();
 
 			while (rs.next()) {
-				String email = rs.getString(1);
-				String password = rs.getString(2);
-				UserType type = UserType.valueOf(rs.getString(3));
-				String name = rs.getString(4);
-				return Optional.of(new User.Builder(email, password).setName(name).setUserType(type).build());
+				Long id = Long.valueOf(rs.getInt(1));
+				String email = rs.getString(2);
+				String password = rs.getString(3);
+				UserType type = UserType.valueOf(rs.getString(4));
+				String name = rs.getString(5);
+				return Optional.of(new User.Builder(email, password).setId(id).setName(name).setUserType(type).build());
 
 			}
 			rs.close();

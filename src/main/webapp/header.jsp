@@ -18,10 +18,8 @@
 </head>
 <body>
 
-	<nav class="d-flex justify-content-between">
 
-		<img src="${pageContext.request.contextPath}/asset/logo_trans.png"
-			id="header-logo" />
+
 		<%
 		User user = (User) request.getSession().getAttribute("user");
 		%>
@@ -31,36 +29,33 @@
 		<%
 		response.sendRedirect(request.getContextPath() + "/index.jsp");
 		%>
-
 		<%
-		}
-		%>
-
-		<%
-		boolean sameType = request.getServletPath().contains(user.getType().name().toLowerCase());
-		%>
-		<%
-		if (!sameType) {
+		} else if (!request.getServletPath().contains(user.getType().name().toLowerCase())) {
 		%>
 		<%
 		response.sendRedirect(request.getContextPath() + "/index.jsp");
 		%>
-		<%}%>
-
+		<%
+		}
+		%>
 		<%
 		if (user != null) {
 		%>
+
+	<nav class="d-flex justify-content-between">
+		<a href="${pageContext.request.contextPath}/pages/${user.getType().name().toLowerCase()}/index.jsp"> <img
+			src="${pageContext.request.contextPath}/asset/logo_trans.png"
+			id="header-logo" />
+		</a>
+
 		<div class="d-inline-flex" style="gap: 1.3rem">
 			<p>${user.getName()}</p>
 			<form action="${pageContext.request.contextPath}/auth/logout"
 				method="POST">
 				<button class="btn btn-secondary">Logout</button>
 			</form>
-
 		</div>
+	</nav>
 		<%
 		}
 		%>
-
-
-	</nav>

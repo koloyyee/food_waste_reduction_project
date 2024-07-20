@@ -11,6 +11,8 @@ import java.sql.SQLException;
 
 import cst8288.project.fwrp.dao.ItemDaoImpl;
 import cst8288.project.fwrp.model.Item;
+import cst8288.project.fwrp.model.User;
+import cst8288.project.fwrp.service.ItemService;
 import cst8288.project.fwrp.utils.Logger;
 
 /**
@@ -21,15 +23,14 @@ import cst8288.project.fwrp.utils.Logger;
 public class ConsumerController extends HttpServlet {
 	private Logger log = Logger.getLogger();
 	private static final long serialVersionUID = 1L;
-	private ItemDaoImpl itemDaoIml;
+	private ItemService itemService;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public ConsumerController() {
 		super();
-		// TODO Auto-generated constructor stub
-		this.itemDaoIml = new ItemDaoImpl();
+		this.itemService = new ItemService();
 	}
 
 	/**
@@ -58,21 +59,58 @@ public class ConsumerController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-//		doGet(request, response);
-		log.info("POST");
+		// handle post request to order the surplus items
+		String[] enpoints = request.getPathInfo().split("/");
+		String action = enpoints[2];
+		switch (action) {
+		case "order":
+			handleOrder(request, response);
+			break;
+		}
+
 	}
 
 	private void handleGetItem(HttpServletRequest request, HttpServletResponse response) {
 		String param = request.getParameter("id");
 		try {
-			Item item = itemDaoIml.find(Long.parseLong(param)).get();
-			log.info(item.toString());
-			request.setAttribute("item", item);
-			RequestDispatcher dispatcher = request
-					.getRequestDispatcher("/pages/consumer/item.jsp");
-			dispatcher.forward(request, response);
+			var item = itemService.getItemById(Long.parseLong(param));
+			if (!item.isPresent()) {
+				response.sendRedirect("/pages/consumer/items.jsp");
+			} else {
+				request.setAttribute("item", item.get());
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/consumer/item.jsp");
+				dispatcher.forward(request, response);
+
+			}
 		} catch (NumberFormatException | SQLException | ServletException | IOException e) {
+			log.warn(e.getLocalizedMessage());
+		}
+	}
+
+	private void handleOrder(HttpServletRequest request, HttpServletResponse response) {
+		String param = request.getParameter("id");
+		try {
+			// deduct the quantity from the item table
+			// insert to order table
+			
+		    User user = (User) request.getSession().getAttribute("user");
+		    log.info(user);
+		    Long userId = user.getId();
+		    Long itemId = Long.parseLong(param);
+		    int quantity = Integer.parseInt(request.getParameter("quantity"));
+		    double itemPrice = Double.parseDouble(request.getParameter("price"));
+		    
+			int result = itemService.orderSurplusItem(userId, itemId, quantity, itemPrice);
+
+			if (result < 0) {
+				request.setAttribute("errMsg", "Failed to order item");
+				handleGetItem(request, response);
+			} else {
+				request.setAttribute("msg", "Item ordered successfully");
+				response.sendRedirect(request.getContextPath()  + "/pages/consumer/order_placed.jsp");
+			}
+			
+		} catch (NumberFormatException | SQLException | IOException e) {
 			log.warn(e.getLocalizedMessage());
 		}
 	}

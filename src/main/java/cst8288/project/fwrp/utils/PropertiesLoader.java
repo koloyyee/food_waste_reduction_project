@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class PropertiesLoader {
-	private static Logger logger = Logger.getLogger();
+	private static Logger log = Logger.getLogger();
 	private static Properties properties = new Properties();
 
 	private PropertiesLoader() {}
@@ -28,9 +28,10 @@ public class PropertiesLoader {
 			// inputStream 
 		InputStream in = PropertiesLoader.class.getClassLoader().getResourceAsStream("/application.properties");
 		properties.load(in);
+		log.info(properties.toString());
 		} catch (IOException e) {
 			// logger
-			logger.warn(e.getLocalizedMessage());
+			log.warn(e.getLocalizedMessage());
 		}
 		return properties;
 	}

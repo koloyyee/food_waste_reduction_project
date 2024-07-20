@@ -42,12 +42,11 @@ if (item != null) {
 					Price: $<%=item.getPrice()%></p>
 
 				<form
-					action="${pageContext.request.contextPath}/consumers/items/order/${requestScope.item.getId()}"
+					action="${pageContext.request.contextPath}/consumers/items/order"
 					method="POST">
 					<label for="quantity">Quantity:</label> <input type="number"
 						name="quantity" min="1" max="<%=item.getQuantity()%>" required>
 					<input type="hidden" name="id" value="<%=item.getId()%>">
-					<input type="hidden" name="price" value="<%=item.getPrice()%>">
 					<button type="submit" class="btn btn-primary">Order it
 						now!</button>
 				</form>

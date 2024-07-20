@@ -61,7 +61,6 @@ public class AuthController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
@@ -81,7 +80,6 @@ public class AuthController extends HttpServlet {
 			case Retailer:
 				userTypeJsp += "/retailer/index.jsp";
 				List<Item> items = itemDao.findAll();
-				log.info(items);
 				request.getSession().setAttribute("items", items);
 				break;
 			case CharitableOrg:
