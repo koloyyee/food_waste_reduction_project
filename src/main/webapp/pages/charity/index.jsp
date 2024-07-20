@@ -35,7 +35,7 @@ if (items != null && items.size() > 0) {
 		<td><%=item.getQuantity()%></td>
 		<td>$<%=item.getPrice()%></td>
 		<td>  
-		<form action="${pageContext.request.contextPath}/consumers/items" method="GET">
+		<form action="${pageContext.request.contextPath}/retailers/items" method="GET">
 				<input type="hidden" name="id" value="<%=item.getId()%>">
 				<button type="submit" class="btn btn-primary">Get Detail</button>
 			</form>

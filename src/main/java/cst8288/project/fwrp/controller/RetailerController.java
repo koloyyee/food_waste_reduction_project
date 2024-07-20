@@ -6,6 +6,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
+
+import cst8288.project.fwrp.model.Item;
+import cst8288.project.fwrp.service.ItemService;
+import cst8288.project.fwrp.utils.Logger;
+import cst8288.project.fwrp.utils.LoggerFactory;
 
 /**
  * Servlet implementation class RetailerController<br>
@@ -23,12 +29,16 @@ import java.io.IOException;
 @WebServlet(name = "RetailerController", urlPatterns = { "/retailers/*" })
 public class RetailerController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final Logger log = LoggerFactory.getLogger();
+	
+	private ItemService itemService;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public RetailerController() {
 		super();
+		this.itemService = new ItemService();
 	}
 
 	/**
@@ -37,9 +47,25 @@ public class RetailerController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		// get item by id
 		String path = request.getPathInfo();
+		long id = Long.parseLong(request.getParameter("id"));
 		
+		try {
+			Optional<Item> item = itemService.getItemById(id);
+			if (item.isPresent()) {
+				request.setAttribute("item", item.get());
+				log.info(item.get().toString());
+				request.getRequestDispatcher("/pages/retailer/item.jsp").forward(request, response);
+			} 
+			else {
+				log.warn("Item not found");
+				response.sendRedirect("/pages/retailer/index.jsp");
+			}
+			
+		} catch (Exception e) {
+			log.warn(e.getLocalizedMessage());
+		}
 
 	}
 

@@ -60,4 +60,6 @@ public class ItemService {
 	public int orderSurplusItem(Long userId, Long itemId, int quantity, double itemPrice) throws SQLException {
 		return itemDaoImpl.orderItem(userId, itemId, quantity, itemPrice, TransactionType.Purchased );
 	}
+	
+	
 }

@@ -80,7 +80,6 @@ public class AuthController extends HttpServlet {
 			case Retailer:
 				userTypeJsp += "/retailer/index.jsp";
 				List<Item> items = itemDao.findAll();
-				log.info(items);
 				request.getSession().setAttribute("items", items);
 				break;
 			case CharitableOrg:
@@ -92,7 +91,6 @@ public class AuthController extends HttpServlet {
 			default:
 				userTypeJsp += "/consumer/index.jsp";
 				List<Item> surplus = itemDao.findSurplus();
-				log.info(surplus);
 				request.getSession().setAttribute("items", surplus);
 				break;
 			}
