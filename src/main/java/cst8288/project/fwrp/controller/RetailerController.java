@@ -55,7 +55,7 @@ public class RetailerController extends HttpServlet {
 			Optional<Item> item = itemService.getItemById(id);
 			if (item.isPresent()) {
 				request.setAttribute("item", item.get());
-				log.info(item.get().toString());
+//				log.info(item.get().toString());
 				request.getRequestDispatcher("/pages/retailer/item.jsp").forward(request, response);
 			} 
 			else {
