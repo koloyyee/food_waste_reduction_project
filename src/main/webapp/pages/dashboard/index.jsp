@@ -13,5 +13,8 @@
 <body>
 <%  %>
 Welcome to our home page.
+</head>
+<body>
+
 </body>
 </html>
