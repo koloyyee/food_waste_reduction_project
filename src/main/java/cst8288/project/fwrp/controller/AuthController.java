@@ -90,8 +90,8 @@ public class AuthController extends HttpServlet {
 				break;
 			default:
 				userTypeJsp += "/consumer/index.jsp";
-				List<Item> surplus = itemDao.findSurplus();
-				request.getSession().setAttribute("items", surplus);
+				List<Item> nonDonation = itemDao.findAllNonDontation();
+				request.getSession().setAttribute("items", nonDonation);
 				break;
 			}
 				response.sendRedirect(userTypeJsp);

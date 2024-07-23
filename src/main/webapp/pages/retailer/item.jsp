@@ -61,30 +61,14 @@ if (item != null) {
 					</div>
 
 					<div class="form-check mb-3">
-					<p>Is Surplus? ${item.isSurplus()}</p>
-
-<%-- 						<input class="form-check-input" type="checkbox"
-							value="${item.isSurplus()}" id="is_surplus"
-							<c:if test="${item.isSurplus()}">checked=checked</c:if>>
-						<label class="form-check-label" for="is_surplus">Mark as
-							Surplus </label>
- --%>					</div>
+						<p>Is Surplus? ${item.isSurplus()}</p>
+					</div>
 					<div class="form-check mb-3">
-					<p>Is Donation? ${item.isDonation()}</p>
-<%-- 						<input class="form-check-input" type="checkbox"
-							value="${item.isDonation() }" id="is_donation"
-							<c:if test="${item.isDonation()}">checked=checked</c:if>>
-						<label class="form-check-label" for="is_donation"> Mark as
-							Donation</label>
- --%>					</div>
+						<p>Is Donation? ${item.isDonation()}</p>
+					</div>
 					<div class="form-check mb-3">
-					<p>Is Available? ${item.isAvailable()}</p>
-<%-- 						<input class="form-check-input" type="checkbox"
-							value="${item.isDonation() }" id="is_available"
-							<c:if test="${item.isAvailable()}">checked=checked</c:if>>
-						<label class="form-check-label" for="is_available"> Mark
-							as Available</label>
- --%>					</div>
+						<p>Is Available? ${item.isAvailable()}</p>
+					</div>
 					<input type="hidden" name="price" value="<%=item.getPrice()%>">
 					<button type="submit" class="btn btn-primary">Update
 						Product</button>

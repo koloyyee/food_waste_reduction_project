@@ -57,13 +57,7 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 	@Override
 	public List<Item> findAll() throws SQLException {
 
-		String sql = """
-				SELECT * FROM item
-				WHERE
-				is_donation = false AND
-				is_available = true AND
-				quantity > 0
-				""";
+		String sql = "SELECT * FROM item ";
 		List<Item> items = new ArrayList<>();
 		try (var statement = connection.prepareStatement(sql)) {
 			var result = statement.executeQuery();
@@ -162,6 +156,39 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+
+	public List<Item> findAllNonDontation() throws SQLException {
+
+		String sql = """
+				SELECT * FROM item
+				WHERE
+				is_donation = false AND
+				is_available = true AND
+				quantity > 0
+				""";
+		List<Item> items = new ArrayList<>();
+		try (var statement = connection.prepareStatement(sql)) {
+			var result = statement.executeQuery();
+			while (result.next()) {
+				Item item = new Item();
+				item.setId(result.getLong("id"));
+				item.setName(result.getString("name"));
+				item.setDescription(result.getString("description"));
+				item.setExpiryDate(result.getDate("expiry_date").toLocalDate());
+				item.setPrice(result.getBigDecimal("price"));
+				item.setDiscountRate(result.getDouble("discount_rate"));
+				item.setSurplus(result.getBoolean("is_surplus"));
+				item.setDonation(result.getBoolean("is_donation"));
+				item.setQuantity(result.getInt("quantity"));
+				item.setAvailable(result.getBoolean("is_available"));
+				item.setCreatedAt(result.getTimestamp("created_at").toLocalDateTime());
+				item.setUpdatedAt(result.getTimestamp("updated_at").toLocalDateTime());
+
+				items.add(item);
+			}
+		}
+		return items;
 	}
 
 	/**

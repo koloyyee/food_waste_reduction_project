@@ -61,9 +61,41 @@ public class ItemService {
 		return itemDaoImpl.orderItem(userId, itemId, quantity, itemPrice, TransactionType.Purchased );
 	}
 	
-	
+	/**
+	 * Retailer allowed method
+	 * Toggle item donation status
+	 * 
+	 * @param item Item
+	 * @return int
+	 * */
 	public int toggleDonationItem(Item item) throws SQLException {
 		return itemDaoImpl.update(item.getId(), item);
 	}
+
+	/**
+	 * Retailer	allowed method
+	 * Mark surplus item
+	 * Trigger Email notification from Retailer to Consumer
+	 * */
+	public int markSurplusItem(Item item) throws SQLException {
+		// update the item with surplus status as true
+		// send email notification to consumer
+		// email successfully sent update notification table 
+		return -1;
+	}
+
+	public int unmarkSurplusItem(Item item) throws SQLException {
+		return itemDaoImpl.update(item.getId(), item);
+	}
 	
+	/**
+	 * Retailer allowed method
+	 * Toggle item available status
+	 * 
+	 * @param item Item
+	 * @return int
+	 * */
+	public int toggleAvailableItem(Item item) throws SQLException {
+		return itemDaoImpl.update(item.getId(), item);
+	}
 }

@@ -41,18 +41,45 @@ if (items != null && items.size() > 0) {
 			</form>
 		</td>
 		<td>
+			<!-- Button trigger modal -->
+			<button type="button" class="btn btn-warning" data-bs-toggle="modal"
+				data-bs-target="#for_surplus">Surplus Status</button> <!-- Modal -->
+			<div class="modal fade" id="for_surplus" tabindex="-1"
+				aria-labelledby=for_surplus_label aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" id="for_surplus_label">Modal
+								title</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"
+								aria-label="Close"></button>
+						</div>
+						<form
+							action="${pageContext.request.contextPath}/retailers/items/toggle_surplus"
+							method="POST">
+							<div class="modal-body">
+								<p><%=item.getName()%>
+									<span style="color: red"> ${item.checkSurplus()? "will expire in a week." : "" }</span>
+									${item.isSurplus() ? 'is surplus' : 'is not surplus yet '}, Do
+									you want to change it?
+								</p>
+								<input type="hidden" name="id" value="<%=item.getId()%>">
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-bs-dismiss="modal">Close</button>
+									<button type="submit" type="button" class="btn btn-danger">Update</button>
 
-			<form action="${pageContext.request.contextPath}/retailers/items/"
-				method="POST">
-				<input type="hidden" name="id" value="<%=item.getId()%>">
-				<button type="submit" class="btn btn-warning">Mark as
-					Surplus</button>
-			</form>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div> <!-- Button trigger modal -->
 		</td>
 		<td>
 			<!-- Button trigger modal -->
-			<button type="button" class="btn btn-primary" data-bs-toggle="modal"
-				data-bs-target="#for_donation">Mark as For Donation</button> <!-- Modal -->
+			<button type="button" class="btn btn-info" data-bs-toggle="modal"
+				data-bs-target="#for_donation">Donation Status</button> <!-- Modal -->
 			<div class="modal fade" id="for_donation" tabindex="-1"
 				aria-labelledby=for_donation_label aria-hidden="true">
 				<div class="modal-dialog">
@@ -75,13 +102,14 @@ if (items != null && items.size() > 0) {
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary"
 										data-bs-dismiss="modal">Close</button>
-									<button type="submit" type="button" class="btn btn-info">Update</button>
+									<button type="submit" type="button" class="btn btn-danger">Update</button>
+
+								</div>
+							</div>
 						</form>
 					</div>
 				</div>
-			</div>
-			</div>
-			</div>
+			</div> <!-- Button trigger modal -->
 		</td>
 	</tr>
 	<%

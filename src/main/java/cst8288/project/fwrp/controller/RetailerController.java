@@ -83,8 +83,10 @@ public class RetailerController extends HttpServlet {
 			toggleDontation(request, response);
 			break;
 		case "/items/toggle_surplus":
+			toggleSurplus(request, response);
 			break;
 		case "/items/toggle_available":
+			toggleAvailable(request, response);
 			break;
 		default:
 			break;
@@ -100,10 +102,43 @@ public class RetailerController extends HttpServlet {
 				log.info("Item: " + item.get().toString());
 				itemService.toggleDonationItem(item.get());
 			}
-				
+
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.warn(e.getLocalizedMessage());
+		}
+	}
+
+	private void toggleSurplus(HttpServletRequest request, HttpServletResponse response) {
+		long id = Long.parseLong(request.getParameter("id"));
+		try {
+			Optional<Item> item = itemService.getItemById(id);
+			if (item.isPresent()) {
+				item.get().setDonation(!item.get().isSurplus());
+				log.info("Item: " + item.get().toString());
+				if(item.get().isSurplus()) {
+					itemService.markSurplusItem(item.get());
+				} else {
+					itemService.unmarkSurplusItem(item.get());
+				}
+			}
+
+		} catch (SQLException e) {
+			log.warn(e.getLocalizedMessage());
+		}
+	}
+
+	private void toggleAvailable(HttpServletRequest request, HttpServletResponse response) {
+		long id = Long.parseLong(request.getParameter("id"));
+		try {
+			Optional<Item> item = itemService.getItemById(id);
+			if (item.isPresent()) {
+				item.get().setDonation(!item.get().isAvailable());
+				log.info("Item: " + item.get().toString());
+				itemService.toggleAvailableItem(item.get());
+			}
+
+		} catch (SQLException e) {
+			log.warn(e.getLocalizedMessage());
 		}
 	}
 

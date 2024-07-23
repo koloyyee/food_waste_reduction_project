@@ -39,18 +39,7 @@ public class ConsumerController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String path = request.getPathInfo();
-
-		switch (path) {
-		case "/items":
-			handleGetItem(request, response);
-			break;
-		default:
-			log.info(path);
-			break;
-
-		}
-
+		handleGetItem(request, response);
 	}
 
 	/**
@@ -92,22 +81,22 @@ public class ConsumerController extends HttpServlet {
 		try {
 			// deduct the quantity from the item table
 			// insert to order table
-			
-		    User user = (User) request.getSession().getAttribute("user");
-		    Long userId = user.getId();
-		    Long itemId = Long.parseLong(param);
-		    int quantity = Integer.parseInt(request.getParameter("quantity"));
-		    double itemPrice = Double.parseDouble(request.getParameter("price"));
-		    
+
+			User user = (User) request.getSession().getAttribute("user");
+			Long userId = user.getId();
+			Long itemId = Long.parseLong(param);
+			int quantity = Integer.parseInt(request.getParameter("quantity"));
+			double itemPrice = Double.parseDouble(request.getParameter("price"));
+
 			int result = itemService.orderSurplusItem(userId, itemId, quantity, itemPrice);
 			if (result < 0) {
 				request.setAttribute("errMsg", "Failed to order item");
 				handleGetItem(request, response);
 			} else {
 				request.setAttribute("msg", "Item ordered successfully");
-				response.sendRedirect(request.getContextPath()  + "/pages/consumer/order_placed.jsp");
+				response.sendRedirect(request.getContextPath() + "/pages/consumer/order_placed.jsp");
 			}
-			
+
 		} catch (NumberFormatException | SQLException | IOException e) {
 			log.warn(e.getLocalizedMessage());
 		}
