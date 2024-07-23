@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Enumeration;
 import java.util.Optional;
 
 import cst8288.project.fwrp.model.Item;
@@ -118,9 +119,15 @@ public class RetailerController extends HttpServlet {
 				log.info("Item: " + item.get().isSurplus());
 				
 				if(item.get().isSurplus()) {
-					itemService.markSurplusItem(item.get());
+					// discount come back as whole number e.g: 30 for 30%, so we need to divide it by 100.
+
+					var dr = request.getParameter("discountRate");
+					Double newDR = Double.parseDouble(dr);
+					log.info("Discount Rate: " + newDR / 100 + dr);
+					item.get().setDiscountRate(newDR / 100);
+//					itemService.markSurplusItem(item.get());
 				} else {
-					itemService.unmarkSurplusItem(item.get());
+//					itemService.unmarkSurplusItem(item.get());
 				}
 			}
 

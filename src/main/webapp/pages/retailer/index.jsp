@@ -41,20 +41,15 @@ if (items != null && items.size() > 0) {
 			</form>
 		</td>
 		<td>
-			<!-- Button trigger modal -->
-						<% String name = item.getName(); %>
-						<% String idName =  "for_surplus_" + item.getName();%>	
-						<% String labelName=  "for_surplus_" + item.getName() + "_label" ;%>	
+			<!-- Button trigger modal --> 
 
 			<button type="button" class="btn btn-warning" data-bs-toggle="modal"
-				data-bs-target=<%= "#" + idName %>>Surplus Status</button> <!-- Modal -->
-			<div class="modal fade" id=<%= idName  %>> tabindex="-1"
-				aria-labelledby=for_surplus_label aria-hidden="true">
+				data-bs-target=<%="#" +  "for_surplus_" + item.getName()%>>Surplus Status</button> <!-- Modal -->
+			<div class="modal fade" id=<%= "for_surplus_" + item.getName()%> tabindex="-1" aria-labelledby=for_surplus_label aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h1 class="modal-title fs-5" id=<%= labelName %>>>Modal
-								title</h1>
+							<h1 class="modal-title fs-5" id=<%= "for_surplus_" + item.getName()+ "label"%>>>Modal title</h1>
 							<button type="button" class="btn-close" data-bs-dismiss="modal"
 								aria-label="Close"></button>
 						</div>
@@ -63,20 +58,38 @@ if (items != null && items.size() > 0) {
 							method="POST">
 							<div class="modal-body">
 								<p>
-								<%=item.getName()%>
-								<% if(item.isSurplus() && !item.isSurplus()) { %>
-	                                <span style="color: red">will expire in a week.</span>		
-								<p> Do you watch set to surplus? </p>	
-								<!-- create input for update the discount rate -->								
-								<label for="discountRate">Discount Rate:</label>
-								<input type="number" name="discountRate" min="0" max="100" step="1" required>		
-                                <% } else if (!item.isSurplus()){%>
-									is not surplus , do
-									you want to change it?
-                                <% } else { %>
-									is surplus , do
-									you want to change it?
-								<% } %>
+									<%=item.getName()%>
+
+									<%
+									if (item.checkSurplus()) {
+									%>
+									<span style="color: red">will expire in a week.</span>
+									<%
+									}
+									%>
+
+									<%
+									if (!item.isSurplus()) {
+									%>
+								
+								<p>Do you watch set to surplus?</p>
+								<!-- create input for update the discount rate -->
+								<label for="discountRate">Discount Rate:</label> <input
+									type="number" name="discountRate" min="0" max="100" step="1"
+									required>
+								<%
+								} else if (!item.isSurplus()) {
+								%>
+								is not surplus , do you want to change it? <label
+									for="discountRate">Discount Rate:</label> <input type="number"
+									name="discountRate" min="0" max="100" step="1" required>
+								<%
+								} else {
+								%>
+								is surplus , do you want to change it?
+								<%
+								}
+								%>
 								</p>
 								<input type="hidden" name="id" value="<%=item.getId()%>">
 								<div class="modal-footer">
@@ -94,14 +107,13 @@ if (items != null && items.size() > 0) {
 		<td>
 			<!-- Button trigger modal -->
 			<button type="button" class="btn btn-info" data-bs-toggle="modal"
-				data-bs-target=<%= "#" + idName %>>Donation Status</button> <!-- Modal -->
-			<div class="modal fade" id=<%= idName %> tabindex="-1"
-				aria-labelledby=<%=  labelName %> aria-hidden="true">
+				data-bs-target=<%="#" +  "for_donation_" + item.getName()%>>Donation Status</button> <!-- Modal -->
+			<div class="modal fade" id=<%= "for_donation_" + item.getName()%> tabindex="-1"
+				aria-labelledby=<%= "for_donation_" + item.getName() + "label"%> aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h1 class="modal-title fs-5" id=<%=  labelName %>>Modal
-								title</h1>
+							<h1 class="modal-title fs-5" id=<%="for_donation_" + item.getName() + "label"%>>Modal title</h1>
 							<button type="button" class="btn-close" data-bs-dismiss="modal"
 								aria-label="Close"></button>
 						</div>
