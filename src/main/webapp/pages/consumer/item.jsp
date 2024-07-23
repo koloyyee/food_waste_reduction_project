@@ -3,7 +3,7 @@
 
 <%@ page import="cst8288.project.fwrp.model.Item"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
-<c:import url="/header.jsp" />
+<c:import url="/includes/header.jsp" />
 <!-- 
 view item detail. Consumer can order item from here. so view, and create
 order.
@@ -79,5 +79,4 @@ if (item != null) {
 
 	</div>
 </main>
-</body>
-</html>
+<c:import url="/includes/footer.jsp" />

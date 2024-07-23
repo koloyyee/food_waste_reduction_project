@@ -62,4 +62,8 @@ public class ItemService {
 	}
 	
 	
+	public int toggleDonationItem(Item item) throws SQLException {
+		return itemDaoImpl.update(item.getId(), item);
+	}
+	
 }

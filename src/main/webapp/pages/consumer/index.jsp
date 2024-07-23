@@ -4,7 +4,7 @@
 <%@ page import="cst8288.project.fwrp.model.Item"%>
 <%@ page import="java.util.List"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
-<c:import url="/header.jsp" />
+<c:import url="/includes/header.jsp" />
 <h1>Welcome to Consumer Page!</h1>
 <%
 User user = (User) request.getSession().getAttribute("user");
@@ -64,6 +64,4 @@ if (items != null && items.size() > 0) {
 <%
     }
 %>
-
-</body>
-</html>
+<c:import url="/includes/footer.jsp" />

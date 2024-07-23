@@ -3,7 +3,7 @@
 
 <%@ page import="cst8288.project.fwrp.model.Item"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
-<c:import url="/header.jsp" />
+<c:import url="/includes/header.jsp" />
 <!-- 
 view item detail. Consumer can order item from here. so view, and create
 order.
@@ -59,27 +59,32 @@ if (item != null) {
 							type="number" name="discountRate" class="form-control"
 							id="discount_rate" value="${item.getDiscountRate() * 100 }">
 					</div>
+
 					<div class="form-check mb-3">
-						<input class="form-check-input" type="checkbox"
+					<p>Is Surplus? ${item.isSurplus()}</p>
+
+<%-- 						<input class="form-check-input" type="checkbox"
 							value="${item.isSurplus()}" id="is_surplus"
 							<c:if test="${item.isSurplus()}">checked=checked</c:if>>
 						<label class="form-check-label" for="is_surplus">Mark as
 							Surplus </label>
-					</div>
+ --%>					</div>
 					<div class="form-check mb-3">
-						<input class="form-check-input" type="checkbox"
+					<p>Is Donation? ${item.isDonation()}</p>
+<%-- 						<input class="form-check-input" type="checkbox"
 							value="${item.isDonation() }" id="is_donation"
 							<c:if test="${item.isDonation()}">checked=checked</c:if>>
 						<label class="form-check-label" for="is_donation"> Mark as
 							Donation</label>
-					</div>
+ --%>					</div>
 					<div class="form-check mb-3">
-						<input class="form-check-input" type="checkbox"
+					<p>Is Available? ${item.isAvailable()}</p>
+<%-- 						<input class="form-check-input" type="checkbox"
 							value="${item.isDonation() }" id="is_available"
 							<c:if test="${item.isAvailable()}">checked=checked</c:if>>
 						<label class="form-check-label" for="is_available"> Mark
 							as Available</label>
-					</div>
+ --%>					</div>
 					<input type="hidden" name="price" value="<%=item.getPrice()%>">
 					<button type="submit" class="btn btn-primary">Update
 						Product</button>
@@ -112,5 +117,4 @@ if (item != null) {
 
 	</div>
 </main>
-</body>
-</html>
+<c:import url="/includes/footer.jsp" />

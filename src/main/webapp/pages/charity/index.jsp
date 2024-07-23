@@ -6,7 +6,7 @@
 <%@ page import="java.util.List"%>
 
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
-<c:import url="/header.jsp" />
+<c:import url="/includes/header.jsp" />
 	<h1>Welcome to Charitable Organization Page!</h1>
 	<% User user = (User) request.getSession().getAttribute("user");	%>
 	<p>Hello! Welcome back! ${user.getName()}</p>
@@ -67,5 +67,6 @@ if (items != null && items.size() > 0) {
     }
 %>
 
+<c:import url="/includes/footer.jsp" />
 </body>
 </html>

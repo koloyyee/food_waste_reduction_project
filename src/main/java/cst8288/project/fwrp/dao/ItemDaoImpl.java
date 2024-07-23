@@ -94,7 +94,7 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 	@Override
 	public int update(Long id, Item object) throws SQLException {
 		String sql = """
-				UPDATE Items
+				UPDATE Item
 				SET
 				name = ?,
 				description = ?,
@@ -129,7 +129,7 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 	@Override
 	public int delete(Long id) throws SQLException {
 		String sql = """
-				UPDATE Items
+				UPDATE Item
 				SET
 				is_available = false
 				WHERE
@@ -148,7 +148,7 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 	 */
 	public int updateQuantity(Long id, int newQuant) {
 		String sql = """
-				UPDATE Items
+				UPDATE Item
 				SET
 				quantity = ?
 				WHERE
