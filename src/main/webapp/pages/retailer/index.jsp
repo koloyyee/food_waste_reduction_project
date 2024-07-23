@@ -94,13 +94,13 @@ if (items != null && items.size() > 0) {
 		<td>
 			<!-- Button trigger modal -->
 			<button type="button" class="btn btn-info" data-bs-toggle="modal"
-				data-bs-target="#for_donation_${item.getName()}">Donation Status</button> <!-- Modal -->
-			<div class="modal fade" id="for_donation_${item.getName()}" tabindex="-1"
-				aria-labelledby=for_donation_${item.getName()}_label aria-hidden="true">
+				data-bs-target=<%= "#" + idName %>>Donation Status</button> <!-- Modal -->
+			<div class="modal fade" id=<%= idName %> tabindex="-1"
+				aria-labelledby=<%=  labelName %> aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h1 class="modal-title fs-5" id="for_donation_${item.getName()}_label">Modal
+							<h1 class="modal-title fs-5" id=<%=  labelName %>>Modal
 								title</h1>
 							<button type="button" class="btn-close" data-bs-dismiss="modal"
 								aria-label="Close"></button>
