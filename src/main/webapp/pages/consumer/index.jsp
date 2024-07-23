@@ -28,7 +28,7 @@ if (items != null && items.size() > 0) {
 	for (Item item : items) {
 	%>
 	<tr>
-		<td><%=item.getName()%></td>
+		<td><%=item.getName()%> ${item.isSurplus()? "Discount Item!" : ""} }</td>
 		<td><%=item.getDescription()%></td>
 		<td><%=item.getQuantity()%></td>
 		<td>$<%=item.getPrice()%></td>

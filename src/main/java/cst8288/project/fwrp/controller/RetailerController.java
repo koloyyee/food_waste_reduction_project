@@ -113,8 +113,10 @@ public class RetailerController extends HttpServlet {
 		try {
 			Optional<Item> item = itemService.getItemById(id);
 			if (item.isPresent()) {
-				item.get().setDonation(!item.get().isSurplus());
-				log.info("Item: " + item.get().toString());
+				log.info("Item: " + item.get().isSurplus());
+				item.get().setSurplus(!item.get().isSurplus());
+				log.info("Item: " + item.get().isSurplus());
+				
 				if(item.get().isSurplus()) {
 					itemService.markSurplusItem(item.get());
 				} else {
@@ -132,7 +134,7 @@ public class RetailerController extends HttpServlet {
 		try {
 			Optional<Item> item = itemService.getItemById(id);
 			if (item.isPresent()) {
-				item.get().setDonation(!item.get().isAvailable());
+				item.get().setAvailable(!item.get().isAvailable());
 				log.info("Item: " + item.get().toString());
 				itemService.toggleAvailableItem(item.get());
 			}
