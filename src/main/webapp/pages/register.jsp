@@ -35,7 +35,7 @@
 		method="POST" id="login-form">
 		<input type="text" name="name" placeholder="name" required /> <input
 			type="email" name="email" placeholder="account email" required /> <input
-			type="password" name="password" placeholder=password " minlength="8"
+			type="password" name="password" placeholder="password" minlength="8"
 			required> <select id="userType" name="type">
 			<option value="Consumer">Consumer</option>
 			<option value="Retailer">Retailer</option>
@@ -45,13 +45,13 @@
 		
 <!-- 		 <input
 			id="orgName" type="text" name="org_name"
-			placeholder="company or orgnaization name">
+			placeholder="company or organization name">
  -->		<div class="btn-group">
 			<button type="submit">Register</button>
 			<button type="reset" class="btn-cancel">Cancel</button>
 		</div>
 	</form>
-	<a href="${pageContext.request.contextPath}/"> Has Account? Here to
+	<a href="${pageContext.request.contextPath}/"> Have an Account? Click here to
 		Login</a>
 </main>
 </body>
