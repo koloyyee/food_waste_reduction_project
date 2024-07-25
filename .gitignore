@@ -35,3 +35,7 @@ build/
 ### VS Code ###
 .vscode/
 
+
+### TOMCAT ###
+apache-tomcat-10.1.26/logs/
+apache-tomcat-10.1.26/work/

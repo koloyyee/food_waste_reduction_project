@@ -45,16 +45,17 @@ if (items != null && items.size() > 0) {
 	<%
 	} else {
 	%>
-	<p>No items found</p>
+<div class="d-flex flex-column align-items-center">
+	<p class="mt-5"> No items found</p>
 	<%
 	}
 	%>
 </table>
-
 <% if (user != null) { %>
-<form action="${pageContext.request.contextPath}/pages/consumer/index.jsp">
+<form class="mt-3" action="${pageContext.request.contextPath}/pages/consumer/index.jsp">
 	<button type="submit" class="btn btn-primary">refresh list</button>
 </form>
+</div>
 <%
 } else {
 	%>
