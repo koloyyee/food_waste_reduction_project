@@ -123,7 +123,7 @@ if (items != null && items.size() > 0) {
 							method="POST">
 							<div class="modal-body">
 								<p><%=item.getName()%>
-									${item.isDonation() ? 'is for donation' : 'is not for donation yet. '},
+									<%= item.isDonation() ? "is for donation" : "is not for donation yet."%>
 									Do you want to change it?
 								</p>
 								<input type="hidden" name="id" value="<%=item.getId()%>">

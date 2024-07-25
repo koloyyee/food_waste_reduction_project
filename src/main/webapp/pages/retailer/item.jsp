@@ -60,14 +60,14 @@ if (item != null) {
 							id="discount_rate" value="${item.getDiscountRate() * 100 }">
 					</div>
 
-					<div class="form-check mb-3">
-						<p>Is Surplus? ${item.isSurplus()}</p>
+					<div class="mb-3">
+						<p>Is Surplus? <%= item.isSurplus() ? "✅":"❌" %></p>
 					</div>
-					<div class="form-check mb-3">
-						<p>Is Donation? ${item.isDonation()}</p>
+					<div class=" mb-3">
+						<p>Is Donation? <%= item.isDonation() ? "✅":"❌" %></p>
 					</div>
-					<div class="form-check mb-3">
-						<p>Is Available? ${item.isAvailable()}</p>
+					<div class="mb-3">
+						<p>Is Available? <%= item.isAvailable() ? "✅":"❌" %></p>
 					</div>
 					<input type="hidden" name="price" value="<%=item.getPrice()%>">
 					<button type="submit" class="btn btn-primary">Update

@@ -98,10 +98,11 @@ public class RetailerController extends HttpServlet {
 			Optional<Item> item = itemService.getItemById(id);
 			if (item.isPresent()) {
 				item.get().setDonation(!item.get().isDonation());
-				log.info("Item: " + item.get().toString());
-				itemService.toggleDonationItem(item.get());
+				int updatedRow = itemService.toggleDonationItem(item.get());
+				if(updatedRow == 1) {
+					rerenderItemList(request, response);
+				}
 			}
-
 		} catch (SQLException e) {
 			log.warn(e.getLocalizedMessage());
 		}
@@ -118,7 +119,6 @@ public class RetailerController extends HttpServlet {
 				if (item.get().isSurplus()) {
 					// discount come back as whole number e.g: 30 for 30%, so we need to divide it
 					// by 100.
-
 					var dr = request.getParameter("discountRate");
 					Double newDR = Double.parseDouble(dr);
 					item.get().setDiscountRate(newDR / 100);
@@ -129,7 +129,7 @@ public class RetailerController extends HttpServlet {
 				}
 
 				if (updatedState == 1) {
-					getAllItems(request, response);
+					rerenderItemList(request, response);
 				}
 
 			}
@@ -146,6 +146,7 @@ public class RetailerController extends HttpServlet {
 		try {
 			Optional<Item> item = itemService.getItemById(id);
 			if (item.isPresent()) {
+				log.info("Item: " + item.get().toString());
 				item.get().setAvailable(!item.get().isAvailable());
 				log.info("Item: " + item.get().toString());
 				itemService.toggleAvailableItem(item.get());
@@ -156,10 +157,10 @@ public class RetailerController extends HttpServlet {
 		}
 	}
 
-	private void getAllItems(HttpServletRequest request, HttpServletResponse response) {
+	private void rerenderItemList(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			request.getSession().setAttribute("items", itemService.getItems());
-			response.sendRedirect("/pages/retailer/index.jsp");
+			response.sendRedirect(request.getContextPath() + "/pages/retailer/index.jsp");
 		} catch (SQLException |  IOException e) {
 			log.warn(e.getLocalizedMessage());
 		}
