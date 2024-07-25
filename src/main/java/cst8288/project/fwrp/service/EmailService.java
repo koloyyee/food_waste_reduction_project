@@ -33,6 +33,7 @@ public class EmailService {
 
 		log.info("Sender: " + sender);
 		log.info("Password: " + password);
+		
 //		Session session = Session.getInstance(properties, null);
 
 		Properties prop = new Properties();
