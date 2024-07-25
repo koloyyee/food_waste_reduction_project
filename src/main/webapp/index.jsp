@@ -58,7 +58,7 @@
 				</div>
 				<a class="card-link"
 					href="${pageContext.request.contextPath}/pages/register.jsp">No
-					Account? Here to Register</a>
+					Account? Click Here To Register</a>
 
 			</div>
 		</form>

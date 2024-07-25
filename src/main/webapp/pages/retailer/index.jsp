@@ -7,6 +7,14 @@
 
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <c:import url="/header.jsp" />
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"/> 
+	
+<div class="d-flex flex-column align-items-center">
+
+	<h1 class="text-center display-4">Welcome To The Retailer Page!</h1>
+
 <%
 User user = (User) request.getSession().getAttribute("user");
 %>
@@ -65,6 +73,6 @@ if (items != null && items.size() > 0) {
 <%
     }
 %>
-
+</div>
 </body>
 </html>
