@@ -3,6 +3,9 @@ package cst8288.project.fwrp.model;
 /**
  * User, the base class for the application. <br>
  * 3 types of Users: 1. Retailer, 2. Charitable Organization, 3. Consumer
+ * 
+ * 
+ * the Subscriber in Observer pattern
  */
 public class User {
 

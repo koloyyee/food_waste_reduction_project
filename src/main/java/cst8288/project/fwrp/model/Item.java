@@ -8,6 +8,7 @@ import java.time.temporal.ChronoUnit;
 
 /**
  * Items
+ * This is will be Observer in pub/sub pattern
  */
 public class Item {
     private Long id;

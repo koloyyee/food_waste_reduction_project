@@ -2,6 +2,11 @@ package cst8288.project.fwrp.model;
 
 import java.time.LocalDateTime;
 
+
+/**
+ * Subject - Notification
+ * Observer - User????
+ * */
 public class Notification {
     private Long id;
     private User user;

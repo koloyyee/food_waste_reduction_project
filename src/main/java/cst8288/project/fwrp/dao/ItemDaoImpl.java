@@ -233,8 +233,8 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 		String sql = """
 				SELECT * FROM item
 				WHERE
-				is_donation = true,
-				is_available = true,
+				is_donation = true AND
+				is_available = true AND
 				quantity > 0
 				""";
 		try (var statement = connection.prepareStatement(sql)) {

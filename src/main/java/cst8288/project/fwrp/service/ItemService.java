@@ -81,6 +81,8 @@ public class ItemService {
 		// update the item with surplus status as true
 		// send email notification to consumer
 		// email successfully sent update notification table 
+		EmailService emailService = new EmailService();
+		emailService.send("koloyyee@gmail.com", "Hello");
 		return -1;
 	}
 

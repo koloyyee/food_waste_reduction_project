@@ -123,9 +123,8 @@ public class RetailerController extends HttpServlet {
 
 					var dr = request.getParameter("discountRate");
 					Double newDR = Double.parseDouble(dr);
-					log.info("Discount Rate: " + newDR / 100 + dr);
 					item.get().setDiscountRate(newDR / 100);
-//					itemService.markSurplusItem(item.get());
+					itemService.markSurplusItem(item.get());
 				} else {
 //					itemService.unmarkSurplusItem(item.get());
 				}
