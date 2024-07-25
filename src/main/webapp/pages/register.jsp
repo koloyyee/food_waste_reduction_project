@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
-<%-- <c:import url="/header.jsp" /> --%>
+<c:import url="/header.jsp" />
 <%-- <c:set var="contextPath" value="${pageContext.request.contextPath}" /> --%>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/global.css"
@@ -33,15 +33,23 @@
 
 	<form action="${pageContext.request.contextPath}/users/register"
 		method="POST" id="login-form">
-		<input type="text" name="name" placeholder="name" required /> <input
+		<input type="text" name="name" placeholder="name" required />
+		 <input
 			type="email" name="email" placeholder="account email" required /> <input
 			type="password" name="password" placeholder="password" minlength="8"
-			required> <select id="userType" name="type">
+			required>
+		<select id="userType" name="type">
 			<option value="Consumer">Consumer</option>
 			<option value="Retailer">Retailer</option>
 			<option value="CharitableOrg">Charitable Organization</option>
 		</select> 
 		<input type="text" name="phone" placeholder="phone(optional)" />
+		<select id="commMethod" name="commMetho">
+			<option value="1">Email</option>
+			<option value="2">Phone</option>
+			<option value="3">Both</option>
+		</select> 
+		<input type="text" name="location" placeholder="city" required />
 		
 <!-- 		 <input
 			id="orgName" type="text" name="org_name"

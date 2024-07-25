@@ -24,10 +24,14 @@ import jakarta.mail.MessagingException;
  * pattern to notify the Consumer
  * </p>
  */
-public class EmailService {
+public class EmailService implements NotificationService {
 	private Logger log = Logger.getLogger();
+	// email list is separated by comma
 
-	public void send(String to, String message) {
+	public EmailService() {
+	}
+
+	public int send(String receiver, String subject, String body) {
 		// send email with JavaMail
 
 		// Email related properties are loaded from application.properties
@@ -66,14 +70,18 @@ public class EmailService {
 		try {
 			MimeMessage msg = new MimeMessage(session);
 			msg.setFrom(new InternetAddress(sender));
-			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
-			msg.setSubject("New Discounted Items!");
-			msg.setText("Dear Mail Crawler," + "\n\n Please do not spam my email!");
+			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receiver, false));
+			msg.setSubject(subject);
+			msg.setText(body);
 			Transport.send(msg, sender, password);
-
 			log.info("Sent message successfully");
+
+			return 1;
+			//
+
 		} catch (MessagingException e) {
 			log.warn(e.getLocalizedMessage());
+			return 0;
 		}
 
 	}

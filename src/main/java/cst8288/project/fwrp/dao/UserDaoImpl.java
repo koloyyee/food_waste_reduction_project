@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 import cst8288.project.fwrp.db.DBConnection;
+import cst8288.project.fwrp.model.CommMethodType;
 import cst8288.project.fwrp.model.User;
 import cst8288.project.fwrp.model.UserType;
 import cst8288.project.fwrp.utils.Logger;
@@ -22,39 +23,48 @@ public class UserDaoImpl implements DBDao<User, Long> {
 	private Connection conn = DBConnection.getInstance().getConnection();
 
 	@Override
-	public User save(User user) throws SQLException {
+	public User save(User newUser) throws SQLException {
 		String sql = """
 				INSERT INTO user
-				(name,email, password, phone, type)
-				VALUES (?, ?, ?, ?, ?);
+				(name,email, password, phone, type, comm_method, location)
+				VALUES (?, ?, ?, ?, ?, ? , ?);
 				""";
-		try (PreparedStatement stat = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
-			stat.setString(1, user.getName());
-			stat.setString(2, user.getEmail());
-			stat.setString(3, user.getPassword());
-			stat.setString(4, user.getPhone());
-			stat.setString(5, user.getType().name());
+		try (
+
+				PreparedStatement stat = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
+			stat.setString(1, newUser.getName());
+			stat.setString(2, newUser.getEmail());
+			stat.setString(3, newUser.getPassword());
+			stat.setString(4, newUser.getPhone());
+			stat.setString(5, newUser.getType().name());
+			stat.setString(6, newUser.getCommMethod().name());
+			stat.setString(7, newUser.getLocation());
 
 			int rowAffected = stat.executeUpdate();
 
 			assert (rowAffected > 0);
 			if (rowAffected != 1) {
-				throw new SQLException("Failed to regsiter new user: " + user.getEmail());
+				throw new SQLException("Failed to regsiter new user: " + newUser.getEmail());
 			}
-			log.info("New user: %s registered.".formatted(user.getEmail()));
+			log.info("New user: %s registered.".formatted(newUser.getEmail()));
 
-			User.Builder builder = new User.Builder(user.getEmail(), user.getPassword());
-			builder.setName(user.getName()).setPhone(user.getPhone()).setUserType(user.getType());
+			User user = new User();
+			user.setName(newUser.getName());
+			user.setEmail(newUser.getEmail());
+			user.setPhone(newUser.getPhone());
+			user.setType(newUser.getType());
+			user.setCommMethod(newUser.getCommMethod());
+			user.setLocation(newUser.getLocation());
 
 			try (ResultSet generatedKeys = stat.getGeneratedKeys()) {
 				if (generatedKeys.next()) {
-					builder.setId(generatedKeys.getLong(1));
+					user.setId(generatedKeys.getLong(1));
 				} else {
 					throw new SQLException("Creating user failed, no ID obtained.");
 				}
 			}
 
-			return builder.build();
+			return user;
 		}
 
 	}
@@ -62,14 +72,16 @@ public class UserDaoImpl implements DBDao<User, Long> {
 	@Override
 	public Optional<User> find(Long id) throws SQLException {
 		String sql = """
-				SELECT id, name, email, phone, type
+				SELECT id, name, email, phone, type, comm_type, location
 				FROM
 				user
 				WHERE
 				id = ?
 				""";
 
-		try (PreparedStatement stat = conn.prepareStatement(sql);) {
+		try (
+
+				PreparedStatement stat = conn.prepareStatement(sql);) {
 			stat.setLong(1, id);
 			ResultSet rs = stat.executeQuery();
 
@@ -79,14 +91,22 @@ public class UserDaoImpl implements DBDao<User, Long> {
 				String email = rs.getString(3);
 				String phone = rs.getString(4);
 				UserType type = UserType.valueOf(rs.getString(4));
+				CommMethodType commMethod = CommMethodType.valueOf(rs.getString(5));
+				String location = rs.getString(6);
 
-				User.Builder builder = new User.Builder(email, "");
-				return Optional.of(builder.setId(uid).setName(name).setPhone(phone).setUserType(type).build());
+				User user = new User();
+				user.setId(uid);
+				user.setName(name);
+				user.setEmail(email);
+				user.setPhone(phone);
+				user.setType(type);
+				user.setCommMethod(commMethod);
+				user.setLocation(location);
 
+				return Optional.of(user);
 			}
 			rs.close();
 		}
-		conn.close();
 		return Optional.empty();
 	}
 
@@ -109,7 +129,15 @@ public class UserDaoImpl implements DBDao<User, Long> {
 				String password = rs.getString(3);
 				UserType type = UserType.valueOf(rs.getString(4));
 				String name = rs.getString(5);
-				return Optional.of(new User.Builder(email, password).setId(id).setName(name).setUserType(type).build());
+
+				User user = new User();
+				user.setId(id);
+				user.setEmail(email);
+				user.setPassword(password);
+				user.setName(name);
+				user.setType(type);
+
+				return Optional.of(user);
 
 			}
 			rs.close();
@@ -120,7 +148,7 @@ public class UserDaoImpl implements DBDao<User, Long> {
 	@Override
 	public List<User> findAll() throws SQLException {
 		String sql = """
-				SELECT id, name, email, phone, type
+				SELECT id, name, email, phone, type, comm_method, location
 				FROM
 				users;
 				""";
@@ -135,9 +163,18 @@ public class UserDaoImpl implements DBDao<User, Long> {
 				String email = rs.getString(3);
 				String phone = rs.getString(4);
 				UserType type = UserType.valueOf(rs.getString(4));
+				CommMethodType commMethod = CommMethodType.valueOf(rs.getString(5));
+				String location = rs.getString(6);
 
-				User.Builder builder = new User.Builder(email, "");
-				User user = builder.setId(uid).setName(name).setPhone(phone).setUserType(type).build();
+				User user = new User();
+				user.setId(uid);
+				user.setName(name);
+				user.setEmail(email);
+				user.setPhone(phone);
+				user.setType(type);
+				user.setCommMethod(commMethod);
+				user.setLocation(location);
+
 				users.add(user);
 			}
 
@@ -154,6 +191,10 @@ public class UserDaoImpl implements DBDao<User, Long> {
 				email = ?,
 				phone = ?
 				type = ?
+				comm_method = ?
+				location = ?
+				WHERE
+				id = ?
 				""";
 		try (Connection conn = DBConnection.getInstance().getConnection()) {
 

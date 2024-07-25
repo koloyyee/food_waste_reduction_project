@@ -28,8 +28,9 @@ if (items != null && items.size() > 0) {
 	<%
 	for (Item item : items) {
 	%>
+	<% String surplusMsg = (boolean) item.checkSurplus() ? "(Expiring less than 1 week!)" : ""; %>
 	<tr>
-		<td><%=item.getName()%></td>
+		<td><%=item.getName() %> <span style="color:red" >  <%= surplusMsg %> </span></td>
 		<td><%=item.getDescription()%></td>
 		<td><%=item.getQuantity()%></td>
 		<td>$<%=item.getPrice()%></td>

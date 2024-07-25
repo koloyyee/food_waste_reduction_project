@@ -29,7 +29,7 @@ public class UserService{
 		} else {
 			String message = "No user found with email: " + email;
 			log.warn(message);
-			return new User.Builder("", "").build();
+			return new User();
 		}
 	}
 

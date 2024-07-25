@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
+import cst8288.project.fwrp.model.CommMethodType;
 import cst8288.project.fwrp.model.User;
 import cst8288.project.fwrp.model.UserType;
 import cst8288.project.fwrp.service.UserService;
@@ -69,6 +70,8 @@ public class UserController extends HttpServlet {
 			String email = request.getParameter("email");
 			String phone = request.getParameter("phone");
 			UserType type = UserType.valueOf(request.getParameter("type"));
+			CommMethodType commMethod = CommMethodType.valueOf(request.getParameter("commMethod"));
+			String location = request.getParameter("location");
 
 			if (!validation.checkPassword(password)) {
 				// password invalid
@@ -76,9 +79,16 @@ public class UserController extends HttpServlet {
 				String msg = "Password must be 8-99, 1 or more symbols, 1 or more Uppercase and 1 or more lowercase letter, and digit 0-9 ";
 				throw new PasswordInvalidException(msg);
 			}
-			User.Builder builder = new User.Builder(email, password);
+			User user = new User();
+			user.setName(name);
+			user.setPassword(password);
+			user.setEmail(email);
+			user.setPhone(phone);
+			user.setType(type);
+			user.setCommMethod(commMethod);
+			user.setLocation(location);
+			
 
-			User user = builder.setId(null).setName(name).setPhone(phone).setUserType(type).build();
 			userService.register(user);
 
 //			RequestDispatcher dispatcher = request.getRequestDispatcher("/auth/login");

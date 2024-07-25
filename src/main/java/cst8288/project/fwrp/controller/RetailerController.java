@@ -1,5 +1,6 @@
 package cst8288.project.fwrp.controller;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -50,8 +51,6 @@ public class RetailerController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// get item by id
-		String path = request.getPathInfo();
 		long id = Long.parseLong(request.getParameter("id"));
 
 		try {
@@ -68,7 +67,6 @@ public class RetailerController extends HttpServlet {
 		} catch (Exception e) {
 			log.warn(e.getLocalizedMessage());
 		}
-
 	}
 
 	/**
@@ -109,29 +107,37 @@ public class RetailerController extends HttpServlet {
 		}
 	}
 
-	private void toggleSurplus(HttpServletRequest request, HttpServletResponse response) {
+	private void toggleSurplus(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		long id = Long.parseLong(request.getParameter("id"));
 		try {
 			Optional<Item> item = itemService.getItemById(id);
 			if (item.isPresent()) {
-				log.info("Item: " + item.get().isSurplus());
 				item.get().setSurplus(!item.get().isSurplus());
-				log.info("Item: " + item.get().isSurplus());
-				
-				if(item.get().isSurplus()) {
-					// discount come back as whole number e.g: 30 for 30%, so we need to divide it by 100.
+				int updatedState;
+				if (item.get().isSurplus()) {
+					// discount come back as whole number e.g: 30 for 30%, so we need to divide it
+					// by 100.
 
 					var dr = request.getParameter("discountRate");
 					Double newDR = Double.parseDouble(dr);
 					item.get().setDiscountRate(newDR / 100);
-					itemService.markSurplusItem(item.get());
+
+					updatedState = itemService.markSurplusItem(item.get());
 				} else {
-//					itemService.unmarkSurplusItem(item.get());
+					updatedState = itemService.unmarkSurplusItem(item.get());
 				}
+
+				if (updatedState == 1) {
+					getAllItems(request, response);
+				}
+
 			}
 
 		} catch (SQLException e) {
 			log.warn(e.getLocalizedMessage());
+			request.setAttribute("error", "failed to update item.");
+			request.getRequestDispatcher("/pages/retailer/index.jsp").forward(request, response);
 		}
 	}
 
@@ -146,6 +152,15 @@ public class RetailerController extends HttpServlet {
 			}
 
 		} catch (SQLException e) {
+			log.warn(e.getLocalizedMessage());
+		}
+	}
+
+	private void getAllItems(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			request.getSession().setAttribute("items", itemService.getItems());
+			response.sendRedirect("/pages/retailer/index.jsp");
+		} catch (SQLException |  IOException e) {
 			log.warn(e.getLocalizedMessage());
 		}
 	}

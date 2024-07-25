@@ -1,10 +1,12 @@
 package cst8288.project.fwrp.model;
 
-public class Subscription {
+import cst8288.project.fwrp.service.EmailService;
+import cst8288.project.fwrp.service.NotificationService;
+import cst8288.project.fwrp.service.SmsService;
+
+public class Subscription implements Observer{
 	private User user;
 	private Item item;
-	private CommMethodType commMethodType;
-	private String location; // city.
 
 	public User getUser() {
 		return user;
@@ -22,29 +24,25 @@ public class Subscription {
 		this.item = item;
 	}
 
-	public CommMethodType getCommMethodType() {
-		return commMethodType;
-	}
-
-	public void setCommMethodType(CommMethodType commMethodType) {
-		this.commMethodType = commMethodType;
-	}
-
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
+//	@Override
+//	public CommMethodType getCommMethodType() {
+//		return user.getCommMethod();
+//	}
 
 	@Override
-	public String toString() {
-		return "Subscription{" +
-				"user=" + user +
-				", item=" + item +
-				", commMethodType=" + commMethodType +
-				", location='" + location + '\'' +
-				'}';
+	public void update(String title, String body) {
+		switch(user.getCommMethod()) {
+		case Email:
+			new EmailService().send(user.getEmail(), title, body);
+			break;
+		case Phone:
+			new SmsService().send(user.getPhone(), title, body);
+			break;
+		}
 	}
+	@Override
+	public String toString() {
+		return "Subscription [user=" + user + ", item=" + item + "]";
+	}
+
 }

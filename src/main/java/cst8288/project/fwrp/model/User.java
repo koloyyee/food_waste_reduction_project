@@ -9,93 +9,83 @@ package cst8288.project.fwrp.model;
  */
 public class User {
 
-	private final Long id;
-	private final String name;
-	private final String email;
-	private final String phone;
-	private final String password;
-	private final UserType type;
-
-
-	private User(Builder builder) {
-		this.id = builder.id;
-		this.name = builder.name;
-		this.email = builder.email;
-		this.phone = builder.phone;
-		this.password = builder.password;
-		this.type = builder.type;
-	}
-
-	public static class Builder {
-		private Long id;
-		private String name;
-		private String email;
-		private String phone;
-		private String password;
-		private UserType type;
-
-		public Builder(String email, String password) {
-			this.email = email;
-			this.password = password;
-		}
-
-		public Builder setId(Long id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder setName(String name) {
-			this.name = name;
-			return this;
-		}
-
-		public Builder setPhone(String phone) {
-			// TODO: phone validation needed
-			this.phone = phone;
-			return this;
-		}
-
-		public Builder setUserType(UserType type) {
-			this.type = type;
-			return this;
-		}
-
-		public User build() {
-			return new User(this);
-		}
-	}
-	
-	
+	private Long id;
+	private String name;
+	private String email;
+	private String phone;
+	private String password;
+	private UserType type;
+	private CommMethodType commMethod;
+	private String location;
 
 	public Long getId() {
 		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {
 		return name;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getEmail() {
 		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPhone() {
 		return phone;
 	}
 
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
 	public String getPassword() {
 		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public UserType getType() {
 		return type;
 	}
 
+	public void setType(UserType type) {
+		this.type = type;
+	}
+
+	public CommMethodType getCommMethod() {
+		return commMethod;
+	}
+
+	public void setCommMethod(CommMethodType commMethod) {
+		this.commMethod = commMethod;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", email=" + email + ", phone=" + phone + ", password=" + password
-				+ ", type=" + type + "]";
+				+ ", type=" + type + ", commMethod=" + commMethod + ", location=" + location + "]";
 	}
-	
-	
+
 }

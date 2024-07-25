@@ -41,7 +41,7 @@ public class PasswordFilter implements Filter {
 //		log.info(inputPassword + " " + inputEmail);
 		try {
 			User user = userService.loadUserByEmail(inputEmail);
-
+			log.info(user.toString());
 			if (inputEmail.equals(user.getEmail()) && inputPassword.equals(user.getPassword())) {
 				// pass the request along the filter chain
 				request.setAttribute("user", user);
