@@ -5,10 +5,13 @@
 <%@ page import="java.util.List"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <c:import url="/header.jsp" />
-<h1>Welcome to Consumer Page!</h1>
-<%
-User user = (User) request.getSession().getAttribute("user");
-%>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"/> 
+<div class="d-flex flex-column align-items-center">
+	<h1 class="text-center display-4">Welcome to Consumer Page!</h1>
+	<% User user = (User) request.getSession().getAttribute("user");	%>
+	<p>Welcome back! ${user.getName()}</p>
 <%
 List<Item> items = (List<Item>) request.getSession().getAttribute("items");
 %>
@@ -45,16 +48,17 @@ if (items != null && items.size() > 0) {
 	<%
 	} else {
 	%>
-	<p>No items found</p>
+<div class="d-flex flex-column align-items-center">
+	<p class="mt-5"> No items found</p>
 	<%
 	}
 	%>
 </table>
-
 <% if (user != null) { %>
-<form action="${pageContext.request.contextPath}/pages/consumer/index.jsp">
+<form class="mt-3" action="${pageContext.request.contextPath}/pages/consumer/index.jsp">
 	<button type="submit" class="btn btn-primary">refresh list</button>
 </form>
+</div>
 <%
 } else {
 	%>
