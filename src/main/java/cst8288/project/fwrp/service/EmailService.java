@@ -77,7 +77,6 @@ public class EmailService implements NotificationService {
 			log.info("Sent message successfully");
 
 			return 1;
-			//
 
 		} catch (MessagingException e) {
 			log.warn(e.getLocalizedMessage());
