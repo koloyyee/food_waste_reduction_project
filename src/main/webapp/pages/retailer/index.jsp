@@ -12,12 +12,9 @@
 	rel="stylesheet"/> 
 	
 <div class="d-flex flex-column align-items-center">
-
-	<h1 class="text-center display-4">Welcome To The Retailer Page!</h1>
-
-<%
-User user = (User) request.getSession().getAttribute("user");
-%>
+	<h1 class="text-center display-4">Welcome to Retailer Page!</h1>
+	<% User user = (User) request.getSession().getAttribute("user");	%>
+	<p>Welcome back! ${user.getName()}</p>
 <%
 List<Item> items = (List<Item>) request.getSession().getAttribute("items");
 %>

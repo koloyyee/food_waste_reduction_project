@@ -8,12 +8,10 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"/> 
-<div class="container">
+<div class="d-flex flex-column align-items-center">
 	<h1 class="text-center display-4">Welcome to Consumer Page!</h1>
-</div>
-<%
-User user = (User) request.getSession().getAttribute("user");
-%>
+	<% User user = (User) request.getSession().getAttribute("user");	%>
+	<p>Welcome back! ${user.getName()}</p>
 <%
 List<Item> items = (List<Item>) request.getSession().getAttribute("items");
 %>
