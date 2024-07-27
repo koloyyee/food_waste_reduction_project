@@ -1,6 +1,6 @@
 -- create random items
 INSERT INTO fwrp.item
-(name, description, expiry_date, price, discount_rate, is_surplus, is_donation, quantity, is_available, created_at, update_at)
+(name, description, expiry_date, price, discount_rate, is_surplus, is_donation, quantity, is_available, created_at, updated_at)
 VALUES
 ('Candy', 'A sweet treat for your sweet tooth', '2022-12-31', ROUND((RAND() * 10), 2), 0.0, false, false, FLOOR(RAND() * 100), true, now(), now()),
 ('Chocolate Bar', 'A delicious snack for any time of the day', '2022-12-31', ROUND((RAND() * 10), 2), 0.0, false, false, FLOOR(RAND() * 100), true, now(), now()),

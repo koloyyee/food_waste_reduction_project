@@ -55,6 +55,9 @@ public class ConsumerController extends HttpServlet {
 		case "order":
 			handleOrder(request, response);
 			break;
+		case "subscribe" :
+			handleSubscribe(request, response);
+			break;
 		}
 
 	}
@@ -98,6 +101,32 @@ public class ConsumerController extends HttpServlet {
 			}
 
 		} catch (NumberFormatException | SQLException | IOException e) {
+			log.warn(e.getLocalizedMessage());
+		}
+	}
+
+	public void handleSubscribe(HttpServletRequest request, HttpServletResponse response) {
+		Long itemId = Long.parseLong(request.getParameter("item_id"));
+		Long userId = Long.parseLong(request.getParameter("user_id"));
+		try {
+			// deduct the quantity from the item table
+			// insert to order table
+
+			int result = 0;
+			try {
+				result = itemService.subscribeItem(userId, itemId);
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
+			if (result < 0) {
+				request.setAttribute("errMsg", "Failed to subscribe item");
+				handleGetItem(request, response);
+			} else {
+				request.setAttribute("msg", "Item subscribed successfully");
+				response.sendRedirect(request.getContextPath() + "/pages/consumer/subscription_placed.jsp");
+			}
+
+		} catch (NumberFormatException | IOException e) {
 			log.warn(e.getLocalizedMessage());
 		}
 	}

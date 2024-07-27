@@ -24,9 +24,11 @@ import cst8288.project.fwrp.model.TransactionType;
  ************************************************************************************************************/
 public class ItemService {
 	private ItemDaoImpl itemDaoImpl;
+	private SubscriptionDao subscriptionDao;
 
 	public ItemService() {
 		this.itemDaoImpl = new ItemDaoImpl();
+		this.subscriptionDao = new SubscriptionDao();
 	}
 	
 	/**
@@ -117,5 +119,12 @@ public class ItemService {
 	 */
 	public int toggleAvailableItem(Item item) throws SQLException {
 		return itemDaoImpl.update(item.getId(), item);
+	}
+
+	public int subscribeItem(Long userId, Long itemId) throws SQLException {
+		subscriptionDao.find(4L);
+//			subscriptionDao.save(itemId, userId);
+		return 0;			
+
 	}
 }

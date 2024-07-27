@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 main {
-	background: linear-gradient(to bottom, #fffacd, #fada9d);
+	/* background: linear-gradient(to bottom, #fffacd, #fada9d); */
 	height:100vh;
 	display:flex;
 	flex-direction: column;
@@ -31,4 +31,11 @@ main {
 #login-form > input {
 	width : 25rem;
 	
+}
+
+#index-logo {
+	width: 20rem;
+}
+#header-logo {
+	width: 8rem;
 }

@@ -4,7 +4,7 @@
 <%@ page import="cst8288.project.fwrp.model.Item"%>
 <%@ page import="java.util.List"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
-<c:import url="/header.jsp" />
+<c:import url="/includes/header.jsp" />
 <h1>Welcome to Consumer Page!</h1>
 <%
 User user = (User) request.getSession().getAttribute("user");
@@ -28,7 +28,7 @@ if (items != null && items.size() > 0) {
 	for (Item item : items) {
 	%>
 	<tr>
-		<td><%=item.getName()%></td>
+		<td><%=item.getName()%> ${item.isSurplus()? "Discount Item!" : ""} </td>
 		<td><%=item.getDescription()%></td>
 		<td><%=item.getQuantity()%></td>
 		<td>$<%=item.getPrice()%></td>
@@ -45,15 +45,24 @@ if (items != null && items.size() > 0) {
 	<%
 	} else {
 	%>
-	<p>No items found</p>
+<div class="d-flex flex-column align-items-center">
+	<p class="mt-5"> No items found</p>
 	<%
 	}
 	%>
 </table>
-
-<form action="${pageContext.request.contextPath}/consumers/items/get/1">
-	<button type="submit" class="btn btn-primary">View Items</button>
+<% if (user != null) { %>
+<form class="mt-3" action="${pageContext.request.contextPath}/pages/consumer/index.jsp">
+	<button type="submit" class="btn btn-primary">refresh list</button>
 </form>
-
-</body>
-</html>
+</div>
+<%
+} else {
+	%>
+	<a href="${pageContext.request.contextPath}/index.jsp"> 
+		<button class="btn btn-primary">Please login first</button>
+	</a>
+<%
+    }
+%>
+<c:import url="/includes/footer.jsp" />

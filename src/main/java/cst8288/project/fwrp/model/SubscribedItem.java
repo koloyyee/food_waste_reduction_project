@@ -10,7 +10,10 @@ public class SubscribedItem implements Subject{
 	public SubscribedItem(Item item) {
 		this.item = item;
 	}
-	
+
+	public void addSubscribers(List<Observer> subscribers) {
+		this.subscribers.addAll(subscribers);
+	}
 	@Override
 	public void addSubscribers(Observer subscribers) {
 		this.subscribers.add(subscribers);
@@ -30,4 +33,11 @@ public class SubscribedItem implements Subject{
 		
 	}
 
+	@Override
+	public String toString() {
+		return "SubscribedItem{" +
+				"item=" + item +
+				", subscribers=" + subscribers +
+				'}';
+	}
 }

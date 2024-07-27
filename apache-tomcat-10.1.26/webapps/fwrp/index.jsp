@@ -25,31 +25,48 @@
 	<main id="index-main">
 		<section id="welcome-message">
 			<img src="${pageContext.request.contextPath}/asset/logo_trans.png"
-				id="header-logo" />
-			<h2>Welcome to the Food Waste Reduction Project!</h2>
-			<h3>Let's work together to reduce food waste.</h3>
+				id="index-logo" />
 		</section>
-		<form action="auth/login" method="POST" id="login-form">
-			<input type="email" name="email" placeholder="account email" required />
-			<input type="password" name="password" placeholder="account password"
-				minlength="8" />
-			<%
-			String err = (String) request.getSession().getAttribute("errMsg");
-			%>
-			<%
-			if (err != null) {
-			%>
-			<span class="err-msg"><%=err%> </span>
-			<%
-			}
-			%>
-			<div class="btn-group">
-				<button type="submit" class="btn btn-warning">Login</button>
-				<button type="reset" class="btn btn-danger">Cancel</button>
+		<form class="card p-3" action="auth/login" method="POST"
+			id="login-form">
+			<div class="card-body">
+				<div class="mb-3 form-floating">
+					<input
+						class="form-control" id="email" type="email" name="email"
+						placeholder="account email" required />
+					<label for="email" >Email address</label> 
+				</div>
+				<div class="mb-3 form-floating">
+					 <input
+						class="form-control" id="password" type="password" name="password"
+						placeholder="account password" minlength="8" />
+					<label for="password" >Password</label>
+				</div>
+				<%
+				String err = (String) request.getSession().getAttribute("errMsg");
+				%>
+				<%
+				if (err != null) {
+				%>
+				<span class="err-msg"><%=err%> </span>
+				<%
+				}
+				%>
+				<div class="mx-auto">
+					<button type="submit" class="btn btn-primary">Login</button>
+					<button type="reset" class="btn btn-secondary">Cancel</button>
+				</div>
+				<a class="card-link"
+					href="${pageContext.request.contextPath}/pages/register.jsp">No
+					Account? Click Here To Register</a>
+
 			</div>
 		</form>
-		<a href="${pageContext.request.contextPath}/pages/register.jsp">No
-			Account? Here to Register</a>
+		<footer class="mt-5 text-center">
+
+			<h3>Welcome to the Food Waste Reduction Project!</h3>
+			<h4>Let's work together to reduce food waste.</h4>
+		</footer>
 	</main>
 </body>
 </html>

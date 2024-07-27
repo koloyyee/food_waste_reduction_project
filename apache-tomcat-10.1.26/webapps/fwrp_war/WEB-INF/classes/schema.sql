@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS  `order` (
                          `user_id` int DEFAULT NULL,
                          `item_id` int DEFAULT NULL,
                          `transaction_type` tinyint(1) NOT NULL COMMENT '1 - purchased, 2 - donated',
-                         `total_price` decimal(10,2) NOT NULL DEFAULT '0.00',
+                         `item_price` decimal(10,2) NOT NULL DEFAULT '0.00',
                          PRIMARY KEY (`id`),
                          KEY `fk_orders_user_id` (`user_id`),
                          KEY `fk_orders_item_id` (`item_id`),
