@@ -8,6 +8,11 @@
           <option name="CONTEXT_PATH" value="/fwrp" />
         </settings>
       </artifact>
+      <artifact name="fwrp:war exploded">
+        <settings>
+          <option name="CONTEXT_PATH" value="/fwrp_war_exploded" />
+        </settings>
+      </artifact>
     </deployment>
     <server-settings>
       <option name="BASE_DIRECTORY_NAME" value="2fe72382-0aeb-4ab0-8ead-4f1947df3da3" />
@@ -104,6 +109,7 @@
       <option name="Make" enabled="true" />
       <option name="BuildArtifacts" enabled="true">
         <artifact name="fwrp:war" />
+        <artifact name="fwrp:war exploded" />
       </option>
     </method>
   </configuration>

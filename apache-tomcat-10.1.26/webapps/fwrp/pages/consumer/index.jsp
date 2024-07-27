@@ -5,6 +5,27 @@
 <%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <c:import url="/includes/header.jsp"/>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/pages/consumer/index.jsp" >Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/pages/consumer/index.jsp">Shopping List</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Subscribed To</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Ordered history</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 <h1>Welcome to Consumer Page!</h1>
 <%
     User user = (User) request.getSession().getAttribute("user");
@@ -19,7 +40,7 @@
 <!-- create table -->
 <table class="table">
     <tr>
-        <th scope="col">Item Name</th>
+        <th scope="col">Item Name </th>
         <th scope="col">Item Description</th>
         <th scope="col">Item Quantity</th>
         <th scope="col">Item Price</th>
@@ -28,7 +49,11 @@
         for (Item item : items) {
     %>
     <tr>
-        <td><%=item.getName()%> ${item.isSurplus()? "Discount Item!" : ""} </td>
+
+        <% String surplusMsg = item.isSurplus() ? "( Expiring Soon!)" : "" ; %>
+       <% String discountMsg =  item.getDiscountRate() > 0 ? "(Discounted Item!)" : "";  %>
+
+        <td><%=item.getName()%> <span style="color:red" >  <%= surplusMsg %> <%= discountMsg %> </span> </td>
         <td><%=item.getDescription()%>
         </td>
         <td><%=item.getQuantity()%>

@@ -20,8 +20,13 @@
 
 	<nav class="d-flex justify-content-between">
 
-		<img src="${pageContext.request.contextPath}/asset/logo_trans.png"
-			id="header-logo" />
+		<a href="${pageContext.request.contextPath}/pages/${user.getType().name().toLowerCase()}/index.jsp">
+			<img
+					src="${pageContext.request.contextPath}/asset/logo_trans.png"
+					id="header-logo" />
+		</a>
+<%--		<img src="${pageContext.request.contextPath}/asset/logo_trans.png"--%>
+<%--			id="header-logo" />--%>
 		<%
 		User user = (User) request.getSession().getAttribute("user");
 		%>

@@ -96,11 +96,11 @@ public class ItemService {
 		int updatedRow = itemDaoImpl.update(item.getId(), item);
 
 		if (updatedRow == 1) {
-			// send email notification to consumer
-			// email successfully sent update notification table
-//		EmailService emailService = new EmailService();
-//		String body = "Discounted Item: " + item.getName() + " is now on sale at " + item.getDiscountRate() * 100 + "% off.";
-//		emailService.send("koloyyee@gmail.com", "Discounted Item", body );
+//			 send email notification to consumer
+//			 email successfully sent update notification table
+		EmailService emailService = new EmailService();
+		String body = "Discounted Item: " + item.getName() + " is now on sale at " + item.getDiscountRate() * 100 + "% off.";
+		emailService.send("koloyyee@gmail.com", "Discounted Item", body );
 
 		}
 
