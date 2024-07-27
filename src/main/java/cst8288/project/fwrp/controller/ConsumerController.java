@@ -39,7 +39,16 @@ public class ConsumerController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		handleGetItem(request, response);
+		String[] enpoints = request.getPathInfo().split("/");
+		String action = enpoints[1];
+		switch (action) {
+		case "items":
+			handleGetItem(request, response);
+			break;
+		case "subscribe":
+			handleUserSubscribed(request, response);
+			break;
+		}
 	}
 
 	/**
@@ -58,6 +67,9 @@ public class ConsumerController extends HttpServlet {
 		case "subscribe" :
 			handleSubscribe(request, response);
 			break;
+		case "unsubscribe" :
+			handleUnsubscribe(request, response);
+			break;
 		}
 
 	}
@@ -75,6 +87,20 @@ public class ConsumerController extends HttpServlet {
 
 			}
 		} catch (NumberFormatException | SQLException | ServletException | IOException e) {
+			log.warn(e.getLocalizedMessage());
+		}
+	}
+	
+	private void handleUserSubscribed(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			request.getSession().setAttribute("items", null);
+			long userId =Long.parseLong( request.getParameter("user_id"));
+			
+			var items = itemService.getSubscribedItems(userId);
+			request.setAttribute("items", items);
+				request.getRequestDispatcher("/pages/consumer/subscribed.jsp").forward(request, response);
+//			response.sendRedirect(request.getContextPath() + "/pages/consumer/subscribed.jsp");
+		} catch (SQLException | IOException | ServletException e) {
 			log.warn(e.getLocalizedMessage());
 		}
 	}
@@ -120,6 +146,25 @@ public class ConsumerController extends HttpServlet {
 			}
 
 		} catch (NumberFormatException | IOException | SQLException e) {
+			log.warn(e.getLocalizedMessage());
+		}
+	}
+	public void handleUnsubscribe(HttpServletRequest request, HttpServletResponse response) {
+		Long itemId = Long.parseLong(request.getParameter("item_id"));
+		User user = (User) request.getSession().getAttribute("user");
+
+		try {
+			int result = itemService.unsubscribeItem(itemId, user.getId());
+			if (result < 0) {
+				request.setAttribute("errMsg", "Failed to subscribe item");
+				handleGetItem(request, response);
+			} else {
+				request.setAttribute("items", itemService.getSubscribedItems(user.getId()));	
+				request.setAttribute("msg", "Item subscribed successfully");
+				request.getRequestDispatcher("/pages/consumer/subscribed.jsp").forward(request, response);
+			}
+
+		} catch (NumberFormatException | IOException | SQLException | ServletException e) {
 			log.warn(e.getLocalizedMessage());
 		}
 	}

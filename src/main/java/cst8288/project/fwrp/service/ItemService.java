@@ -133,7 +133,14 @@ public class ItemService {
 					throw new RuntimeException("User or Item not found");
 				} 
 				return subscriptionDao.save(item.getId(), userId);
+	}
 
+	public int unsubscribeItem(Long itemId, Long userId) throws SQLException {
+			var item = itemDaoImpl.find(itemId).orElse(null);
+				if (item == null) {
+					throw new RuntimeException("User or Item not found");
+				} 
+				return subscriptionDao.delete(item.getId(), userId);
 	}
 
 	public SubscribedItem findSubscribedItem(Long itemId) throws SQLException {
@@ -141,8 +148,7 @@ public class ItemService {
 		return item.orElseThrow(() -> new RuntimeException("Item not found"));
 	}
 
-	public List<Item> getSubscribedItems(Long id) {
-		subscriptionDao.findUserSubcribed(id);
-		return null;
+	public List<Item> getSubscribedItems(Long userId) throws SQLException {
+		return	subscriptionDao.findUserSubcribed(userId);
 	}
 }

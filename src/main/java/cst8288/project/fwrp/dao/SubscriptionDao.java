@@ -16,9 +16,9 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 /**
- * A User (Consumer / Charitable Organization) subscribe to an item,
- * when the item is marked as surplus, the Consumer will be notified.
- * when the item is marked as donation, the Charitable Organization will be notified.
+ * A User (Consumer / Charitable Organization) subscribe to an item, when the
+ * item is marked as surplus, the Consumer will be notified. when the item is
+ * marked as donation, the Charitable Organization will be notified.
  */
 public class SubscriptionDao {
 	private Logger log = Logger.getLogger();
@@ -31,10 +31,10 @@ public class SubscriptionDao {
 	public int save(Long itemId, Long userId) throws SQLException {
 
 		String sql = """
-			INSERT INTO subscription
-			(item_id, user_id)
-			VALUES (?, ?)	
-			""";	
+				INSERT INTO subscription
+				(item_id, user_id)
+				VALUES (?, ?)
+				""";
 		try (PreparedStatement stat = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			stat.setLong(1, itemId);
 			stat.setLong(2, userId);
@@ -55,10 +55,9 @@ public class SubscriptionDao {
 		return null;
 	}
 
-
 	public Optional<SubscribedItem> find(Long itemId) throws SQLException {
 		String sql = """
-				SELECT 
+				SELECT
 				i.id as item_id,
 				i.name as item_name,
 				i.description as item_description,
@@ -77,20 +76,19 @@ public class SubscriptionDao {
 				u.email as user_email,
 				u.phone as user_phone,
 				u.password as user_password,
-				u.type as user_type,	
+				u.type as user_type,
 				u.comm_method as user_comm_method,
 				u.location as user_location,
 
 				s.subscription_date as subscription_date
-				
-				FROM 
+
+				FROM
 				subscription s
 				JOIN item i ON s.item_id = i.id
 				JOIN user u ON s.user_id = u.id
 				WHERE item_id = ?
 				""";
 		List<SubscribedItem> subscribedItems = new ArrayList<>();
-
 
 		try (PreparedStatement stat = conn.prepareStatement(sql)) {
 			stat.setLong(1, itemId);
@@ -99,7 +97,7 @@ public class SubscriptionDao {
 			Set<Observer> userSet = new HashSet<>();
 			Item item = new Item();
 
-			while(rs.next()) {
+			while (rs.next()) {
 				item.setId(rs.getLong("item_id"));
 				item.setName(rs.getString("item_name"));
 				item.setDescription(rs.getString("item_description"));
@@ -120,7 +118,7 @@ public class SubscriptionDao {
 				user.setPhone(rs.getString("user_phone"));
 				user.setType(UserType.valueOf(rs.getString("user_type")));
 				var commMethod = CommMethodType.getByCode(Integer.parseInt(rs.getString("user_comm_method")));
-				if(commMethod.isPresent()) {
+				if (commMethod.isPresent()) {
 					user.setCommMethod(commMethod.get());
 				}
 				user.setLocation(rs.getString("user_location"));
@@ -141,49 +139,50 @@ public class SubscriptionDao {
 	}
 
 
-	public int delete(Long aLong) throws SQLException {
+	public List<Item> findUserSubcribed(Long id) throws SQLException {
 		String sql = """
-				DELETE FROM subscription
-				WHERE item_id = ?
+				   SELECT
+				  	*
+				   FROM subscription s
+				  	JOIN item i ON s.item_id = i.id
+				   Where s.user_id = ?
 				""";
-		try (PreparedStatement stat = conn.prepareStatement(sql)) {
-			stat.setLong(1, aLong);
-			int result = stat.executeUpdate();
-			log.info("Subscription deleted: " + aLong);
-			return result;
+		try (var stat = conn.prepareStatement(sql)) {
+			stat.setLong(1, id);
+			var rs = stat.executeQuery();
+
+			List<Item> items = new ArrayList<>();
+			while (rs.next()) {
+				Item item = new Item();
+				item.setId(rs.getLong("id"));
+				item.setName(rs.getString("name"));
+				item.setDescription(rs.getString("description"));
+				item.setExpiryDate(rs.getDate("expiry_date").toLocalDate());
+				item.setPrice(BigDecimal.valueOf(rs.getDouble("price")));
+				item.setDiscountRate(rs.getDouble("discount_rate"));
+				item.setSurplus(rs.getBoolean("is_surplus"));
+				item.setDonation(rs.getBoolean("is_donation"));
+				item.setQuantity(rs.getInt("quantity"));
+				item.setAvailable(rs.getBoolean("is_available"));
+				item.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+				item.setUpdatedAt(rs.getTimestamp("updated_at").toLocalDateTime());
+				log.info("Item found: " + item);
+				items.add(item);
+			}
+			return items;
 		}
 	}
-
-	public	 List<Item> findUserSubcribed(Long id) {
+	public int delete(Long itemId, Long userId) throws SQLException {
 		String sql = """
-			    SELECT 
-			   	* 
-			    FROM subscription s	
-			   	JOIN item i ON s.item_id = i.id 
-			    Where s.user_id = ?
+				DELETE FROM subscription
+				WHERE item_id = ? AND user_id = ?
 				""";
-		try( var stat  = conn.prepareStatement(sql)){
-            stat.setLong(1, id);
-            var rs = stat.executeQuery();
-			
-            List<Item> items = new ArrayList<>();
-            while( rs.next()) {
-					Item item = new Item();
-					item.setId(rs.getLong("id"));
-					item.setName(rs.getString("name"));
-					item.setDescription(rs.getString("description"));
-					item.setExpiryDate(rs.getDate(rs.getString("expiry_date")).toLocalDate());
-					item.setPrice(BigDecimal.valueOf(rs.getDouble("price")));
-					item.setDiscountRate(rs.getDouble("discount_rate"));
-					item.setSurplus(rs.getBoolean("is_surplus"));
-					item.setDonation(rs.getBoolean("is_donation"));
-					item.setQuantity(rs.getInt("quantity"));
-					item.setAvailable(rs.getBoolean("is_available"));
-					item.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
-					item.setUpdatedAt(rs.getTimestamp("updated_at").toLocalDateTime());
-					
-					items.add(item);
-            }
-		return items;
+		try (PreparedStatement stat = conn.prepareStatement(sql)) {
+			stat.setLong(1, itemId);
+			stat.setLong(2, userId);
+			int result = stat.executeUpdate();
+			log.info("Subscription deleted: " + itemId + " " + userId);
+			return result;
+		}
 	}
 }

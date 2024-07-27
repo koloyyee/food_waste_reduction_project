@@ -53,6 +53,7 @@ if (item != null) {
 				</form>
 			</blockquote>
 		</div>
+
 		<%
 		}
 		%>
@@ -78,5 +79,12 @@ if (item != null) {
 		</a>
 
 	</div>
-</main>
+
+<!-- 		<div class="back-btn">
+			<button class="btn btn-primary" type="button"
+				onclick="history.back()">Back</button>
+		</div>
+ -->
+ 
+ </main>
 <c:import url="/includes/footer.jsp" />
