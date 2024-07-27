@@ -9,6 +9,10 @@ public enum CommMethodType {
     CommMethodType(int code) {
         this.code = code;
     }
+    
+    public int code() {
+    	        return code;
+    }
 
     public static Optional<CommMethodType> getByCode(int code) {
         for (CommMethodType commMethodType : CommMethodType.values()) {

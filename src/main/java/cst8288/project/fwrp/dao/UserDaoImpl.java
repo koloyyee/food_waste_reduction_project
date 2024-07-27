@@ -37,7 +37,7 @@ public class UserDaoImpl implements DBDao<User, Long> {
 			stat.setString(3, newUser.getPassword());
 			stat.setString(4, newUser.getPhone());
 			stat.setString(5, newUser.getType().name());
-			stat.setString(6, newUser.getCommMethod().name());
+			stat.setInt(6, newUser.getCommMethod().code());
 			stat.setString(7, newUser.getLocation());
 
 			int rowAffected = stat.executeUpdate();

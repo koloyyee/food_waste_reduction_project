@@ -68,9 +68,9 @@ String errMsg = (String) request.getAttribute("errMsg");
 
 				<div class="mb-2">
 					<select id="commMethod" name="commMethod"  class=" form-select">
-						<option value="1">Email</option>
-						<option value="2">Phone</option>
-						<option value="3">Both</option>
+						<option value="Email">Email</option>
+						<option value="Phone">Phone</option>
+						<option value="Both">Both</option>
 					</select>
 
 				</div>
