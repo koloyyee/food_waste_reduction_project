@@ -27,12 +27,6 @@
 		</dependency>
 
 
-		<!-- https://mvnrepository.com/artifact/com.twilio.sdk/twilio -->
-		<dependency>
-			<groupId>com.twilio.sdk</groupId>
-			<artifactId>twilio</artifactId>
-			<version>10.4.1</version>
-		</dependency>
 
 		<!--https://mvnrepository.com/artifact/jakarta.servlet.jsp/jakarta.servlet.jsp-api -->
 		<dependency>
