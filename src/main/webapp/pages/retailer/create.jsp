@@ -50,6 +50,13 @@
 		</div>
 	</form>
 	</div>
+
+    <div class="back-btn">
+        <a href="${pageContext.request.contextPath}/pages/retailer/index.jsp">
+            <button class="btn btn-primary">Back</button>
+        </a>
+
+    </div>
 </main>
 <script>
 	const expiryDate = document.getElementById('expiry_date');

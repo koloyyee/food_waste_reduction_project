@@ -232,7 +232,7 @@ public class RetailerController extends HttpServlet {
 			
 			try {
 				Item newItem = itemService.create(item);
-				if (newItem != null) {
+				if (newItem.getId() != null) {
 					rerenderItemList(request, response);
 				}
 			} catch (SQLException e) {

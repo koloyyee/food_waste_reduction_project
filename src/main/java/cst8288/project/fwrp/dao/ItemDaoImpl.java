@@ -2,6 +2,7 @@ package cst8288.project.fwrp.dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,8 +37,30 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 	}
 
 	@Override
-	public Item save(Item object) throws SQLException {
-		return null;
+	public Item save(Item item) throws SQLException {
+		String sql = """
+				INSERT INTO item
+				(name, description, expiry_date, price, discount_rate, is_surplus, is_donation, quantity, is_available)
+				""";
+		try (var statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+			statement.setString(1, item.getName());
+			statement.setString(2, item.getDescription());
+			statement.setDate(3, java.sql.Date.valueOf(item.getExpiryDate()));
+			statement.setBigDecimal(4, item.getPrice());
+			statement.setDouble(5, item.getDiscountRate());
+			statement.setBoolean(6, item.isSurplus());
+			statement.setBoolean(7, item.isDonation());
+			statement.setInt(8, item.getQuantity());
+			statement.setBoolean(9, item.isAvailable());
+			var rowUpdated = statement.executeUpdate();
+			if (rowUpdated == 1) {
+				var result = statement.getGeneratedKeys();
+				if (result.next()) {
+					item.setId(result.getLong(1));
+				}
+			}
+		}
+		return item;
 	}
 
 	@Override
@@ -289,7 +312,7 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 				id = ?
 				""";
 		String insertOrderSql = """
-				INSERT INTO `Order` 
+				INSERT INTO `Order`
 				(user_id, item_id, quantity, item_price, transaction_type)
 				VALUES (?, ?, ?, ?, ?)
 				""";
@@ -306,7 +329,7 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 			orderStat.setInt(3, quantity);
 			orderStat.setDouble(4, itemPrice);
 			orderStat.setInt(5, type.code());
-			
+
 			int itemUpdateRow = itemStat.executeUpdate();
 			int orderInsertRow = orderStat.executeUpdate();
 
