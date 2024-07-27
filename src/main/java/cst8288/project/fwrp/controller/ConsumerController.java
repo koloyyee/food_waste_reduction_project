@@ -123,7 +123,7 @@ public class ConsumerController extends HttpServlet {
 				handleGetItem(request, response);
 			} else {
 				request.setAttribute("msg", "Item subscribed successfully");
-				response.sendRedirect(request.getContextPath() + "/pages/consumer/subscription_placed.jsp");
+				response.sendRedirect(request.getContextPath() + "/pages/consumer/index.jsp");
 			}
 
 		} catch (NumberFormatException | IOException e) {
