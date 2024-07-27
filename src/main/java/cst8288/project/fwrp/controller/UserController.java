@@ -82,7 +82,7 @@ public class UserController extends HttpServlet {
 			User user = new User();
 			user.setName(name);
 			user.setPassword(password);
-			user.setEmail(email);
+			user.setEmail(email.toLowerCase());
 			user.setPhone(phone);
 			user.setType(type);
 			user.setCommMethod(commMethod);
