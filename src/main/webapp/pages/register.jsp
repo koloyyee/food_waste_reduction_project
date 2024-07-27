@@ -72,7 +72,7 @@ String errMsg = (String) request.getAttribute("errMsg");
 						<option value="Phone">Phone</option>
 						<option value="Both">Both</option>
 					</select>
-
+				<small>Preferred Communication Method</small> 
 				</div>
 
 				<div class="mb-3 form-floating">
