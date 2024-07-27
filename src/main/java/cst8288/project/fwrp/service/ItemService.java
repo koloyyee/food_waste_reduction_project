@@ -5,8 +5,13 @@ import java.util.List;
 import java.util.Optional;
 
 import cst8288.project.fwrp.dao.ItemDaoImpl;
+import cst8288.project.fwrp.dao.SubscriptionDao;
 import cst8288.project.fwrp.model.Item;
+import cst8288.project.fwrp.model.SubscribedItem;
 import cst8288.project.fwrp.model.TransactionType;
+import cst8288.project.fwrp.model.User;
+import cst8288.project.fwrp.utils.Logger;
+import cst8288.project.fwrp.utils.LoggerFactory;
 
 /*************************************************************************************************************
  * File Name: ItemService.java Description: This file contains the ItemService
@@ -23,6 +28,7 @@ import cst8288.project.fwrp.model.TransactionType;
  * 
  ************************************************************************************************************/
 public class ItemService {
+	private static Logger log = LoggerFactory.getLogger();
 	private ItemDaoImpl itemDaoImpl;
 	private SubscriptionDao subscriptionDao;
 
@@ -121,10 +127,22 @@ public class ItemService {
 		return itemDaoImpl.update(item.getId(), item);
 	}
 
-	public int subscribeItem(Long userId, Long itemId) throws SQLException {
-		subscriptionDao.find(4L);
-//			subscriptionDao.save(itemId, userId);
-		return 0;			
+	public int subscribeItem(Long itemId, Long userId) throws SQLException {
+			var item = itemDaoImpl.find(itemId).orElse(null);
+				if (item == null) {
+					throw new RuntimeException("User or Item not found");
+				} 
+				return subscriptionDao.save(item.getId(), userId);
 
+	}
+
+	public SubscribedItem findSubscribedItem(Long itemId) throws SQLException {
+		var item =  subscriptionDao.find(itemId);
+		return item.orElseThrow(() -> new RuntimeException("Item not found"));
+	}
+
+	public List<Item> getSubscribedItems(Long id) {
+		subscriptionDao.findUserSubcribed(id);
+		return null;
 	}
 }

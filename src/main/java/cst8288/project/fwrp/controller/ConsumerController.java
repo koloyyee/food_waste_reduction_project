@@ -107,17 +107,10 @@ public class ConsumerController extends HttpServlet {
 
 	public void handleSubscribe(HttpServletRequest request, HttpServletResponse response) {
 		Long itemId = Long.parseLong(request.getParameter("item_id"));
-		Long userId = Long.parseLong(request.getParameter("user_id"));
-		try {
-			// deduct the quantity from the item table
-			// insert to order table
+		User user = (User) request.getSession().getAttribute("user");
 
-			int result = 0;
-			try {
-				result = itemService.subscribeItem(userId, itemId);
-			} catch (SQLException e) {
-				throw new RuntimeException(e);
-			}
+		try {
+			int result = itemService.subscribeItem(itemId, user.getId());
 			if (result < 0) {
 				request.setAttribute("errMsg", "Failed to subscribe item");
 				handleGetItem(request, response);
@@ -126,7 +119,7 @@ public class ConsumerController extends HttpServlet {
 				response.sendRedirect(request.getContextPath() + "/pages/consumer/index.jsp");
 			}
 
-		} catch (NumberFormatException | IOException e) {
+		} catch (NumberFormatException | IOException | SQLException e) {
 			log.warn(e.getLocalizedMessage());
 		}
 	}

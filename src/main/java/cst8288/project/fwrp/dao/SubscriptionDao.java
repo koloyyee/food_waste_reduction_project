@@ -1,4 +1,4 @@
-package cst8288.project.fwrp.service;
+package cst8288.project.fwrp.dao;
 
 import cst8288.project.fwrp.dao.DBDao;
 import cst8288.project.fwrp.db.DBConnection;
@@ -8,7 +8,9 @@ import cst8288.project.fwrp.utils.Logger;
 
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Connection;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -18,7 +20,7 @@ import java.util.*;
  * when the item is marked as surplus, the Consumer will be notified.
  * when the item is marked as donation, the Charitable Organization will be notified.
  */
-public class SubscriptionDao implements DBDao<SubscribedItem, Long> {
+public class SubscriptionDao {
 	private Logger log = Logger.getLogger();
 	private Connection conn;
 
@@ -26,12 +28,34 @@ public class SubscriptionDao implements DBDao<SubscribedItem, Long> {
 		this.conn = DBConnection.getInstance().getConnection();
 	}
 
-	@Override
+	public int save(Long itemId, Long userId) throws SQLException {
+
+		String sql = """
+			INSERT INTO subscription
+			(item_id, user_id)
+			VALUES (?, ?)	
+			""";	
+		try (PreparedStatement stat = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+			stat.setLong(1, itemId);
+			stat.setLong(2, userId);
+			stat.executeUpdate();
+			log.info("Subscription saved: " + itemId + " " + userId);
+			try (ResultSet generatedKeys = stat.getGeneratedKeys()) {
+				if (generatedKeys.next()) {
+					return generatedKeys.getInt(1);
+				} else {
+					log.warn("Subscription not saved: " + itemId + " " + userId);
+					return 0;
+				}
+			}
+		}
+	}
+
 	public SubscribedItem save(SubscribedItem object) throws SQLException {
 		return null;
 	}
 
-	@Override
+
 	public Optional<SubscribedItem> find(Long itemId) throws SQLException {
 		String sql = """
 				SELECT 
@@ -112,18 +136,54 @@ public class SubscriptionDao implements DBDao<SubscribedItem, Long> {
 		}
 	}
 
-	@Override
 	public List<SubscribedItem> findAll() throws SQLException {
 		return List.of();
 	}
 
-	@Override
-	public int update(Long aLong, SubscribedItem object) throws SQLException {
-		return 0;
+
+	public int delete(Long aLong) throws SQLException {
+		String sql = """
+				DELETE FROM subscription
+				WHERE item_id = ?
+				""";
+		try (PreparedStatement stat = conn.prepareStatement(sql)) {
+			stat.setLong(1, aLong);
+			int result = stat.executeUpdate();
+			log.info("Subscription deleted: " + aLong);
+			return result;
+		}
 	}
 
-	@Override
-	public int delete(Long aLong) throws SQLException {
-		return 0;
+	public	 List<Item> findUserSubcribed(Long id) {
+		String sql = """
+			    SELECT 
+			   	* 
+			    FROM subscription s	
+			   	JOIN item i ON s.item_id = i.id 
+			    Where s.user_id = ?
+				""";
+		try( var stat  = conn.prepareStatement(sql)){
+            stat.setLong(1, id);
+            var rs = stat.executeQuery();
+			
+            List<Item> items = new ArrayList<>();
+            while( rs.next()) {
+					Item item = new Item();
+					item.setId(rs.getLong("id"));
+					item.setName(rs.getString("name"));
+					item.setDescription(rs.getString("description"));
+					item.setExpiryDate(rs.getDate(rs.getString("expiry_date")).toLocalDate());
+					item.setPrice(BigDecimal.valueOf(rs.getDouble("price")));
+					item.setDiscountRate(rs.getDouble("discount_rate"));
+					item.setSurplus(rs.getBoolean("is_surplus"));
+					item.setDonation(rs.getBoolean("is_donation"));
+					item.setQuantity(rs.getInt("quantity"));
+					item.setAvailable(rs.getBoolean("is_available"));
+					item.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+					item.setUpdatedAt(rs.getTimestamp("updated_at").toLocalDateTime());
+					
+					items.add(item);
+            }
+		return items;
 	}
 }

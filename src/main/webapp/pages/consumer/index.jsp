@@ -67,11 +67,33 @@
             </form>
         </td>
         <td>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#<%= "for_sub_"  + item.getId() %>">
+  Subscribe
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="<%= "for_sub_"  + item.getId() %>" tabindex="-1" aria-labelledby="<%= "for_sub_"  + item.getId() + "_label" %>" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="<%= "for_sub"  + item.getId() +"_lablel"%>">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
             <form action="${pageContext.request.contextPath}/consumers/items/subscribe" method="POST">
+      <div class="modal-body">
+            	     Subscribe to item <%= item.getName() %>
                 <input type="hidden" name="item_id" value="<%=item.getId()%>">
                 <input type="hidden" name="user_id" value="<%=user.getId()%>">
-                <button type="submit" class="btn btn-primary"> Subscribe </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary"> Confirm</button>
+      </div>
             </form>
+    </div>
+  </div>
+</div>
         </td>
     </tr>
     <%
