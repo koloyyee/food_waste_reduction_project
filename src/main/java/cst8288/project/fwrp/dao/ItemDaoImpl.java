@@ -11,6 +11,22 @@ import cst8288.project.fwrp.model.Item;
 import cst8288.project.fwrp.model.TransactionType;
 import cst8288.project.fwrp.utils.Logger;
 
+/*************************************************************************************************************
+ * File Name: ItemDaoImpl.java Description: This file contains the ItemDaoImpl
+ * class. This class is used to perform CRUD operations on the Item table in the
+ * database.
+ * <hr>
+ * An abstract layer between DAO and controller. <br>
+ * 
+ * Consumer allowed methods: find, findAll, save, update, delete,
+ * updateQuantity, findAllNonDontation, findSurplus, findDonations, orderItem
+ * <br>
+ * Charitable Organization allowed methods: find, findAll, save, update, delete,
+ * updateQuantity, findAllNonDontation, findSurplus, findDonations, orderItem
+ * <br>
+ * Retailer allowed methods: All methods<br>
+ * 
+ ************************************************************************************************************/
 public class ItemDaoImpl implements DBDao<Item, Long> {
 	private Logger log = Logger.getLogger();
 	private Connection connection;

@@ -32,6 +32,7 @@ public class ItemService {
 	private ItemDaoImpl itemDaoImpl;
 	private SubscriptionDao subscriptionDao;
 
+
 	public ItemService() {
 		this.itemDaoImpl = new ItemDaoImpl();
 		this.subscriptionDao = new SubscriptionDao();
@@ -101,12 +102,14 @@ public class ItemService {
 
 		int updatedRow = itemDaoImpl.update(item.getId(), item);
 
+
 		if (updatedRow == 1) {
+			Optional<SubscribedItem> items =  subscriptionDao.find(item.getId());
+			if (items.isPresent()) {
 //			 send email notification to consumer
 //			 email successfully sent update notification table
-		EmailService emailService = new EmailService();
-		String body = "Discounted Item: " + item.getName() + " is now on sale at " + item.getDiscountRate() * 100 + "% off.";
-		emailService.send("koloyyee@gmail.com", "Discounted Item", body );
+				items.get().notifySubscribers("Discounted Item", "Discounted Item: " + item.getName() + " is now on sale at " + item.getDiscountRate() * 100 + "% off.");
+			}
 
 		}
 
@@ -151,4 +154,13 @@ public class ItemService {
 	public List<Item> getSubscribedItems(Long userId) throws SQLException {
 		return	subscriptionDao.findUserSubcribed(userId);
 	}
+
+	public int deleteItem(Long itemId) throws SQLException {
+		return itemDaoImpl.delete(itemId);
+	}
+
+	public Item create(Item item) throws SQLException {
+        return itemDaoImpl.save(item);
+	}
+	
 }

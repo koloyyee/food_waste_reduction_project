@@ -77,6 +77,38 @@ order.
                     <button type="submit" class="btn btn-primary">Update
                         Product
                     </button>
+
+			<!-- Button trigger modal -->
+			<button type="button" class="btn btn-danger" data-bs-toggle="modal"
+				data-bs-target=<%="#" +  "for_remove_" + item.getName()%>>Remove Item </button> <!-- Modal -->
+			<div class="modal fade" id=<%= "for_remove_" + item.getName()%> tabindex="-1"
+				aria-labelledby=<%= "for_donation_" + item.getName() + "label"%> aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" id=<%="for_remove_" + item.getName() + "label"%>>Remove Item</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"
+								aria-label="Close"></button>
+						</div>
+						<form
+							action="${pageContext.request.contextPath}/retailers/items/delete"
+							method="POST">
+							<div class="modal-body">
+								<p><%=item.getName()%>
+								Remove from Item List?
+								</p>
+								<input type="hidden" name="id" value="<%=item.getId()%>">
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-bs-dismiss="modal">Close</button>
+									<button type="submit" type="button" class="btn btn-danger">Remove</button>
+
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div> <!-- Button trigger modal -->
                 </form>
             </blockquote>
         </div>

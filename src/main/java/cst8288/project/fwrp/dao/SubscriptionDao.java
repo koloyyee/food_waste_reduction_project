@@ -88,7 +88,6 @@ public class SubscriptionDao {
 				JOIN user u ON s.user_id = u.id
 				WHERE item_id = ?
 				""";
-		List<SubscribedItem> subscribedItems = new ArrayList<>();
 
 		try (PreparedStatement stat = conn.prepareStatement(sql)) {
 			stat.setLong(1, itemId);
@@ -127,17 +126,21 @@ public class SubscriptionDao {
 
 				userSet.add(new Subscriber(user, subscriptionDate));
 			}
-			SubscribedItem subscribedItem = new SubscribedItem(item);
-			subscribedItem.addSubscribers(userSet.stream().toList());
-			log.info("SubscribedItem found: " + subscribedItem);
-			return Optional.of(subscribedItem);
+
+			if (item.getName() == null) {
+				return Optional.empty();
+			} else {
+				SubscribedItem subscribedItem = new SubscribedItem(item);
+				subscribedItem.addSubscribers(userSet.stream().toList());
+				log.info("SubscribedItem found: " + subscribedItem);
+				return Optional.of(subscribedItem);
+			}
 		}
 	}
 
 	public List<SubscribedItem> findAll() throws SQLException {
 		return List.of();
 	}
-
 
 	public List<Item> findUserSubcribed(Long id) throws SQLException {
 		String sql = """
@@ -172,6 +175,7 @@ public class SubscriptionDao {
 			return items;
 		}
 	}
+
 	public int delete(Long itemId, Long userId) throws SQLException {
 		String sql = """
 				DELETE FROM subscription

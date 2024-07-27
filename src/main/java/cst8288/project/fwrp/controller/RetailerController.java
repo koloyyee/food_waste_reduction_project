@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.Optional;
@@ -30,6 +31,22 @@ import cst8288.project.fwrp.utils.LoggerFactory;
  * <li>[] Set discount rate</li>
  * </ul>
  */
+
+/*************************************************************************************************************
+ * File Name: RetailerController.java Description: This file contains the
+ * RetailerController class. This class is used to handle retailer operations
+ * such as viewing all items, viewing all surplus, creating, updating, and
+ * deleting items, changing item status, setting if the item is for “donation”,
+ * setting quantities, and setting discount rate.
+ * <hr>
+ * An abstract layer between DAO and view. <br>
+ *
+ * Consumer allowed methods: None <br>
+ * Charitable Organization allowed methods: None <br>
+ * Retailer allowed methods: doGet, doPost, toggleDontation, toggleSurplus,
+ * toggleAvailable, rerenderItemList <br>
+ *
+ ************************************************************************************************************/
 @WebServlet(name = "RetailerController", urlPatterns = { "/retailers/*" })
 public class RetailerController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -87,10 +104,18 @@ public class RetailerController extends HttpServlet {
 		case "/items/toggle_available":
 			toggleAvailable(request, response);
 			break;
+		case "/items/delete":
+			handleDelete(request, response);
+            break;
+		case "/items/create":
+			handleCreate(request, response);
+			break;
 		default:
 			break;
 		}
 	}
+
+
 
 	private void toggleDontation(HttpServletRequest request, HttpServletResponse response) {
 		long id = Long.parseLong(request.getParameter("id"));
@@ -166,4 +191,52 @@ public class RetailerController extends HttpServlet {
 		}
 	}
 
+	private void handleDelete(HttpServletRequest request, HttpServletResponse response) {
+		Long itemId = Long.parseLong(request.getParameter("id"));
+		try {
+            int deletedRow = itemService.deleteItem(itemId);
+            if (deletedRow == 1) {
+                rerenderItemList(request, response);
+            }
+        } catch (SQLException e) {
+            log.warn(e.getLocalizedMessage());
+        }
+	}
+	
+	
+	private void handleCreate(HttpServletRequest request, HttpServletResponse response) {
+			Enumeration<String> params = request.getParameterNames();
+			Item item = new Item();
+			while (params.hasMoreElements()) {
+				String param = params.nextElement();
+				switch (param) {
+				case "name":
+					item.setName(request.getParameter(param));
+					break;
+				case "description":
+					item.setDescription(request.getParameter(param));
+					break;
+				case "price":
+					item.setPrice(new BigDecimal(request.getParameter(param)));
+					break;
+				case "discountRate":
+					item.setDiscountRate(Double.parseDouble(request.getParameter(param)));
+					break;
+				case "quantity":
+					item.setQuantity(Integer.parseInt(request.getParameter(param)));
+					break;
+				default:
+					break;
+				}
+			}
+			
+			try {
+				Item newItem = itemService.create(item);
+				if (newItem != null) {
+					rerenderItemList(request, response);
+				}
+			} catch (SQLException e) {
+				log.warn(e.getLocalizedMessage());
+			}
+	}
 }

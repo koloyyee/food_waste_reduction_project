@@ -17,11 +17,21 @@ import cst8288.project.fwrp.model.User;
 import cst8288.project.fwrp.utils.Logger;
 import cst8288.project.fwrp.utils.LoggerFactory;
 
-// for login we will need to do authentication with doFilter 
-// https://www.geeksforgeeks.org/servlet-authentication-filter/
 /**
  * Servlet implementation class AuthController user login, logout P@$$word123
  */
+/*************************************************************************************************************
+ * File Name: AuthController.java 
+ * Description: This file contains the AuthController class. This class is used to handle authentication 
+ * operations such as login and logout.
+ * <hr>
+ * An abstract layer between DAO and view. <br>
+ * 
+ * Consumer allowed methods: login, logout <br>
+ * Charitable Organization allowed methods: login, logout <br>
+ * Retailer allowed methods: login, logout <br>
+ * 
+ ************************************************************************************************************/
 @WebServlet(name = "AuthController", urlPatterns = "/auth/*")
 public class AuthController extends HttpServlet {
 	private static Logger log = LoggerFactory.getLogger();
