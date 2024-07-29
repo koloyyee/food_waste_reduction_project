@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Enumeration;
 import java.util.Optional;
 
@@ -240,6 +242,9 @@ public class RetailerController extends HttpServlet {
 
 	private void handleCreate(HttpServletRequest request, HttpServletResponse response) {
 		Enumeration<String> params = request.getParameterNames();
+		
+		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		
 		Item item = new Item();
 		while (params.hasMoreElements()) {
 			String param = params.nextElement();
@@ -260,13 +265,19 @@ public class RetailerController extends HttpServlet {
 				item.setQuantity(Integer.parseInt(request.getParameter(param)));
 				break;
 			case "expiryDate":
-				item.setQuantity(Integer.parseInt(request.getParameter(param)));
+				item.setExpiryDate(LocalDate.parse(request.getParameter(param)));
 				break;
+			case "isSurplus":
+				item.setSurplus(Boolean.parseBoolean(request.getParameter(param)));
+				break;
+				case "isDonation":
+					item.setDonation(Boolean.parseBoolean(request.getParameter(param)));
+					break;
 			default:
 				break;
 			}
 		}
-
+		log.info(item.toString());
 		try {
 			Item newItem = itemService.create(item);
 			if (newItem.getId() != null) {
@@ -275,6 +286,11 @@ public class RetailerController extends HttpServlet {
 		} catch (SQLException e) {
 			log.warn(e.getLocalizedMessage());
 		}
+	}
+
+	private LocalDate LocalDate(String parameter) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	private void handleUpdate(HttpServletRequest request, HttpServletResponse response) {

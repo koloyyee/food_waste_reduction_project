@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +43,8 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 	public Item save(Item item) throws SQLException {
 		String sql = """
 				INSERT INTO item
-				(name, description, expiry_date, price, discount_rate, is_surplus, is_donation, quantity, is_available)
+				(name, description, expiry_date, price, discount_rate, is_surplus, is_donation, quantity, is_available, created_at)
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?)
 				""";
 		try (var statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			statement.setString(1, item.getName());
@@ -54,6 +56,7 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 			statement.setBoolean(7, item.isDonation());
 			statement.setInt(8, item.getQuantity());
 			statement.setBoolean(9, item.isAvailable());
+			statement.setDate(10 , java.sql.Date.valueOf(LocalDate.now()));
 			var rowUpdated = statement.executeUpdate();
 			if (rowUpdated == 1) {
 				var result = statement.getGeneratedKeys();
@@ -118,7 +121,12 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 				item.setQuantity(result.getInt("quantity"));
 				item.setAvailable(result.getBoolean("is_available"));
 				item.setCreatedAt(result.getTimestamp("created_at").toLocalDateTime());
-				item.setUpdatedAt(result.getTimestamp("updated_at").toLocalDateTime());
+				
+				if( result.getTimestamp("updated_at") != null) {
+					item.setUpdatedAt(result.getTimestamp("updated_at").toLocalDateTime());
+				} else {
+                    item.setUpdatedAt(null);
+				}
 
 				items.add(item);
 			}
