@@ -15,36 +15,49 @@
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<form class="" action="${pageContext.request.contextPath}/consumers/items/all">
-						<button type="submit" class="btn btn-link">Shopping
-							List</button>
+					<form class=""
+						action="${pageContext.request.contextPath}/consumers/items/all">
+						<button type="submit" class="btn btn-link">Shopping List</button>
 					</form>
 				</li>
+				<%
+				User user = (User) request.getSession().getAttribute("user");
+				%>
+				<%
+				if (user == null) {
+				%>
+				<%
+				response.sendRedirect(request.getContextPath() + "/index.jsp");
+				%>
+				<%
+				} else if (!request.getServletPath().contains(user.getType().name().toLowerCase())) {
+				%>
+				<%
+				response.sendRedirect(request.getContextPath() + "/index.jsp");
+				%>
+				<%
+				} else {
+				%>
 				<li class="nav-item">
-					<%
-					User user = (User) request.getSession().getAttribute("user");
-					%> <%
- if (user == null) {
- %> <%
- response.sendRedirect(request.getContextPath() + "/index.jsp");
- %> <%
- } else if (!request.getServletPath().contains(user.getType().name().toLowerCase())) {
- %> <%
- response.sendRedirect(request.getContextPath() + "/index.jsp");
- %> <%
- } else {
- %>
 					<form
 						action="${pageContext.request.contextPath}/consumers/subscribe"
 						method="GET">
 						<input type="hidden" name="user_id" value="<%=user.getId()%>">
 						<button type="submit" class="btn btn-link">Subscribed To</button>
-					</form> <%
- }
- %>
+					</form>
+
 				</li>
-				<li class="nav-item"><a class="nav-link" href="#">Ordered
-						history</a></li>
+				<li class="nav-item">
+					<form
+						action="${pageContext.request.contextPath}/consumers/order_history"
+						method="GET">
+						<input type="hidden" name="user_id" value="<%=user.getId()%>">
+						<button type="submit" class="btn btn-link">Order History</button>
+					</form>
+				</li>
+				<%
+				}
+				%>
 			</ul>
 		</div>
 	</div>

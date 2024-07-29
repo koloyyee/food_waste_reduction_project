@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="cst8288.project.fwrp.model.User"%>
-<%@ page import="cst8288.project.fwrp.model.Item"%>
+<%@ page import="cst8288.project.fwrp.model.OrderedItem"%>
 <%@ page import="java.util.List"%>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <c:import url="/includes/header.jsp" />
 <c:import url="/includes/consumer_nav.jsp" />
@@ -11,7 +12,7 @@
 User user = (User) request.getSession().getAttribute("user");
 %>
 <%
-List<Item> items = (List<Item>) request.getAttribute("items");
+List<OrderedItem> items = (List<OrderedItem>) request.getAttribute("items");
 %>
 
 <%
@@ -22,20 +23,23 @@ if (items != null && items.size() > 0) {
 	<tr>
 		<th scope="col">Item Name</th>
 		<th scope="col">Item Description</th>
-		<th scope="col">Item Quantity</th>
-		<th scope="col">Item Price</th>
+		<th scope="col">Quantity</th>
+		<th scope="col">Price</th>
+		<th scope="col">Date Purchased</th>
 	</tr>
 	<%
-	for (Item item : items) {
+	for (OrderedItem item : items) {
 	%>
 	<tr>
 
 		<td><%=item.getName()%></td>
 		<td><%=item.getDescription()%></td>
 		<td><%=item.getQuantity()%></td>
-		<td>$<%=item.getDiscountedPrice()%>
+		<td>$<%=item.getPrice()%>
+		<td><%= item.getCreatedAtStr() %>
 		</td>
-		<%--         <td>
+		<%--         
+		<td>
             <form action="${pageContext.request.contextPath}/consumers/items" method="GET">
                 <input type="hidden" name="id" value="<%=item.getId()%>">
                 <button type="submit" class="btn btn-primary">Get Detail</button>

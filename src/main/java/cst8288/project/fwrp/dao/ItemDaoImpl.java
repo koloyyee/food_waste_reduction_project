@@ -10,6 +10,7 @@ import java.util.Optional;
 
 import cst8288.project.fwrp.db.DBConnection;
 import cst8288.project.fwrp.model.Item;
+import cst8288.project.fwrp.model.OrderedItem;
 import cst8288.project.fwrp.model.TransactionType;
 import cst8288.project.fwrp.utils.Logger;
 
@@ -356,20 +357,15 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 
 	}
 
-	public List<Item> findOrderHistory(Long userId) throws SQLException {
+	public List<OrderedItem> findOrderHistory(Long userId) throws SQLException {
 		String sql = """
 				SELECT
 				i.id,
 				i.name,
 				i.description,
-				i.price,
-				i.discount_rate,
-				i.is_surplus,
-				i.is_donation,
-				i.quantity,
-				i.is_available,
-				i.created_at,
-				i.updated_at
+				o.item_price as price,
+				o.quantity,
+				o.created_at
 				FROM
 				 `fwrp`.`order` o
 				JOIN `fwrp`.`item` i  ON o.item_id = i.id
@@ -377,23 +373,18 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 				WHERE
 				u.id = ?
 				""";
-		List<Item> items = new ArrayList<>();
+		List<OrderedItem> items = new ArrayList<>();
 		try (var stat = connection.prepareStatement(sql)) {
 			stat.setLong(1, userId);
 			var rs = stat.executeQuery();
 			while (rs.next()) {
-				Item item = new Item();
+				OrderedItem item = new OrderedItem();
 				item.setId(rs.getLong("id"));
 				item.setName(rs.getString("name"));
 				item.setDescription(rs.getString("description"));
 				item.setPrice(new BigDecimal(rs.getDouble("price")));
-				item.setDiscountRate(rs.getDouble("discount_rate"));
-				item.setSurplus(rs.getBoolean("is_surplus"));
-				item.setDonation(rs.getBoolean("is_donation"));
 				item.setQuantity(rs.getInt("quantity"));
-				item.setAvailable(rs.getBoolean("is_available"));
 				item.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
-				item.setUpdatedAt(rs.getTimestamp("updated_at").toLocalDateTime());
 				items.add(item);
 
 			}

@@ -19,7 +19,7 @@ import cst8288.project.fwrp.utils.Logger;
  * Servlet implementation class ConsumerController
  */
 @WebServlet(name = "ConsumerController", urlPatterns = { "/consumers/items/*", "/consumers/users/*",
-		"/consumers/orders/*" })
+		"/consumers/*" })
 public class ConsumerController extends HttpServlet {
 	private Logger log = Logger.getLogger();
 	private static final long serialVersionUID = 1L;
@@ -40,6 +40,7 @@ public class ConsumerController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String path = request.getPathInfo();
+		log.info("Path: " + path);
 		switch (path) {
 		case "/items/all":
 			handleGetAllItems(request, response);
@@ -50,6 +51,11 @@ public class ConsumerController extends HttpServlet {
 		case "/subscribe":
 			handleUserSubscribed(request, response);
 			break;
+		case "/order_history":
+			handleGetOrderHistory(request, response);
+			break;
+			default:
+				break;
 		}
 	}
 
@@ -71,9 +77,6 @@ public class ConsumerController extends HttpServlet {
 			break;
 		case "/items/unsubscribe":
 			handleUnsubscribe(request, response);
-			break;
-		case "/items/order_history":
-			handleGetOrderHistory(request, response);
 			break;
 		default:
 			break;
