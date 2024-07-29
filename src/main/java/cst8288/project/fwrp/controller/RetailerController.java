@@ -106,16 +106,17 @@ public class RetailerController extends HttpServlet {
 			break;
 		case "/items/delete":
 			handleDelete(request, response);
-            break;
+			break;
 		case "/items/create":
 			handleCreate(request, response);
+			break;
+		case "/items/update":
+			handleUpdate(request, response);
 			break;
 		default:
 			break;
 		}
 	}
-
-
 
 	private void toggleDontation(HttpServletRequest request, HttpServletResponse response) {
 		long id = Long.parseLong(request.getParameter("id"));
@@ -124,7 +125,7 @@ public class RetailerController extends HttpServlet {
 			if (item.isPresent()) {
 				item.get().setDonation(!item.get().isDonation());
 				int updatedRow = itemService.toggleDonationItem(item.get());
-				if(updatedRow == 1) {
+				if (updatedRow == 1) {
 					rerenderItemList(request, response);
 				}
 			}
@@ -186,7 +187,7 @@ public class RetailerController extends HttpServlet {
 		try {
 			request.getSession().setAttribute("items", itemService.getItems());
 			response.sendRedirect(request.getContextPath() + "/pages/retailer/index.jsp");
-		} catch (SQLException |  IOException e) {
+		} catch (SQLException | IOException e) {
 			log.warn(e.getLocalizedMessage());
 		}
 	}
@@ -194,49 +195,90 @@ public class RetailerController extends HttpServlet {
 	private void handleDelete(HttpServletRequest request, HttpServletResponse response) {
 		Long itemId = Long.parseLong(request.getParameter("id"));
 		try {
-            int deletedRow = itemService.deleteItem(itemId);
-            if (deletedRow == 1) {
-                rerenderItemList(request, response);
-            }
-        } catch (SQLException e) {
-            log.warn(e.getLocalizedMessage());
-        }
-	}
-	
-	
-	private void handleCreate(HttpServletRequest request, HttpServletResponse response) {
-			Enumeration<String> params = request.getParameterNames();
-			Item item = new Item();
-			while (params.hasMoreElements()) {
-				String param = params.nextElement();
-				switch (param) {
-				case "name":
-					item.setName(request.getParameter(param));
-					break;
-				case "description":
-					item.setDescription(request.getParameter(param));
-					break;
-				case "price":
-					item.setPrice(new BigDecimal(request.getParameter(param)));
-					break;
-				case "discountRate":
-					item.setDiscountRate(Double.parseDouble(request.getParameter(param)));
-					break;
-				case "quantity":
-					item.setQuantity(Integer.parseInt(request.getParameter(param)));
-					break;
-				default:
-					break;
-				}
+			int deletedRow = itemService.deleteItem(itemId);
+			if (deletedRow == 1) {
+				rerenderItemList(request, response);
 			}
-			
-			try {
-				Item newItem = itemService.create(item);
-				if (newItem.getId() != null) {
+		} catch (SQLException e) {
+			log.warn(e.getLocalizedMessage());
+		}
+	}
+
+	private void handleCreate(HttpServletRequest request, HttpServletResponse response) {
+		Enumeration<String> params = request.getParameterNames();
+		Item item = new Item();
+		while (params.hasMoreElements()) {
+			String param = params.nextElement();
+			switch (param) {
+			case "name":
+				item.setName(request.getParameter(param));
+				break;
+			case "description":
+				item.setDescription(request.getParameter(param));
+				break;
+			case "price":
+				item.setPrice(new BigDecimal(request.getParameter(param)));
+				break;
+			case "discountRate":
+				item.setDiscountRate(Double.parseDouble(request.getParameter(param)));
+				break;
+			case "quantity":
+				item.setQuantity(Integer.parseInt(request.getParameter(param)));
+				break;
+			default:
+				break;
+			}
+		}
+
+		try {
+			Item newItem = itemService.create(item);
+			if (newItem.getId() != null) {
+				rerenderItemList(request, response);
+			}
+		} catch (SQLException e) {
+			log.warn(e.getLocalizedMessage());
+		}
+	}
+
+	private void handleUpdate(HttpServletRequest request, HttpServletResponse response) {
+		Long itemId = Long.parseLong(request.getParameter("id"));
+		try {
+			Optional<Item> item = itemService.getItemById(itemId);
+			if (item.isPresent()) {
+				Enumeration<String> params = request.getParameterNames();
+				while (params.hasMoreElements()) {
+					String param = params.nextElement();
+					switch (param) {
+					case "name":
+						item.get().setName(request.getParameter(param));
+						break;
+					case "description":
+						item.get().setDescription(request.getParameter(param));
+						break;
+					case "price":
+						System.out.println(request.getParameter(param));
+						System.out.println(item.get().getOriginalPrice());
+						item.get().setPrice(new BigDecimal(request.getParameter(param)));
+						System.out.println(item.get().getOriginalPrice());
+						break;
+					case "discountRate":
+						item.get().setDiscountRate(Double.parseDouble(request.getParameter(param)) / 100);
+						break;
+					case "quantity":
+						item.get().setQuantity(Integer.parseInt(request.getParameter(param)));
+						break;
+					default:
+						break;
+					}
+				}
+				log.info(item.toString());
+				int updatedRow = itemService.updateItem(item.get());
+				if (updatedRow == 1) {
 					rerenderItemList(request, response);
 				}
-			} catch (SQLException e) {
-				log.warn(e.getLocalizedMessage());
 			}
+		} catch (SQLException e) {
+			log.warn(e.getLocalizedMessage());
+		}
 	}
 }

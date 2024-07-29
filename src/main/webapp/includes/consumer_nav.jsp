@@ -35,7 +35,7 @@
 						action="${pageContext.request.contextPath}/consumers/subscribe"
 						method="GET">
 						<input type="hidden" name="user_id" value="<%=user.getId()%>">
-						<button type="submit" class="btn btn-primary">Subscribed
+						<button type="submit" class="btn btn-link">Subscribed
 							To</button>
 					</form> <%
  }

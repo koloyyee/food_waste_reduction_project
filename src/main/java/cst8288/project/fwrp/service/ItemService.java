@@ -79,8 +79,8 @@ public class ItemService {
 	 * @return boolean
 	 * @throws SQLException
 	 */
-	public int orderSurplusItem(Long userId, Long itemId, int quantity, double itemPrice) throws SQLException {
-		return itemDaoImpl.orderItem(userId, itemId, quantity, itemPrice, TransactionType.Purchased);
+	public int orderSurplusItem(Long userId, Long itemId, int quantity, double discountedPrice) throws SQLException {
+		return itemDaoImpl.orderItem(userId, itemId, quantity, discountedPrice, TransactionType.Purchased);
 	}
 
 	/**
@@ -161,6 +161,10 @@ public class ItemService {
 
 	public Item create(Item item) throws SQLException {
         return itemDaoImpl.save(item);
+	}
+
+	public int updateItem(Item item) throws SQLException {
+		return itemDaoImpl.update(item.getId(), item);
 	}
 	
 }

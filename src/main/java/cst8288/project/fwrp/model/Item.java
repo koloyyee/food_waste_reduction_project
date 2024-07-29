@@ -83,11 +83,14 @@ public class Item {
      * discount rate start at 0% = 0.0, no discount. if 30% off, discount rate will
      * 1 - 0.3 = 0.7
      */
-    public BigDecimal getPrice() {
+    public BigDecimal getDiscountedPrice() {
 
         var bdDiscountRate = BigDecimal.valueOf(1 - discountRate);
         // round the price to 2 decimals
-        return price.multiply(bdDiscountRate).setScale(2, RoundingMode.HALF_EVEN);
+        System.out.println(price);
+        var result = price.multiply(bdDiscountRate).setScale(2, RoundingMode.HALF_EVEN);
+        System.out.println(result);
+        return result;
     }
 
 	public BigDecimal getOriginalPrice() {

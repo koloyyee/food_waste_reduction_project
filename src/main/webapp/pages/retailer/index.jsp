@@ -33,7 +33,7 @@ if (items != null && items.size() > 0) {
 		<td><%=item.getName() %> <span style="color:red" >  <%= surplusMsg %> </span></td>
 		<td><%=item.getDescription()%></td>
 		<td><%=item.getQuantity()%></td>
-		<td>$<%=item.getPrice()%></td>
+		<td>$<%=item.getOriginalPrice()%></td>
 		<td>
 			<form action="${pageContext.request.contextPath}/retailers/items"
 				method="GET">

@@ -115,9 +115,9 @@ public class ConsumerController extends HttpServlet {
 			Long userId = user.getId();
 			Long itemId = Long.parseLong(param);
 			int quantity = Integer.parseInt(request.getParameter("quantity"));
-			double itemPrice = Double.parseDouble(request.getParameter("price"));
+			double discountedPrice= Double.parseDouble(request.getParameter("discounted_price"));
 
-			int result = itemService.orderSurplusItem(userId, itemId, quantity, itemPrice);
+			int result = itemService.orderSurplusItem(userId, itemId, quantity, discountedPrice);
 			if (result < 0) {
 				request.setAttribute("errMsg", "Failed to order item");
 				handleGetItem(request, response);

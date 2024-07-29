@@ -39,7 +39,7 @@ if (item != null) {
 					<%=item.getDiscountRate() * 100%>% off!
 				</p>
 				<p>
-					Price: $<%=item.getPrice()%></p>
+					Price: $<%=item.getDiscountedPrice()%></p>
 
 				<form
 					action="${pageContext.request.contextPath}/consumers/items/order/${requestScope.item.getId()}"
@@ -47,7 +47,7 @@ if (item != null) {
 					<label for="quantity">Quantity:</label> <input type="number"
 						name="quantity" min="1" max="<%=item.getQuantity()%>" required>
 					<input type="hidden" name="id" value="<%=item.getId()%>"> <input
-						type="hidden" name="price" value="<%=item.getPrice()%>">
+						type="hidden" name="discount_price" value="<%=item.getDiscountedPrice()%>">
 					<button type="submit" class="btn btn-primary">Order it
 						now!</button>
 				</form>

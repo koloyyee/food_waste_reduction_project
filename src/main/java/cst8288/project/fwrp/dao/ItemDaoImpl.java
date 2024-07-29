@@ -46,7 +46,7 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 			statement.setString(1, item.getName());
 			statement.setString(2, item.getDescription());
 			statement.setDate(3, java.sql.Date.valueOf(item.getExpiryDate()));
-			statement.setBigDecimal(4, item.getPrice());
+			statement.setBigDecimal(4, item.getOriginalPrice());
 			statement.setDouble(5, item.getDiscountRate());
 			statement.setBoolean(6, item.isSurplus());
 			statement.setBoolean(7, item.isDonation());
@@ -93,6 +93,9 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 		return Optional.empty();
 	}
 
+	/**
+	 * This method for Retailer only
+	 * */
 	@Override
 	public List<Item> findAll() throws SQLException {
 
@@ -146,7 +149,7 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 			statement.setString(1, object.getName());
 			statement.setString(2, object.getDescription());
 			statement.setDate(3, java.sql.Date.valueOf(object.getExpiryDate()));
-			statement.setBigDecimal(4, object.getPrice());
+			statement.setBigDecimal(4, object.getOriginalPrice());
 			statement.setDouble(5, object.getDiscountRate());
 			statement.setBoolean(6, object.isSurplus());
 			statement.setBoolean(7, object.isDonation());
@@ -205,6 +208,7 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 				WHERE
 				is_donation = false AND
 				is_available = true AND
+				expiry_date > CURDATE() AND
 				quantity > 0
 				""";
 		List<Item> items = new ArrayList<>();
@@ -240,6 +244,7 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 				WHERE
 				is_surplus = true AND
 				is_available = true AND
+				expiry_date > CURDATE() AND
 				quantity > 0
 				""";
 		List<Item> items = new ArrayList<>();
@@ -275,6 +280,7 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 				WHERE
 				is_donation = true AND
 				is_available = true AND
+				expiry_date > CURDATE() AND
 				quantity > 0
 				""";
 		try (var statement = connection.prepareStatement(sql)) {
@@ -303,7 +309,7 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 	 * Transaction method for ordering, When a consumer order an item, the quantity
 	 * of the item will be reduced. then insert into the order table.
 	 */
-	public int orderItem(Long userId, Long itemId, int quantity, double itemPrice, TransactionType type) {
+	public int orderItem(Long userId, Long itemId, int quantity, double discountedPrice, TransactionType type) {
 		String updateItemSql = """
 				UPDATE Item
 				SET
@@ -327,7 +333,7 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 			orderStat.setLong(1, userId);
 			orderStat.setLong(2, itemId);
 			orderStat.setInt(3, quantity);
-			orderStat.setDouble(4, itemPrice);
+			orderStat.setDouble(4, discountedPrice);
 			orderStat.setInt(5, type.code());
 
 			int itemUpdateRow = itemStat.executeUpdate();
