@@ -60,18 +60,35 @@ public class ConsumerController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// handle post request to order the surplus items
-		String[] enpoints = request.getPathInfo().split("/");
-		String action = enpoints[2];
-		switch (action) {
-		case "order":
+		String path = request.getPathInfo();
+		log.info("Path: " + path);
+		switch (path) {
+		case "/items/order":
 			handleOrder(request, response);
 			break;
-		case "subscribe":
+		case "/items/subscribe":
 			handleSubscribe(request, response);
 			break;
-		case "unsubscribe":
+		case "/items/unsubscribe":
 			handleUnsubscribe(request, response);
 			break;
+		case "/items/order_history":
+			handleGetOrderHistory(request, response);
+			break;
+		default:
+			break;
+		}
+	}
+
+	private void handleGetOrderHistory(HttpServletRequest request, HttpServletResponse response) {
+		Long uid = request.getParameter("user_id") != null ? Long.parseLong(request.getParameter("user_id"))
+				: ((User) request.getSession().getAttribute("user")).getId();
+		
+		try {
+			request.setAttribute("items", itemService.getConsumerOrderHistory(uid));
+			request.getRequestDispatcher("/pages/consumer/order_history.jsp").forward(request, response);
+		} catch (SQLException | ServletException | IOException e) {
+			log.warn(e.getLocalizedMessage());
 		}
 	}
 

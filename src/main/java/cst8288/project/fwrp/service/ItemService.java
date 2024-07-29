@@ -169,5 +169,9 @@ public class ItemService {
 	public int updateItem(Item item) throws SQLException {
 		return itemDaoImpl.update(item.getId(), item);
 	}
+
+	public Object getConsumerOrderHistory(Long uid) throws SQLException {
+		return itemDaoImpl.findOrderHistory(uid);
+	}
 	
 }

@@ -1,5 +1,6 @@
 package cst8288.project.fwrp.dao;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -95,7 +96,7 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 
 	/**
 	 * This method for Retailer only
-	 * */
+	 */
 	@Override
 	public List<Item> findAll() throws SQLException {
 
@@ -353,6 +354,51 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 
 		return -1;
 
+	}
+
+	public List<Item> findOrderHistory(Long userId) throws SQLException {
+		String sql = """
+				SELECT
+				i.id,
+				i.name,
+				i.description,
+				i.price,
+				i.discount_rate,
+				i.is_surplus,
+				i.is_donation,
+				i.quantity,
+				i.is_available,
+				i.created_at,
+				i.updated_at
+				FROM
+				 `fwrp`.`order` o
+				JOIN `fwrp`.`item` i  ON o.item_id = i.id
+				JOIN  `fwrp`.`user` u ON u.id = o.user_id
+				WHERE
+				u.id = ?
+				""";
+		List<Item> items = new ArrayList<>();
+		try (var stat = connection.prepareStatement(sql)) {
+			stat.setLong(1, userId);
+			var rs = stat.executeQuery();
+			while (rs.next()) {
+				Item item = new Item();
+				item.setId(rs.getLong("id"));
+				item.setName(rs.getString("name"));
+				item.setDescription(rs.getString("description"));
+				item.setPrice(new BigDecimal(rs.getDouble("price")));
+				item.setDiscountRate(rs.getDouble("discount_rate"));
+				item.setSurplus(rs.getBoolean("is_surplus"));
+				item.setDonation(rs.getBoolean("is_donation"));
+				item.setQuantity(rs.getInt("quantity"));
+				item.setAvailable(rs.getBoolean("is_available"));
+				item.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+				item.setUpdatedAt(rs.getTimestamp("updated_at").toLocalDateTime());
+				items.add(item);
+
+			}
+			return items;
+		}
 	}
 
 }
