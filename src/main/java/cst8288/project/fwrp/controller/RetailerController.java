@@ -77,6 +77,12 @@ public class RetailerController extends HttpServlet {
 		case "/items/all":
 			handleGetAllItems(request, response);
 			break;
+		case "/surplus":
+			handleGetItem(request, response);
+			break;
+		case "/donations":
+			handleGetItem(request, response);
+			break;
 		default:
 			break;
 		}
@@ -251,6 +257,9 @@ public class RetailerController extends HttpServlet {
 				item.setDiscountRate(Double.parseDouble(request.getParameter(param)));
 				break;
 			case "quantity":
+				item.setQuantity(Integer.parseInt(request.getParameter(param)));
+				break;
+			case "expiryDate":
 				item.setQuantity(Integer.parseInt(request.getParameter(param)));
 				break;
 			default:
