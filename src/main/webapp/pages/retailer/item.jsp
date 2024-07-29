@@ -73,7 +73,7 @@ if (item != null) {
 							<%=item.isAvailable() ? "✅" : "❌"%>
 						</p>
 					</div>
-					<input type="hidden" name="price" value="<%=item.getPrice()%>">
+					<input type="hidden" name="price" value="<%=item.getDiscountedPrice()%>">
 					<button type="submit" class="btn btn-primary">Update
 						Product</button>
 
@@ -141,7 +141,7 @@ if (item != null) {
 		<a href="${pageContext.request.contextPath}/pages/retailer/index.jsp">
 			<button class="btn btn-primary">Back</button>
 		</a>
-
 	</div>
+	
 </main>
 <c:import url="/includes/footer.jsp" />

@@ -38,7 +38,7 @@
         </td>
         <td><%=item.getQuantity()%>
         </td>
-        <td>$<%=item.getPrice()%>
+        <td>$<%=item.getDiscountedPrice()%>
         </td>
         <td>
             <form action="${pageContext.request.contextPath}/consumers/items" method="GET">

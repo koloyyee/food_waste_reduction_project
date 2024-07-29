@@ -47,7 +47,7 @@ if (item != null) {
 					<label for="quantity">Quantity:</label> <input type="number"
 						name="quantity" min="1" max="<%=item.getQuantity()%>" required>
 					<input type="hidden" name="id" value="<%=item.getId()%>"> <input
-						type="hidden" name="discount_price" value="<%=item.getDiscountedPrice()%>">
+						type="hidden" name="discounted_price" value="<%=item.getDiscountedPrice()%>">
 					<button type="submit" class="btn btn-primary">Order it
 						now!</button>
 				</form>

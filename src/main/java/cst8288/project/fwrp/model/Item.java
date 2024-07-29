@@ -87,10 +87,7 @@ public class Item {
 
         var bdDiscountRate = BigDecimal.valueOf(1 - discountRate);
         // round the price to 2 decimals
-        System.out.println(price);
-        var result = price.multiply(bdDiscountRate).setScale(2, RoundingMode.HALF_EVEN);
-        System.out.println(result);
-        return result;
+        return  price.multiply(bdDiscountRate).setScale(2, RoundingMode.HALF_EVEN);
     }
 
 	public BigDecimal getOriginalPrice() {

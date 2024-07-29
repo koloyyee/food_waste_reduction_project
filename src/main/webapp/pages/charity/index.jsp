@@ -34,7 +34,7 @@ if (items != null && items.size() > 0) {
 		<td><%=item.getName()%></td>
 		<td><%=item.getDescription()%></td>
 		<td><%=item.getQuantity()%></td>
-		<td>$<%=item.getPrice()%></td>
+		<td>$<%=item.getDiscountedPrice()%></td>
 		<td>  
 		<form action="${pageContext.request.contextPath}/retailers/items" method="GET">
 				<input type="hidden" name="id" value="<%=item.getId()%>">
@@ -55,7 +55,7 @@ if (items != null && items.size() > 0) {
 </table>
 
 <% if (user != null) { %>
-<form action="${pageContext.request.contextPath}/pages/consumer/index.jsp">
+<form action="${pageContext.request.contextPath}/pages/charity/index.jsp">
 	<button type="submit" class="btn btn-primary">refresh list</button>
 </form>
 <%

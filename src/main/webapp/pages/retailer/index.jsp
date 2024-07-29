@@ -7,6 +7,8 @@
 
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <c:import url="/includes/header.jsp" />
+<c:import url="/includes/retailer_nav.jsp" />
+<h1> Welcome to Retailer's Page</h1>
 <%
 User user = (User) request.getSession().getAttribute("user");
 %>

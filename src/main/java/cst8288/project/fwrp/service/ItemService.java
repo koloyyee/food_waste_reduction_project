@@ -48,6 +48,9 @@ public class ItemService {
 		return itemDaoImpl.findAll();
 	}
 
+	public List<Item> getConsumerItems() throws SQLException {
+		return itemDaoImpl.findAllNonDontation();
+	}
 	/**
 	 * Get all surplus items
 	 * 

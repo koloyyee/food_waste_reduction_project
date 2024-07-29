@@ -68,21 +68,17 @@ public class RetailerController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		long id = Long.parseLong(request.getParameter("id"));
 
-		try {
-			Optional<Item> item = itemService.getItemById(id);
-			if (item.isPresent()) {
-				request.setAttribute("item", item.get());
-//				log.info(item.get().toString());
-				request.getRequestDispatcher("/pages/retailer/item.jsp").forward(request, response);
-			} else {
-				log.warn("Item not found");
-				response.sendRedirect("/pages/retailer/index.jsp");
-			}
-
-		} catch (Exception e) {
-			log.warn(e.getLocalizedMessage());
+		String path = request.getPathInfo();
+		switch (path) {
+		case "/items":
+			handleGetItem(request, response);
+			break;
+		case "/items/all":
+			handleGetAllItems(request, response);
+			break;
+		default:
+			break;
 		}
 	}
 
@@ -118,6 +114,38 @@ public class RetailerController extends HttpServlet {
 		}
 	}
 
+	// handle GET
+	private void handleGetAllItems(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			request.getSession().setAttribute("items", itemService.getItems());
+			request.getRequestDispatcher("/pages/retailer/index.jsp").forward(request, response);
+		} catch (SQLException | ServletException | IOException e) {
+			log.warn(e.getLocalizedMessage());
+		}
+
+	}
+
+	private void handleGetItem(HttpServletRequest request, HttpServletResponse response) {
+		long id = Long.parseLong(request.getParameter("id"));
+
+		try {
+			Optional<Item> item = itemService.getItemById(id);
+			if (item.isPresent()) {
+				request.setAttribute("item", item.get());
+//				log.info(item.get().toString());
+				request.getRequestDispatcher("/pages/retailer/item.jsp").forward(request, response);
+			} else {
+				log.warn("Item not found");
+				response.sendRedirect("/pages/retailer/index.jsp");
+			}
+
+		} catch (Exception e) {
+			log.warn(e.getLocalizedMessage());
+		}
+
+	}
+
+	// handle POST
 	private void toggleDontation(HttpServletRequest request, HttpServletResponse response) {
 		long id = Long.parseLong(request.getParameter("id"));
 		try {

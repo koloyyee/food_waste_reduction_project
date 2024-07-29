@@ -41,6 +41,12 @@ public class Subscriber implements Observer{
 		case Phone:
 			new SmsService().send(user.getPhone(), title, body);
 			break;
+		case Both:
+			new EmailService().send(user.getEmail(), title, body);
+			new SmsService().send(user.getPhone(), title, body);
+			break;
+		default:
+			break;
 		}
 	}
 

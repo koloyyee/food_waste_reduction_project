@@ -39,13 +39,15 @@ public class ConsumerController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String[] enpoints = request.getPathInfo().split("/");
-		String action = enpoints[1];
-		switch (action) {
-		case "items":
+		String path = request.getPathInfo();
+		switch (path) {
+		case "/items/all":
+			handleGetAllItems(request, response);
+			break;
+		case "/items":
 			handleGetItem(request, response);
 			break;
-		case "subscribe":
+		case "/subscribe":
 			handleUserSubscribed(request, response);
 			break;
 		}
@@ -64,16 +66,32 @@ public class ConsumerController extends HttpServlet {
 		case "order":
 			handleOrder(request, response);
 			break;
-		case "subscribe" :
+		case "subscribe":
 			handleSubscribe(request, response);
 			break;
-		case "unsubscribe" :
+		case "unsubscribe":
 			handleUnsubscribe(request, response);
 			break;
 		}
-
 	}
 
+	/**
+	 * All non-donation items
+	 */
+	private void handleGetAllItems(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			var items = itemService.getConsumerItems();
+			request.getSession().setAttribute("items", items);
+			response.sendRedirect(request.getContextPath() + "/pages/consumer/index.jsp");
+//            request.getRequestDispatcher("/pages/consumer/index.jsp").forward(request, response);
+		} catch (SQLException | IOException e) {
+			log.warn(e.getLocalizedMessage());
+		}
+	}
+
+	/**
+	 * Get item by Id
+	 */
 	private void handleGetItem(HttpServletRequest request, HttpServletResponse response) {
 		String param = request.getParameter("id");
 		try {
@@ -84,22 +102,20 @@ public class ConsumerController extends HttpServlet {
 				request.setAttribute("item", item.get());
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/consumer/item.jsp");
 				dispatcher.forward(request, response);
-
 			}
 		} catch (NumberFormatException | SQLException | ServletException | IOException e) {
 			log.warn(e.getLocalizedMessage());
 		}
 	}
-	
+
 	private void handleUserSubscribed(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			request.getSession().setAttribute("items", null);
-			long userId =Long.parseLong( request.getParameter("user_id"));
-			
+			long userId = Long.parseLong(request.getParameter("user_id"));
+
 			var items = itemService.getSubscribedItems(userId);
 			request.setAttribute("items", items);
-				request.getRequestDispatcher("/pages/consumer/subscribed.jsp").forward(request, response);
-//			response.sendRedirect(request.getContextPath() + "/pages/consumer/subscribed.jsp");
+			request.getRequestDispatcher("/pages/consumer/subscribed.jsp").forward(request, response);
 		} catch (SQLException | IOException | ServletException e) {
 			log.warn(e.getLocalizedMessage());
 		}
@@ -115,7 +131,7 @@ public class ConsumerController extends HttpServlet {
 			Long userId = user.getId();
 			Long itemId = Long.parseLong(param);
 			int quantity = Integer.parseInt(request.getParameter("quantity"));
-			double discountedPrice= Double.parseDouble(request.getParameter("discounted_price"));
+			double discountedPrice = Double.parseDouble(request.getParameter("discounted_price"));
 
 			int result = itemService.orderSurplusItem(userId, itemId, quantity, discountedPrice);
 			if (result < 0) {
@@ -144,11 +160,11 @@ public class ConsumerController extends HttpServlet {
 				request.setAttribute("msg", "Item subscribed successfully");
 				response.sendRedirect(request.getContextPath() + "/pages/consumer/index.jsp");
 			}
-
 		} catch (NumberFormatException | IOException | SQLException e) {
 			log.warn(e.getLocalizedMessage());
 		}
 	}
+
 	public void handleUnsubscribe(HttpServletRequest request, HttpServletResponse response) {
 		Long itemId = Long.parseLong(request.getParameter("item_id"));
 		User user = (User) request.getSession().getAttribute("user");
@@ -159,7 +175,7 @@ public class ConsumerController extends HttpServlet {
 				request.setAttribute("errMsg", "Failed to subscribe item");
 				handleGetItem(request, response);
 			} else {
-				request.setAttribute("items", itemService.getSubscribedItems(user.getId()));	
+				request.setAttribute("items", itemService.getSubscribedItems(user.getId()));
 				request.setAttribute("msg", "Item subscribed successfully");
 				request.getRequestDispatcher("/pages/consumer/subscribed.jsp").forward(request, response);
 			}

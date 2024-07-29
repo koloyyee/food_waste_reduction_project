@@ -14,9 +14,12 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link " aria-current="page"
-					href="${pageContext.request.contextPath}/pages/consumer/index.jsp">Shopping
-						List</a></li>
+				<li class="nav-item">
+					<form class="" action="${pageContext.request.contextPath}/consumers/items/all">
+						<button type="submit" class="btn btn-link">Shopping
+							List</button>
+					</form>
+				</li>
 				<li class="nav-item">
 					<%
 					User user = (User) request.getSession().getAttribute("user");
@@ -35,8 +38,7 @@
 						action="${pageContext.request.contextPath}/consumers/subscribe"
 						method="GET">
 						<input type="hidden" name="user_id" value="<%=user.getId()%>">
-						<button type="submit" class="btn btn-link">Subscribed
-							To</button>
+						<button type="submit" class="btn btn-link">Subscribed To</button>
 					</form> <%
  }
  %>
