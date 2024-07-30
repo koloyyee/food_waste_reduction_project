@@ -1,15 +1,9 @@
-INSERT INTO FWRP.`user` (name,email,password,phone,`type`,created_at,comm_method,location) VALUES
-	 ('P@$$word123','ko000029@algonquinlive.com','P@$$word123','','Consumer','2024-07-11 14:38:30',1,'ottawa'),
-	 ('Loy Yee Ko','koloyyee@gmail.com','P@$$word123','4376627621','Retailer','2024-07-15 18:39:38',1,'toronto'),
-	 ('new name','newemail@example.com','P@$$word123','','CharitableOrg','2024-07-16 16:12:08',1,'ottawa'),
-	 ('JV','jv@algonquinlive.com','P@$$word123','','Consumer','2024-07-17 17:41:05',1,'montreal');
-
 INSERT INTO FWRP.item (name,description,expiry_date,price,discount_rate,is_surplus,is_donation,quantity,is_available,created_at,updated_at) VALUES
-	 ('Candy','A sweet treat for your sweet tooth','2024-07-25',0.25,0.3,1,1,61,1,'2024-07-18 17:55:03','2024-07-18 17:55:03'),
-	 ('Chocolate Bar','A delicious snack for any time of the day','2024-12-31',1.21,0.3,0,0,50,1,'2024-07-18 17:55:03','2024-07-18 17:55:03'),
-	 ('Canned Tomato Soup','A warm and hearty meal for a cold day','2024-08-31',1.34,0.3,0,1,1,1,'2024-08-30 17:55:03','2024-07-18 17:55:03'),
-	 ('Ravioli','A quick and easy meal for busy days','2024-08-31',4.06,0.0,0,1,98,1,'2024-07-18 17:55:03','2024-07-18 17:55:03'),
-	 ('Eggs','A staple for any kitchen','2024-12-31',7.01,0.0,0,0,55,1,'2024-08-30 17:55:03','2024-07-18 17:55:03'),
+	 ('Candy','A sweet treat for your sweet tooth','2024-07-25',18.77,0.3,1,1,61,1,'2024-07-18 17:55:03','2024-07-18 17:55:03'),
+	 ('Chocolate Bar','A delicious snack for any time of the day','2024-12-31',1.21,0.3,0,0,28,1,'2024-07-18 17:55:03','2024-07-18 17:55:03'),
+	 ('Canned Tomato Soup','A warm and hearty meal for a cold day','2024-08-31',1.34,0.3,0,1,0,1,'2024-08-30 17:55:03','2024-07-18 17:55:03'),
+	 ('Ravioli','A quick and easy meal for busy days','2024-08-31',2.84,0.3,1,1,98,1,'2024-07-18 17:55:03','2024-07-18 17:55:03'),
+	 ('Eggs','A staple for any kitchen','2024-12-31',7.01,0.0,0,0,53,1,'2024-08-30 17:55:03','2024-07-18 17:55:03'),
 	 ('Milk','A nutritious drink for any time of the day','2024-12-31',6.60,0.5,1,0,64,1,'2024-08-30 17:55:03','2024-07-18 17:55:03'),
 	 ('Bread','A versatile food that can be enjoyed in many ways','2024-12-31',2.40,0.0,0,0,26,1,'2024-08-30 17:55:03','2024-07-18 17:55:03'),
 	 ('Bananas','A healthy and delicious snack','2024-12-31',6.11,0.0,0,0,25,1,'2024-07-18 17:55:03','2024-07-18 17:55:03'),
@@ -38,10 +32,20 @@ INSERT INTO FWRP.item (name,description,expiry_date,price,discount_rate,is_surpl
 	 ('Flour','A versatile ingredient that can be used in baking and cooking','2024-08-31',8.78,0.0,0,0,19,1,'2024-07-18 17:55:03','2024-07-18 17:55:03'),
 	 ('Butter','A rich and creamy ingredient that can be used in baking and cooking','2024-08-31',3.62,0.0,0,0,21,1,'2024-07-18 17:55:03','2024-07-18 17:55:03');
 INSERT INTO FWRP.item (name,description,expiry_date,price,discount_rate,is_surplus,is_donation,quantity,is_available,created_at,updated_at) VALUES
-	 ('Cheese','A delicious and versatile ingredient that can be enjoyed on its own or in dishes','2024-08-31',9.76,0.5,1,0,24,1,'2024-07-18 17:55:03','2024-07-18 17:55:03');
-
-
+	 ('Cheese','A delicious and versatile ingredient that can be enjoyed on its own or in dishes','2024-08-31',9.76,0.5,1,0,24,1,'2024-07-18 17:55:03','2024-07-18 17:55:03'),
+	 ('Salmon tomato','Salmon Flavoured tomato','2024-08-21',0.22,0.0,0,0,999,0,'2024-07-29 19:38:06',NULL);
+INSERT INTO FWRP.`order` (user_id,item_id,transaction_type,item_price,created_at,quantity) VALUES
+	 (1,2,1,2.47,'2024-07-20 13:50:49',10),
+	 (1,2,1,2.47,'2024-07-20 13:51:49',1),
+	 (1,2,1,2.47,'2024-07-20 13:54:10',20),
+	 (1,2,1,2.47,'2024-07-20 13:57:11',1),
+	 (1,2,1,0.85,'2024-07-29 14:38:52',10),
+	 (1,2,1,0.85,'2024-07-29 14:38:55',10),
+	 (1,5,1,7.01,'2024-07-29 14:39:48',2),
+	 (1,2,1,0.85,'2024-07-29 17:43:07',2),
+	 (48,3,2,0.00,'2024-07-30 14:12:38',1);
 INSERT INTO FWRP.subscription (user_id,item_id,subscription_date) VALUES
+	 (1,2,'2024-07-29 14:07:08'),
 	 (1,12,'2024-07-27 13:53:00'),
 	 (1,30,'2024-07-27 13:53:00'),
 	 (47,4,'2024-07-27 13:53:00'),
@@ -50,16 +54,15 @@ INSERT INTO FWRP.subscription (user_id,item_id,subscription_date) VALUES
 	 (47,30,'2024-07-27 13:53:00'),
 	 (48,4,'2024-07-27 13:53:00'),
 	 (48,7,'2024-07-27 13:53:00'),
-	 (48,12,'2024-07-27 13:53:00'),
-	 (48,30,'2024-07-27 13:53:00');
+	 (48,12,'2024-07-27 13:53:00');
 INSERT INTO FWRP.subscription (user_id,item_id,subscription_date) VALUES
+	 (48,30,'2024-07-27 13:53:00'),
 	 (49,4,'2024-07-27 13:53:00'),
 	 (49,12,'2024-07-27 13:53:00'),
 	 (49,30,'2024-07-27 13:53:00');
-
-	 
-	 INSERT INTO FWRP.`order` (user_id,item_id,transaction_type,item_price,created_at,quantity) VALUES
-	 (1,2,1,2.47,'2024-07-20 13:50:49',10),
-	 (1,2,1,2.47,'2024-07-20 13:51:49',1),
-	 (1,2,1,2.47,'2024-07-20 13:54:10',20),
-	 (1,2,1,2.47,'2024-07-20 13:57:11',1);
+INSERT INTO FWRP.`user` (name,email,password,phone,`type`,created_at,comm_method,location) VALUES
+	 ('MR.Consumer','c@fwrp.com','P@$$word123','+12344567899','Consumer','2024-07-11 14:38:30',3,'ottawa'),
+	 ('Ms.Retailer','r@fwrp.com','P@$$word123','4376627621','Retailer','2024-07-15 18:39:38',1,'toronto'),
+	 ('ChartiOrg','o@fwrp.com','P@$$word123','','CharitableOrg','2024-07-16 16:12:08',1,'ottawa'),
+	 ('JV','jv@algonquinlive.com','P@$$word123','','Consumer','2024-07-17 17:41:05',1,'montreal'),
+	 ('newUSer','NEw@user.com','P@$$word123','','Consumer','2024-07-27 19:28:57',1,'Vancouver');
