@@ -23,14 +23,11 @@ public class UserService{
 	}
 
 	public User loadUserByEmail(String email) throws SQLException {
-		Optional<User> user = dao.loadUserByEmail(email);
-		if(user.isPresent()) { 
-			return user.get();
-		} else {
-			String message = "No user found with email: " + email;
-			log.warn(message);
-			return new User();
-		}
+		return  dao.loadUserByEmail(email).orElse(null);
+	}
+
+	public  int update(User user) throws SQLException {
+	    return dao.update(user.getId(), user);
 	}
 
 }

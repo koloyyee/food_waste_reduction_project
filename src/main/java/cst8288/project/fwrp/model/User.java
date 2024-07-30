@@ -1,5 +1,8 @@
 package cst8288.project.fwrp.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 /**
  * User, the base class for the application. <br>
  * 3 types of Users: 1. Retailer, 2. Charitable Organization, 3. Consumer
@@ -17,6 +20,7 @@ public class User {
 	private UserType type;
 	private CommMethodType commMethod;
 	private String location;
+	private LocalDateTime createdAt;
 
 	public Long getId() {
 		return id;
@@ -80,6 +84,14 @@ public class User {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+	
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
 	}
 
 	@Override

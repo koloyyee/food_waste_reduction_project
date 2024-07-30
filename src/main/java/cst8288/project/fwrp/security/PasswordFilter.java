@@ -43,7 +43,7 @@ public class PasswordFilter implements Filter {
 			User user = userService.loadUserByEmail(inputEmail);
 			log.info(user.toString());
 
-			if ( user.getEmail() != null  && inputEmail.toLowerCase().equals(user.getEmail().toLowerCase())
+			if ( user != null  && inputEmail.toLowerCase().equals(user.getEmail().toLowerCase())
 					&& inputPassword.equals(user.getPassword())) {
 				System.out.println(user);
 				// pass the request along the filter chain

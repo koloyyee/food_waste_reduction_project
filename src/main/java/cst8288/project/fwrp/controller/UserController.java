@@ -3,6 +3,7 @@ package cst8288.project.fwrp.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 import cst8288.project.fwrp.model.CommMethodType;
 import cst8288.project.fwrp.model.User;
@@ -42,15 +43,51 @@ public class UserController extends HttpServlet {
 		String route = request.getPathInfo();
 		switch (route) {
 		case "/register":
-			register(request, response);
+			handleRegister(request, response);
 			break;
 		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String path = request.getPathInfo();
+		switch (path) {
+		case "/update":
+			handleUpdate(request, response);
+			break;
+		}
+	}
+
+	private void handleUpdate(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			Long id = Long.parseLong(request.getParameter("id"));
+			String name = request.getParameter("name");
+			String email = request.getParameter("email");
+			String phone = request.getParameter("phone");
+			String location = request.getParameter("location");
+			CommMethodType commMethod = CommMethodType.valueOf(request.getParameter("commMethod"));
+
+			User user = new User();
+			user.setId(id);
+			user.setName(name);
+			user.setEmail(email);
+			user.setPhone(phone);
+			user.setLocation(location);
+			user.setCommMethod(commMethod);
+
+			int updatedRow = userService.update(user);
+			request.getSession().setAttribute("user", userService.loadUserByEmail(email));
+			
+			if (updatedRow == 1) {
+				request.setAttribute("msg", "Profile updated successfully");
+			} else {
+				request.setAttribute("msg", "Profile updated failed! Please try again.");
+			}
+			request.getRequestDispatcher("/pages/edit_profile.jsp").forward(request, response);
+//			response.sendRedirect(request.getContextPath() + "/pages/edit_profile.jsp");
+		} catch (SQLException | IOException | ServletException e) {
+			log.warn(e.getLocalizedMessage());
+		}
 	}
 
 	/**
@@ -60,7 +97,7 @@ public class UserController extends HttpServlet {
 	 * @throws IOException
 	 * @throws ServletException
 	 */
-	private void register(HttpServletRequest request, HttpServletResponse response)
+	private void handleRegister(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 
 		try {
@@ -87,7 +124,6 @@ public class UserController extends HttpServlet {
 			user.setType(type);
 			user.setCommMethod(commMethod);
 			user.setLocation(location);
-			
 
 			userService.register(user);
 

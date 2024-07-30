@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -112,7 +113,7 @@ public class UserDaoImpl implements DBDao<User, Long> {
 
 	public Optional<User> loadUserByEmail(String reqEmail) throws SQLException {
 		String sql = """
-				SELECT id,name, email, password, type, phone, comm_method, location
+				SELECT id,name, email, password, type, phone, comm_method, location, created_at
 				FROM
 				user
 				WHERE
@@ -132,6 +133,7 @@ public class UserDaoImpl implements DBDao<User, Long> {
 				String phone = rs.getString(6);
 				CommMethodType commMethod = CommMethodType.getByCode(rs.getInt(7)).orElse(null);
 				String location = rs.getString(8);
+				LocalDateTime createdAt = rs.getTimestamp(9).toLocalDateTime();
 
 				User user = new User();
 				user.setId(id);
@@ -142,6 +144,7 @@ public class UserDaoImpl implements DBDao<User, Long> {
 				user.setPhone(phone);
 				user.setCommMethod(commMethod);
 				user.setLocation(location);
+				user.setCreatedAt(createdAt);
 
 				return Optional.of(user);
 
@@ -191,24 +194,35 @@ public class UserDaoImpl implements DBDao<User, Long> {
 	@Override
 	public int update(Long id, User user) throws SQLException {
 		String sql = """
-				UPDATE users
+				UPDATE `fwrp`.`user`
 				SET
 				name = ?,
 				email = ?,
-				phone = ?
-				type = ?
-				comm_method = ?
+				phone = ?,
+				comm_method = ?,
 				location = ?
 				WHERE
 				id = ?
 				""";
-		try (Connection conn = DBConnection.getInstance().getConnection()) {
+		try (
 
-			PreparedStatement stat = conn.prepareStatement(sql);
-
+				PreparedStatement stat = conn.prepareStatement(sql);) {
+			stat.setString(1, user.getName());
+			stat.setString(2, user.getEmail());
+			stat.setString(3, user.getPhone());
+			stat.setInt(4, user.getCommMethod().code());
+			stat.setString(5, user.getLocation());
+			stat.setLong(6, id);
+			int rowAffected = stat.executeUpdate();
+			if (rowAffected == 1) {
+				log.info("User updated successfully: %s".formatted(user.getEmail()));
+				return rowAffected;
+			} else {
+				log.warn("Failed to update user: %s".formatted(user.getEmail()));
+				return -1;
+			}
 		}
 
-		return -1;
 	}
 
 	@Override
