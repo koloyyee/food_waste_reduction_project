@@ -16,7 +16,7 @@ if (user == null) {
 response.sendRedirect(request.getContextPath() + "/index.jsp");
 %>
 <%
-} else if (!request.getServletPath().contains(user.getType().name().toLowerCase())) {
+} else if (!request.getServletPath().contains("charity")) {
 %>
 
 <%
@@ -25,10 +25,11 @@ response.sendRedirect(request.getContextPath() + "/index.jsp");
 <%
 }
 %>
-<!-- 
+ <!-- 
 view item detail. Consumer can order item from here. so view, and create
 order.
  -->
+ 
 <%
 Item item = (Item) request.getAttribute("item");
 %>

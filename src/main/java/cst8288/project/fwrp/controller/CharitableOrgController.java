@@ -16,7 +16,7 @@ import cst8288.project.fwrp.utils.LoggerFactory;
 /**
  * Servlet implementation class CharitableOrgController
  */
-@WebServlet(name = "CharitableOrgController", urlPatterns = { "/charitable_orgs/*" })
+@WebServlet(name = "CharitableOrgController", urlPatterns = { "/charitable_orgs/*", "/charitable_orgs" })
 public class CharitableOrgController extends HttpServlet {
 	private static final Logger log = LoggerFactory.getLogger();
 	private ItemService itemService;
