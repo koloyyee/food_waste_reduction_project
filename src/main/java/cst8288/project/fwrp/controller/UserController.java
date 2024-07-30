@@ -76,6 +76,9 @@ public class UserController extends HttpServlet {
 			user.setCommMethod(commMethod);
 
 			int updatedRow = userService.update(user);
+
+			// get the user from database no matter update success or not
+			// if success we will get the latest version, if not it will be the version existed.
 			request.getSession().setAttribute("user", userService.loadUserByEmail(email));
 			
 			if (updatedRow == 1) {
@@ -84,7 +87,6 @@ public class UserController extends HttpServlet {
 				request.setAttribute("msg", "Profile updated failed! Please try again.");
 			}
 			request.getRequestDispatcher("/pages/edit_profile.jsp").forward(request, response);
-//			response.sendRedirect(request.getContextPath() + "/pages/edit_profile.jsp");
 		} catch (SQLException | IOException | ServletException e) {
 			log.warn(e.getLocalizedMessage());
 		}

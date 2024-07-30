@@ -50,18 +50,14 @@
 		<%
 		if (user != null) {
 		%>
-
-
 		<div class="d-inline-flex" style="gap: 1.3rem">
 			<p>${user.getName()}</p>
-			<a href="${pageContext.request.contextPath}/pages/edit_profile.jsp" class="btn btn-secondary">Edit Profile </a>
+			<a href="${pageContext.request.contextPath}/pages/edit_profile.jsp" class="btn btn-outline-secondary">Edit Profile </a>
 			<form action="${pageContext.request.contextPath}/auth/logout"
 				method="POST">
 				<button class="btn btn-secondary">Logout</button>
 			</form>
-
 		</div>
-
 
 		<%
 		}

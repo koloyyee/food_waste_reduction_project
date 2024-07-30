@@ -83,8 +83,10 @@
     <filter-name>UserTypeFilter</filter-name>
     <url-pattern>/consumers/*</url-pattern>
   </filter-mapping>
-  <filter-mapping>
+<!--  <filter-mapping>
     <filter-name>UserTypeFilter</filter-name>
     <url-pattern>/charitable_orgs/*</url-pattern>
   </filter-mapping>
-</web-app>
+ -->
+ 
+  </web-app>

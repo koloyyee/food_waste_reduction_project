@@ -293,6 +293,7 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 				expiry_date > CURDATE() AND
 				quantity > 0
 				""";
+		List<Item> items = new ArrayList<>();
 		try (var statement = connection.prepareStatement(sql)) {
 			var result = statement.executeQuery();
 			while (result.next()) {
@@ -309,10 +310,11 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 				item.setAvailable(result.getBoolean("is_available"));
 				item.setCreatedAt(result.getTimestamp("created_at").toLocalDateTime());
 				item.setUpdatedAt(result.getTimestamp("updated_at").toLocalDateTime());
-				return List.of(item);
+				
+				items.add(item);
 			}
 		}
-		return List.of();
+		return items;
 	}
 
 	/**
