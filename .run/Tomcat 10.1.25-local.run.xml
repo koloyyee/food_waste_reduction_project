@@ -1,6 +1,8 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Tomcat 10.1.25-local" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 10.1.26 fwrp" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="JavaSE-17">
     <option name="BROWSER_ID" value="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" />
+    <option name="UPDATE_ON_FRAME_DEACTIVATION" value="true" />
+    <option name="HOT_SWAP_CLASSES_ON_FRAME_DEACTIVATION" value="true" />
     <option name="UPDATING_POLICY" value="restart-server" />
     <deployment>
       <artifact name="fwrp:war">
@@ -16,6 +18,7 @@
     </deployment>
     <server-settings>
       <option name="BASE_DIRECTORY_NAME" value="2fe72382-0aeb-4ab0-8ead-4f1947df3da3" />
+      <option name="DEPLOY_TOMCAT_APPS" value="true" />
     </server-settings>
     <predefined_log_file enabled="true" id="Tomcat" />
     <predefined_log_file enabled="true" id="Tomcat Catalina" />

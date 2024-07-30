@@ -112,7 +112,7 @@ public class UserDaoImpl implements DBDao<User, Long> {
 
 	public Optional<User> loadUserByEmail(String reqEmail) throws SQLException {
 		String sql = """
-				SELECT id, email, password, type, name
+				SELECT id,name, email, password, type, phone, comm_method, location
 				FROM
 				user
 				WHERE
@@ -125,10 +125,13 @@ public class UserDaoImpl implements DBDao<User, Long> {
 
 			while (rs.next()) {
 				Long id = Long.valueOf(rs.getInt(1));
-				String email = rs.getString(2);
-				String password = rs.getString(3);
-				UserType type = UserType.valueOf(rs.getString(4));
-				String name = rs.getString(5);
+				String name = rs.getString(2);
+				String email = rs.getString(3);
+				String password = rs.getString(4);
+				UserType type = UserType.valueOf(rs.getString(5));
+				String phone = rs.getString(6);
+				CommMethodType commMethod = CommMethodType.getByCode(rs.getInt(7)).orElse(null);
+				String location = rs.getString(8);
 
 				User user = new User();
 				user.setId(id);
@@ -136,6 +139,9 @@ public class UserDaoImpl implements DBDao<User, Long> {
 				user.setPassword(password);
 				user.setName(name);
 				user.setType(type);
+				user.setPhone(phone);
+				user.setCommMethod(commMethod);
+				user.setLocation(location);
 
 				return Optional.of(user);
 
