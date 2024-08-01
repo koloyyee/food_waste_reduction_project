@@ -41,16 +41,16 @@ class AuthControllerTest {
 //		HttpServletRequest request = Mockito.mock( HttpServletRequest.class);
 //		HttpServletResponse response = Mockito.mock( HttpServletResponse.class);
 //
-//				when(request.getParameter("email")).thenReturn("c@fwrp.com");
-//        when(request.getParameter("password")).thenReturn("P@$$word123");
+//				when(request.getParameter("email")).thenReturn("test@fwrp.com");
+//        when(request.getParameter("password")).thenReturn("TE$T_123");
 //
 //
 //        String email = request.getParameter("email");
 //        String password = request.getParameter("password");
 //
 //        User user = new User();
-//      	user.setEmail("c@fwrp.com");
-//      	user.setPassword("P@$$word123");
+//      	user.setEmail("test@fwrp.com");
+//      	user.setPassword("TE$T_123");
 //
 //      	assertEquals(user.getEmail(), email);
 //      	assertEquals(user.getPassword(), password);
@@ -63,9 +63,6 @@ class AuthControllerTest {
 
 	@Test
 	public void testFindUserByEmail() throws SQLException {
-//		User user = new User();
-//		user.setEmail("c@fwrp.com");
-//		when(userService.loadUserByEmail("c@fwrp.com")).thenReturn(user);
 	}
 
 }
