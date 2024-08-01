@@ -10,13 +10,16 @@ public class PropertiesLoader {
 	private static Properties properties = new Properties();
 
 	private PropertiesLoader() {}
-
+	
 	public static Properties load() {
+		return load("/application.properties");
+	}
+
+	public static Properties load(String path) {
 
 		try  {
 			// inputStream 
-		InputStream in = PropertiesLoader.class.getClassLoader().getResourceAsStream("/application.properties");
-		log.info(in + " loaded successfully");
+		InputStream in = PropertiesLoader.class.getClassLoader().getResourceAsStream(path);
 		properties.load(in);
 		} catch (IOException e) {
 			// logger

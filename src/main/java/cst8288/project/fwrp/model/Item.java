@@ -1,5 +1,7 @@
 package cst8288.project.fwrp.model;
 
+import cst8288.project.fwrp.utils.exception.IllegalDiscountRate;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
@@ -102,7 +104,9 @@ public class Item {
         return discountRate;
     }
 
+    /** discount rate must be  between 0.0 - 0.1*/
     public void setDiscountRate(double discountRate) {
+      if( discountRate < 0 || discountRate > 1) throw new IllegalDiscountRate(discountRate);
         this.discountRate = discountRate;
     }
 
