@@ -24,7 +24,6 @@ public class PasswordFilter implements Filter {
 
 	private Logger log = Logger.getLogger(PasswordFilter.class.getName());
 	private UserService userService = new UserService();
-
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
@@ -83,4 +82,7 @@ public class PasswordFilter implements Filter {
 		// TODO Auto-generated method stub
 	}
 
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
 }
