@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
  * Subject - Notification
  * Observer - User????
  * */
+@Deprecated
 public class Notification {
     private Long id;
     private User user;

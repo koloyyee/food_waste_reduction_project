@@ -4,10 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-/**
- * Differentiated by transaction type.
- * promote immutability.
- */
 public class Order {
 	private Long id;
 	private User user;

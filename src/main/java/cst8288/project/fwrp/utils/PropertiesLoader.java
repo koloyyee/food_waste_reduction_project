@@ -12,7 +12,7 @@ public class PropertiesLoader {
 	private PropertiesLoader() {}
 	
 	public static Properties load() {
-		return load("/application.properties");
+		return load("application.properties");
 	}
 
 	public static Properties load(String path) {

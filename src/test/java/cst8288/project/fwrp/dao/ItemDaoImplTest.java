@@ -1,4 +1,4 @@
-package fwrp.dao;
+package cst8288.project.fwrp.dao;
 
 import static org.junit.jupiter.api.Assertions.*;
 

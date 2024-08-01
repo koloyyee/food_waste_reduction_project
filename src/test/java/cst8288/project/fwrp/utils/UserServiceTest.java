@@ -1,8 +1,6 @@
-package fwrp;
+package cst8288.project.fwrp.utils;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.Test;
 
 import cst8288.project.fwrp.service.UserService;
 import cst8288.project.fwrp.utils.exception.NoSuchUserException;

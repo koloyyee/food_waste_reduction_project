@@ -9,8 +9,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 /**
- * Items
- * This is will be Observer in pub/sub pattern
+ * Item class represents the item in the store.
  */
 public class Item {
     private Long id;
