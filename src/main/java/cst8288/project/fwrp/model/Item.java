@@ -104,7 +104,7 @@ public class Item {
         return discountRate;
     }
 
-    /** discount rate must be  between 0.0 - 0.1*/
+    /** discount rate must be  between 0.0 - 1.0*/
     public void setDiscountRate(double discountRate) {
       if( discountRate < 0 || discountRate > 1) throw new IllegalDiscountRate(discountRate);
         this.discountRate = discountRate;
@@ -117,6 +117,9 @@ public class Item {
         return ChronoUnit.WEEKS.between(LocalDate.now(), this.expiryDate) <= 1;
     }
 
+    public boolean hasExpired() {
+        return ChronoUnit.DAYS.between(this.expiryDate, LocalDate.now() )  > 0;
+    }
     public boolean isSurplus() {
         return isSurplus;
     }
@@ -134,6 +137,7 @@ public class Item {
     }
 
     public void setQuantity(int quantity) {
+        if(quantity < 0) throw new IllegalArgumentException("Quantity cannot be negative");
         this.quantity = quantity;
     }
 

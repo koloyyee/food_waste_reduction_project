@@ -2,6 +2,7 @@ package cst8288.project.fwrp.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Differentiated by transaction type.
@@ -25,6 +26,7 @@ public class Order {
 	}
 
 	public void setUser(User user) {
+		if(user == null ) throw new IllegalArgumentException("User cannot be null");
 		this.user = user;
 	}
 
@@ -33,6 +35,7 @@ public class Order {
 	}
 
 	public void setItem(Item item) {
+		if(item == null ) throw new IllegalArgumentException("Item cannot be null");
 		this.item = item;
 	}
 
@@ -41,6 +44,7 @@ public class Order {
 	}
 
 	public void setQuantity(int quantity) {
+		if(quantity < 0 ) throw new IllegalArgumentException("Quantity cannot be negative");
 		this.quantity = quantity;
 	}
 
@@ -49,6 +53,7 @@ public class Order {
 	}
 
 	public void setTransactionType(TransactionType transactionType) {
+		if(transactionType == null ) throw new IllegalArgumentException("TransactionType cannot be null");
 		this.transactionType = transactionType;
 	}
 
@@ -57,11 +62,16 @@ public class Order {
 	}
 
 	public void setTotalAmount(BigDecimal totalAmount) {
+		if(totalAmount == null ) throw new IllegalArgumentException("TotalAmount cannot be null");
+		if(totalAmount.compareTo(BigDecimal.ZERO) < 0 ) throw new IllegalArgumentException("TotalAmount cannot be negative");
 		this.totalAmount = totalAmount;
 	}
 
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
+	}
+	public void setCreatedAt() {
+		this.createdAt = LocalDateTime.now();
 	}
 
 	public void setCreatedAt(LocalDateTime createdAt) {

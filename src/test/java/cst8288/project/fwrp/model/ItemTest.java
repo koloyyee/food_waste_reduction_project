@@ -55,4 +55,13 @@ class ItemTest {
 		boolean actual = item.checkSurplus();
 		assertEquals(expected, actual);
 	}
+
+	@Test void shouldBeExpired() {
+		Item item = new Item();
+		item.setAvailable(true);
+		item.setExpiryDate(LocalDate.of(2020, 8, 2));
+		boolean expected = true;
+		boolean actual = item.hasExpired();
+		assertEquals(expected, actual);
+	}
 }
