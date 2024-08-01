@@ -11,13 +11,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.Mockito.*;
 import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class PasswordFilterTest {
@@ -49,5 +49,27 @@ class PasswordFilterTest {
 
 		filter.doFilter(request, response, chain);
 		verify(chain).doFilter(request, response);
+	}
+
+	@Test
+	void testEmailNotFound() throws SQLException, ServletException, IOException {
+		when(request.getParameter("email")).thenReturn("not_found@email.com");
+		when(request.getParameter("password")).thenReturn("M0ck!1234");
+		jakarta.servlet.http.HttpSession session = mock(jakarta.servlet.http.HttpSession.class);
+		when(request.getSession()).thenReturn(session);
+
+		User user = new User();
+		user.setEmail("existing@email.com");
+		user.setPassword("M0ck!1234");
+		UserService userService = mock(UserService.class);
+
+		when(userService.loadUserByEmail("not_found@email.com")).thenReturn(null);
+		filter.setUserService(userService);
+		filter.doFilter(request, response, chain);
+
+		// Mocking request attributes
+		when(request.getAttributeNames()).thenReturn(Collections.enumeration(Arrays.asList("errMsg")));
+		when(request.getAttribute("errMsg")).thenReturn("username or password is wrong");
+		verify(response).sendRedirect(contains("index.jsp"));
 	}
 }

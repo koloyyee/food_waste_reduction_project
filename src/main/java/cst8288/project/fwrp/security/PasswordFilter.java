@@ -40,11 +40,10 @@ public class PasswordFilter implements Filter {
 //		log.info(inputPassword + " " + inputEmail);
 		try {
 			User user = userService.loadUserByEmail(inputEmail);
-			log.info(user.toString());
 
 			if ( user != null  && inputEmail.toLowerCase().equals(user.getEmail().toLowerCase())
 					&& inputPassword.equals(user.getPassword())) {
-				System.out.println(user);
+				log.info(user.toString());
 				// pass the request along the filter chain
 				request.setAttribute("user", user);
 				request.setAttribute("isValid", true);
@@ -53,6 +52,8 @@ public class PasswordFilter implements Filter {
 			} else {
 				String msg = "username or password is wrong";
 				req.getSession().setAttribute("errMsg", msg);
+			var val = 	req.getSession().getAttribute("errMsg");
+				req.getSession().getAttribute("errMsg");
 				resp.sendRedirect(req.getContextPath() + "/index.jsp");
 			}
 
@@ -82,6 +83,7 @@ public class PasswordFilter implements Filter {
 		// TODO Auto-generated method stub
 	}
 
+	// for testing
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
