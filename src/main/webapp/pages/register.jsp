@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
-<c:import url="/includes/header.jsp" />
+<%-- <c:import url="/includes/header.jsp" /> --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -89,9 +89,10 @@ String errMsg = (String) request.getAttribute("errMsg");
 				</div>
 
 			</div>
-		</form>
-		<a href="${pageContext.request.contextPath}/"> Have an Account?
+		<a href="${pageContext.request.contextPath}/pages/login.jsp"> Have an Account?
 			Click here to Login</a>
+		</form>
+		<a href="${pageContext.request.contextPath}/">Home</a>
 	</main>
 </body>
 <script>

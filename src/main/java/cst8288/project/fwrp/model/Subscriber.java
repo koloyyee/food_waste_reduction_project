@@ -18,6 +18,8 @@ public class Subscriber implements Observer{
 		this.user = user;
 		this.SubscribersDate = SubscribersDate;
 	}
+	
+	@Override
 	public User getUser() {
 		return user;
 	}
@@ -57,4 +59,5 @@ public class Subscriber implements Observer{
 				", SubscribersDate=" + SubscribersDate +
 				'}';
 	}
+
 }

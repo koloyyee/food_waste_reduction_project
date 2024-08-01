@@ -8,5 +8,6 @@ import cst8288.project.fwrp.service.NotificationService;
  */
 public interface Observer {
 //	CommMethodType getCommMethodType();
-	void update(String title, String body);
+	void update(String title, String body); 
+	User getUser();
 }

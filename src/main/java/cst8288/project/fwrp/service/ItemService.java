@@ -112,6 +112,7 @@ public class ItemService {
 //			 send email notification to consumer
 //			 email successfully sent update notification table
 				items.get().notifySubscribers("Discounted Item", "Discounted Item: " + item.getName() + " is now on sale at " + item.getDiscountRate() * 100 + "% off.");
+
 			}
 
 		}

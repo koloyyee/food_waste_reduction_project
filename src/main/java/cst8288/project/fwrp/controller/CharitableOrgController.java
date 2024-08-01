@@ -35,6 +35,7 @@ public class CharitableOrgController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	// TODO: needs testing
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String path = request.getPathInfo();
@@ -51,6 +52,7 @@ public class CharitableOrgController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	// TODO: needs testing
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		String path = request.getPathInfo();
 		log.info("Path: " + path);
@@ -61,6 +63,7 @@ public class CharitableOrgController extends HttpServlet {
 		}
 	}
 
+	// TODO: needs testing
 	private void handleClaimItem(HttpServletRequest request, HttpServletResponse response) {
 		try {
             Long itemId = Long.parseLong(request.getParameter("id"));
@@ -81,6 +84,7 @@ public class CharitableOrgController extends HttpServlet {
         }
 	}
 
+	// TODO: needs testing
 	private void handleGetItem(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			Long itemId = Long.parseLong(request.getParameter("id"));

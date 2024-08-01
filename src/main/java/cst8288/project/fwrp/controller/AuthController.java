@@ -50,7 +50,7 @@ public class AuthController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		String route = request.getPathInfo();
@@ -74,6 +74,7 @@ public class AuthController extends HttpServlet {
 		doGet(request, response);
 	}
 
+	// TODO: needs testing
 	protected void login(HttpServletRequest request, HttpServletResponse response) {
 
 		boolean isValid = (boolean) request.getAttribute("isValid");
