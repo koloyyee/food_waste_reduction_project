@@ -51,4 +51,11 @@ public class NotificationTest {
         assertNotEquals(CommMethodType.Email, notification.getCommMethod());
         assertEquals(sentTime, notification.getSentTime());
     }
+    
+    @Test
+    public void testCommMethodTypeCode() {
+        assertEquals(1, CommMethodType.Email.code);
+        assertEquals(2, CommMethodType.Phone.code);
+        assertEquals(3, CommMethodType.Both.code);
+    }
 }
