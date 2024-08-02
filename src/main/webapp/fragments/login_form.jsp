@@ -1,4 +1,4 @@
-<form class="card p-3" action="auth/login" method="POST"
+<form class="card p-3" action="${pageContext.request.contextPath}/auth/login" method="POST"
 	  id="login-form">
 	<div class="card-body">
 		<div class="mb-3 form-floating">
