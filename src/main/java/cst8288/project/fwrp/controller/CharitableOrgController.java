@@ -55,7 +55,6 @@ public class CharitableOrgController extends HttpServlet {
 	// TODO: needs testing
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		String path = request.getPathInfo();
-		log.info("Path: " + path);
 		switch (path) {
 		case "/items/claim":
 			handleClaimItem(request, response);
@@ -68,7 +67,6 @@ public class CharitableOrgController extends HttpServlet {
 		try {
             Long itemId = Long.parseLong(request.getParameter("id"));
             User user = (User) request.getSession().getAttribute("user");
-            log.info("User: " + user);
             Long userId = user.getId();
             int quantity = Integer.parseInt(request.getParameter("quantity"));
            var result  =  itemService.claimItem(itemId, userId, quantity);

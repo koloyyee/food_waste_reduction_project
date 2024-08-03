@@ -85,7 +85,6 @@ response.sendRedirect(request.getContextPath() + "/index.jsp");
 
 			<div class="mx-auto">
 				<button type="submit" class="btn btn-primary">Update</button>
-				<button type="reset" class="btn btn-secondary">Cancel</button>
 			</div>
 		</div>
 	</form>
