@@ -43,21 +43,30 @@ public class CharitableOrgController extends HttpServlet {
 		case "/items":
 			handleGetItem(request, response);
 			break;
+		case "/claim_history":
+			handleGetClaimedItem(request, response);
+			break;
 		default:
+			response.sendRedirect(request.getContextPath() + "/pages/charity/index.jsp");
 			break;
 		}
 	}
 
+
 	/**
+	 * @throws IOException 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
 	// TODO: needs testing
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String path = request.getPathInfo();
 		switch (path) {
 		case "/items/claim":
 			handleClaimItem(request, response);
+			break;
+		default:
+			response.sendRedirect(request.getContextPath() + "/pages/charity/index.jsp");
 			break;
 		}
 	}
@@ -82,7 +91,6 @@ public class CharitableOrgController extends HttpServlet {
         }
 	}
 
-	// TODO: needs testing
 	private void handleGetItem(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			Long itemId = Long.parseLong(request.getParameter("id"));
@@ -98,4 +106,16 @@ public class CharitableOrgController extends HttpServlet {
 		}
 	}
 
+	private void handleGetClaimedItem(HttpServletRequest request, HttpServletResponse response) {
+			
+		Long uid = request.getParameter("user_id") != null ? Long.parseLong(request.getParameter("user_id"))
+				: ((User) request.getSession().getAttribute("user")).getId();
+		
+		try {
+			request.setAttribute("items", itemService.getClaimedHistory(uid));
+			request.getRequestDispatcher("/pages/charity/claim_history.jsp").forward(request, response);
+		} catch (SQLException | ServletException | IOException e) {
+			log.warn(e.getLocalizedMessage());
+		}
+	}
 }

@@ -18,8 +18,7 @@ import cst8288.project.fwrp.utils.Logger;
 /**
  * Servlet implementation class ConsumerController
  */
-@WebServlet(name = "ConsumerController", urlPatterns = { "/consumers/items/*", "/consumers/users/*",
-		"/consumers/*" })
+@WebServlet(name = "ConsumerController", urlPatterns = { "/consumers/items/*", "/consumers/users/*", "/consumers/*" })
 public class ConsumerController extends HttpServlet {
 	private Logger log = Logger.getLogger();
 	private static final long serialVersionUID = 1L;
@@ -54,8 +53,10 @@ public class ConsumerController extends HttpServlet {
 		case "/order_history":
 			handleGetOrderHistory(request, response);
 			break;
-			default:
-				break;
+		default:
+
+			response.sendRedirect(request.getContextPath() + "/pages/consumer/index.jsp");
+			break;
 		}
 	}
 
@@ -79,6 +80,7 @@ public class ConsumerController extends HttpServlet {
 			handleUnsubscribe(request, response);
 			break;
 		default:
+			response.sendRedirect(request.getContextPath() + "/pages/consumer/index.jsp");
 			break;
 		}
 	}
@@ -86,7 +88,7 @@ public class ConsumerController extends HttpServlet {
 	private void handleGetOrderHistory(HttpServletRequest request, HttpServletResponse response) {
 		Long uid = request.getParameter("user_id") != null ? Long.parseLong(request.getParameter("user_id"))
 				: ((User) request.getSession().getAttribute("user")).getId();
-		
+
 		try {
 			request.setAttribute("items", itemService.getConsumerOrderHistory(uid));
 			request.getRequestDispatcher("/pages/consumer/order_history.jsp").forward(request, response);

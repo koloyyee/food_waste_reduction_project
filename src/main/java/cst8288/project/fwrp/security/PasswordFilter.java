@@ -12,17 +12,19 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Logger;
 
 import cst8288.project.fwrp.model.User;
 import cst8288.project.fwrp.service.UserService;
+import cst8288.project.fwrp.utils.Logger;
+import cst8288.project.fwrp.utils.LoggerFactory;
 
 /**
  * Servlet Filter implementation class PasswordFilter
  */
 public class PasswordFilter implements Filter {
 
-	private Logger log = Logger.getLogger(PasswordFilter.class.getName());
+//	private Logger log = Logger.getLogger(PasswordFilter.class.getName());
+	private Logger log = LoggerFactory.getLogger();
 	private UserService userService = new UserService();
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
@@ -43,7 +45,6 @@ public class PasswordFilter implements Filter {
 
 			if ( user != null  && inputEmail.toLowerCase().equals(user.getEmail().toLowerCase())
 					&& inputPassword.equals(user.getPassword())) {
-				log.info(user.toString());
 				// pass the request along the filter chain
 				request.setAttribute("user", user);
 				request.setAttribute("isValid", true);
@@ -54,11 +55,11 @@ public class PasswordFilter implements Filter {
 				req.getSession().setAttribute("errMsg", msg);
 			var val = 	req.getSession().getAttribute("errMsg");
 				req.getSession().getAttribute("errMsg");
-				resp.sendRedirect(req.getContextPath() + "/index.jsp");
+				resp.sendRedirect(req.getContextPath() + "/pages/login.jsp");
 			}
 
 		} catch (SQLException e) {
-			log.warning(e.getLocalizedMessage());
+			log.warn(e.getLocalizedMessage());
 		}
 
 	}

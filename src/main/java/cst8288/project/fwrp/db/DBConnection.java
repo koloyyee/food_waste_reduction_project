@@ -38,7 +38,8 @@ public class DBConnection {
 		user = properties.getProperty("user");
 		pass = properties.getProperty("pass");
 		url = "jdbc:%s://%s:%s/%s".formatted(db, host, port, dbname);
-
+		
+		log.info("DBConnection: %s".formatted(url));
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connection = DriverManager.getConnection(url, user, pass);

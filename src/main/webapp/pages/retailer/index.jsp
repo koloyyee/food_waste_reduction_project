@@ -165,7 +165,7 @@ if (user != null) {
 <%
 } else {
 %>
-<a href="${pageContext.request.contextPath}/index.jsp">
+	<a href="${pageContext.request.contextPath}/pages/login.jsp">
 	<button class="btn btn-primary">Please login first</button>
 </a>
 <%

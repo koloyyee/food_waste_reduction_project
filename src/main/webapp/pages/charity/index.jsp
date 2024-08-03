@@ -7,6 +7,7 @@
 
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <c:import url="/includes/header.jsp" />
+<c:import url="/includes/charity_nav.jsp" />
 <main>
 	<h1>Welcome to Charitable Organization Page!</h1>
 	<%
@@ -69,7 +70,7 @@ List<Item> items = (List<Item>) request.getSession().getAttribute("items");
 	<%
 	} else {
 	%>
-	<a href="${pageContext.request.contextPath}/index.jsp">
+	<a href="${pageContext.request.contextPath}/pages/login.jsp">
 		<button class="btn btn-primary">Please login first</button>
 	</a>
 	<%

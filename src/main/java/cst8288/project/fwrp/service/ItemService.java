@@ -178,5 +178,9 @@ public class ItemService {
 	public int claimItem(Long itemId, Long userId, int quantity) throws SQLException {
 		return itemDaoImpl.orderItem(userId, itemId, quantity, 0, TransactionType.Donated);
 	}
+
+	public Object getClaimedHistory(Long uid) throws SQLException {
+		return itemDaoImpl.findOrderHistory(uid);
+	}
 	
 }

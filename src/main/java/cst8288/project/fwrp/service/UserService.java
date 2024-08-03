@@ -23,7 +23,7 @@ public class UserService{
 	}
 
 	public User loadUserByEmail(String email) throws SQLException {
-		return  dao.loadUserByEmail(email).orElse(null);
+		return  dao.loadUserByEmail(email).orElseThrow(() -> new NoSuchUserException("User not found"));
 	}
 
 	public  int update(User user) throws SQLException {

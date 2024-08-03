@@ -113,7 +113,7 @@ public class AuthController extends HttpServlet {
 		} else {
 			response.setContentType("text/html");
 			try {
-				response.sendRedirect("index.jsp");
+				response.sendRedirect("/pages/login.jsp");
 			} catch (IOException e) {
 				log.warn(e.getLocalizedMessage());
 			}

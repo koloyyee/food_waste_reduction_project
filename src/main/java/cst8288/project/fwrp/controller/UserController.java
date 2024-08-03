@@ -40,12 +40,14 @@ public class UserController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String route = request.getPathInfo();
-		switch (route) {
-		case "/register":
-			handleRegister(request, response);
-			break;
-		}
+//		String route = request.getPathInfo();
+//		switch (route) {
+//		case "/register":
+//			handleRegister(request, response);
+//			break;
+//		}
+		
+		doPost(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -54,6 +56,11 @@ public class UserController extends HttpServlet {
 		switch (path) {
 		case "/update":
 			handleUpdate(request, response);
+			break;
+		case "/register":
+			handleRegister(request, response);
+			break;
+		default:
 			break;
 		}
 	}
