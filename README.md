@@ -36,11 +36,26 @@ host=localhost
 port=3306
 dbname=FWRP
 ```
+## Eclipse setup
+Make sure you have Eclipse IDE installed on your machine.
+Go to the proect `fwrp` right click go to the bottom select `properties`,
+then search for `facet` make sure Dynamic Web Module has been selected.
+![img.png](doc/img.png)
+
+## Running as .war Project
+```bash
+mvn clean package
+```
+
 ## Screen Shots
 #### Login
+![login.png](doc/login.png)
 #### Register
+![reg.png](doc/reg.png)
 #### Retailer
+![retailer.png](doc/retailer.png)
 #### Charitable Organization
+![charity.png](doc/charity.png)
 #### Consumer
-
+![consumer.png](doc/consumer.png)
 #### References
