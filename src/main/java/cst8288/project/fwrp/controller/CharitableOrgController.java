@@ -38,7 +38,6 @@ public class CharitableOrgController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	// TODO: needs testing
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String path = request.getPathInfo();
@@ -115,6 +114,12 @@ public class CharitableOrgController extends HttpServlet {
 		}
 	}
 
+	/**
+	 * Return Charitable Organization claimed items
+	 *
+	 * @param request
+	 * @param response
+	 */
 	private void handleGetClaimedItem(HttpServletRequest request, HttpServletResponse response) {
 			
 		Long uid = request.getParameter("user_id") != null ? Long.parseLong(request.getParameter("user_id"))

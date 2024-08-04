@@ -115,10 +115,21 @@ public class Item {
     public boolean checkSurplus() {
         return ChronoUnit.WEEKS.between(LocalDate.now(), this.expiryDate) <= 1;
     }
-
+	
+	/**
+	 * If the expiry date is 1-week away from now, it should return is expired
+	 */
     public boolean hasExpired() {
         return ChronoUnit.DAYS.between(this.expiryDate, LocalDate.now() )  > 0;
     }
+   	
+	/**
+	 * If the quantity is less than 10, it should return low in stock.
+	 */
+	public boolean lowInStock() {
+		return quantity < 10;
+	}
+   
     public boolean isSurplus() {
         return isSurplus;
     }

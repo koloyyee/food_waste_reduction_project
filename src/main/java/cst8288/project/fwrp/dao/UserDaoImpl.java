@@ -19,8 +19,6 @@ import cst8288.project.fwrp.utils.LoggerFactory;
 
 /**
  * User DAO implementation.
- * 
- * 
  */
 public class UserDaoImpl implements DBDao<User, Long> {
 
@@ -28,6 +26,15 @@ public class UserDaoImpl implements DBDao<User, Long> {
 
 	private Connection conn = DBConnection.getInstance().getConnection();
 
+	/**
+	 * Save a new user to the database.
+	 *
+	 * @param newUser the user to save
+	 *
+	 * @return the saved user
+	 *
+	 * @throws SQLException if the user cannot be saved
+	 */
 	@Override
 	public User save(User newUser) throws SQLException {
 		String sql = """
@@ -75,6 +82,15 @@ public class UserDaoImpl implements DBDao<User, Long> {
 
 	}
 
+	/**
+	 * Find a user by id.
+	 *
+	 * @param id the id of the user to find
+	 *
+	 * @return the user if found
+	 *
+	 * @throws SQLException if the user cannot be found
+	 */
 	@Override
 	public Optional<User> find(Long id) throws SQLException {
 		String sql = """
@@ -116,6 +132,15 @@ public class UserDaoImpl implements DBDao<User, Long> {
 		return Optional.empty();
 	}
 
+	/**
+	 * Find a user by email.
+	 *
+	 * @param reqEmail the email of the user to find
+	 *
+	 * @return the user if found
+	 *
+	 * @throws SQLException if the user cannot be found
+	 */
 	public Optional<User> loadUserByEmail(String reqEmail) throws SQLException {
 		String sql = """
 				SELECT id,name, email, password, type, phone, comm_method, location, created_at
@@ -158,7 +183,15 @@ public class UserDaoImpl implements DBDao<User, Long> {
 			return Optional.empty();
 		}
 	}
-
+	/**
+	 * Find a user by email.
+	 *
+	 * @param reqEmail the email of the user to find
+	 *
+	 * @return the user if found
+	 *
+	 * @throws SQLException if the user cannot be found
+	 */
 	@Override
 	public List<User> findAll() throws SQLException {
 		String sql = """
@@ -196,6 +229,16 @@ public class UserDaoImpl implements DBDao<User, Long> {
 		}
 	}
 
+	/**
+	 * Update a user.
+	 *
+	 * @param id the id of the user to update
+	 * @param user the user to update
+	 *
+	 * @return the number of rows affected
+	 *
+	 * @throws SQLException if the user cannot be updated
+	 */
 	@Override
 	public int update(Long id, User user) throws SQLException {
 		String sql = """

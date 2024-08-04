@@ -31,8 +31,9 @@ if (items != null && items.size() > 0) {
 	for (Item item : items) {
 	%>
 	<% String surplusMsg = (boolean) item.checkSurplus() ? "(Expiring less than 1 week!)" : ""; %>
+	<% String lowStockMsg = (boolean) item.lowInStock() ? "(Low in Stock under 5!)" : ""; %>
 	<tr>
-		<td><%=item.getName() %> <span style="color:red" >  <%= surplusMsg %> </span></td>
+		<td><%=item.getName() %> <span style="color:red" >  <%= surplusMsg %>  <%= lowStockMsg %></span></td>
 		<td><%=item.getDescription()%></td>
 		<td><%=item.getQuantity()%></td>
 		<td>$<%=item.getOriginalPrice()%></td>

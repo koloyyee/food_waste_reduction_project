@@ -40,7 +40,7 @@ dbname=FWRP
 Make sure you have Eclipse IDE installed on your machine.
 Go to the proect `fwrp` right click go to the bottom select `properties`,
 then search for `facet` make sure Dynamic Web Module has been selected.
-![img.png](doc/img.png)
+![img.png](design_doc/img.png)
 
 ## Running as .war Project
 ```bash
@@ -49,13 +49,13 @@ mvn clean package
 
 ## Screen Shots
 #### Login
-![login.png](doc/login.png)
+![login.png](design_doc/login.png)
 #### Register
-![reg.png](doc/reg.png)
+![reg.png](design_doc/reg.png)
 #### Retailer
-![retailer.png](doc/retailer.png)
+![retailer.png](design_doc/retailer.png)
 #### Charitable Organization
-![charity.png](doc/charity.png)
+![charity.png](design_doc/charity.png)
 #### Consumer
-![consumer.png](doc/consumer.png)
+![consumer.png](design_doc/consumer.png)
 #### References

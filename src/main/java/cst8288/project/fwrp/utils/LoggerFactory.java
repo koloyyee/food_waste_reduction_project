@@ -8,20 +8,19 @@ package cst8288.project.fwrp.utils;
  */
 public class LoggerFactory {
 
-
-	public static void main(String[] args) {
-		
-		Logger l1 = LoggerFactory.getLogger();
-		Logger l2 = LoggerFactory.getLogger("application.log");
-		l1.info("Hello from Log 1");
-		l2.info("Hello from Log 2", true);
-		l1.warn("Warning from Log 1");
-		l2.warn("Warning from Log 2", true);
-	}
-
+	/**
+	 * Factory produce a logger
+	 * @return Logger
+	 */
 	public static Logger getLogger() {
 		return Logger.getLogger();
 	}
+	/**
+	 * Get a logger with a specific filename
+	 *
+	 * @param filename
+	 * @return Logger
+	 */
 	public static Logger getLogger(String filename) {
 		Logger logger = Logger.getLogger();
 		logger.setFile(filename);

@@ -37,19 +37,18 @@ public class UserController extends HttpServlet {
 		this.validation = new Validation();
 		this.userService = new UserService();
 	}
-
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-//		String route = request.getPathInfo();
-//		switch (route) {
-//		case "/register":
-//			handleRegister(request, response);
-//			break;
-//		}
-		
 		doPost(request, response);
 	}
-
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest, HttpServletResponse)
+	 *      response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String path = request.getPathInfo();

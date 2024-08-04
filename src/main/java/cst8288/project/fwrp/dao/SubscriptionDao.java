@@ -55,6 +55,13 @@ public class SubscriptionDao {
 //		return null;
 //	}
 
+	/**
+	 * Find subscribed item by item id with all subscribers
+	 *
+	 * @param itemId
+	 * @return
+	 * @throws SQLException
+	 */
 	public Optional<SubscribedItem> find(Long itemId) throws SQLException {
 		String sql = """
 				SELECT
@@ -137,12 +144,24 @@ public class SubscriptionDao {
 			}
 		}
 	}
-
-	public List<SubscribedItem> findAll() throws SQLException {
-		return List.of();
-	}
-
-
+//	/**
+//	 * Find all items that a user has subscribed to
+//	 *
+//	 * @param id
+//	 * @return
+//	 * @throws SQLException
+//	 */
+//	public List<SubscribedItem> findAll() throws SQLException {
+//		return List.of();
+//	}
+//
+	/**
+	 * Find all items that a user has subscribed to
+	 *
+	 * @param id
+	 * @return
+	 * @throws SQLException
+	 */
 	public List<Item> findUserSubscribed(Long id) throws SQLException {
 		String sql = """
 				   SELECT

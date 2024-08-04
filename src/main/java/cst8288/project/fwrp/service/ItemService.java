@@ -17,20 +17,21 @@ import cst8288.project.fwrp.model.User;
 import cst8288.project.fwrp.utils.Logger;
 import cst8288.project.fwrp.utils.LoggerFactory;
 
-/*************************************************************************************************************
+/**
+ *
  * File Name: ItemService.java Description: This file contains the ItemService
  * class. This class is used to perform CRUD operations on the Item table in the
  * database.
  * <hr>
  * An abstract layer between DAO and controller. <br>
- * 
+ *
  * Consumer allowed methods: getSurplusItems, getItemById, orderSurplusItems
  * <br>
  * Charitable Organization allowed methods: getDonationItems,
  * getDonationItemById, orderDonationItems <br>
  * Retailer allowed methods: All methods<br>
- * 
- ************************************************************************************************************/
+ *
+ * */
 public class ItemService {
 	private static Logger log = LoggerFactory.getLogger();
 	private ItemDaoImpl itemDaoImpl;

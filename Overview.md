@@ -10,7 +10,7 @@ Controller - assignee: David: DB Connection, create project architecture, Contro
 
 ### Architecture
 
-![Architecture](doc/food_waste_reduction.drawio.png)
+![Architecture](design_doc/food_waste_reduction.drawio.png)
 
 ### Entities
 

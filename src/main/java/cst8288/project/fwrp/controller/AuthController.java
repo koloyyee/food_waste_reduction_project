@@ -74,7 +74,12 @@ public class AuthController extends HttpServlet {
 		doGet(request, response);
 	}
 
-	// TODO: needs testing
+	/**
+	 * Login method, set user session based on user type and redirect to respective jsp
+	 *
+	 * @param request
+	 * @param response
+	 */
 	protected void login(HttpServletRequest request, HttpServletResponse response) {
 
 		boolean isValid = (boolean) request.getAttribute("isValid");
@@ -120,7 +125,12 @@ public class AuthController extends HttpServlet {
 		}
 
 	}
-
+	/**
+	 * Logout method, invalidate session
+	 *
+	 * @param request
+	 * @param response
+	 */
 	protected void logout(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		session.invalidate();

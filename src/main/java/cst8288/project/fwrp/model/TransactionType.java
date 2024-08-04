@@ -1,5 +1,8 @@
 package cst8288.project.fwrp.model;
 
+/**
+ * Transaction Type
+ */
 public enum TransactionType {
 	Purchased(1), Donated(2);
 

@@ -27,7 +27,9 @@ public class DBConnection {
 	private String url = "";
 	private Properties properties;
 
-
+	/**
+	 * Private constructor to prevent instantiation.
+	 */
 	private DBConnection() {
 		properties = PropertiesLoader.load();
 		String db = properties.getProperty("db");

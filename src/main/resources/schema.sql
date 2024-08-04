@@ -1,3 +1,5 @@
+CREATE DATABASE IF NOT EXISTS FWRP;
+
 -- FWRP.item definition
 
 CREATE TABLE `item` (
