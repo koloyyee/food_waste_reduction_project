@@ -17,6 +17,11 @@ import cst8288.project.fwrp.model.UserType;
 import cst8288.project.fwrp.utils.Logger;
 import cst8288.project.fwrp.utils.LoggerFactory;
 
+/**
+ * User DAO implementation.
+ * 
+ * 
+ */
 public class UserDaoImpl implements DBDao<User, Long> {
 
 	private final static Logger log = LoggerFactory.getLogger();

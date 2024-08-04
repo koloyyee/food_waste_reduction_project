@@ -17,6 +17,7 @@ import cst8288.project.fwrp.utils.Logger;
 
 /**
  * Servlet implementation class ConsumerController
+ * Consumer allowed methods: getAllItems, getItem, subscribe, order, unsubscribe, getOrderHistory 
  */
 @WebServlet(name = "ConsumerController", urlPatterns = { "/consumers/items/*", "/consumers/users/*", "/consumers/*" })
 public class ConsumerController extends HttpServlet {
@@ -98,8 +99,13 @@ public class ConsumerController extends HttpServlet {
 	}
 
 	/**
-	 * All non-donation items
-	 */
+	 * Get all items can be view by Consumers
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 * @throws ServletException
+     */
 	private void handleGetAllItems(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			var items = itemService.getConsumerItems();
@@ -113,6 +119,11 @@ public class ConsumerController extends HttpServlet {
 
 	/**
 	 * Get item by Id
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 * @throws ServletException
 	 */
 	private void handleGetItem(HttpServletRequest request, HttpServletResponse response) {
 		String param = request.getParameter("id");
@@ -130,6 +141,13 @@ public class ConsumerController extends HttpServlet {
 		}
 	}
 
+	
+	/**
+	 * Get Consumer's subscribed items
+	 * 
+	 * @param request
+	 * @param response
+	 */
 	private void handleUserSubscribed(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			request.getSession().setAttribute("items", null);
@@ -143,11 +161,20 @@ public class ConsumerController extends HttpServlet {
 		}
 	}
 
+	/**
+	 * Handle Consumer's order
+	 * 
+	 * deduct the quantity from the item table
+	 * 
+	 *  insert to order table
+	 *  
+	 * @param request
+	 * @param response
+	 */
 	private void handleOrder(HttpServletRequest request, HttpServletResponse response) {
 		String param = request.getParameter("id");
 		try {
-			// deduct the quantity from the item table
-			// insert to order table
+			
 
 			User user = (User) request.getSession().getAttribute("user");
 			Long userId = user.getId();
@@ -169,6 +196,14 @@ public class ConsumerController extends HttpServlet {
 		}
 	}
 
+	/**
+	 * Handle user subscribe to an item and get notification if the product is mark as surplus
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 * @throws ServletException
+	 * */
 	public void handleSubscribe(HttpServletRequest request, HttpServletResponse response) {
 		Long itemId = Long.parseLong(request.getParameter("item_id"));
 		User user = (User) request.getSession().getAttribute("user");
@@ -187,6 +222,15 @@ public class ConsumerController extends HttpServlet {
 		}
 	}
 
+	/**
+	 *  Handling user unsubscribing from an item
+	 *  
+	 *  @param request
+	 *  @param response
+	 *  @throws IOException
+	 *  @throws ServletException
+	 *  
+	 * */
 	public void handleUnsubscribe(HttpServletRequest request, HttpServletResponse response) {
 		Long itemId = Long.parseLong(request.getParameter("item_id"));
 		User user = (User) request.getSession().getAttribute("user");

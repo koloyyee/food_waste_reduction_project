@@ -50,7 +50,9 @@ public class SubscribedItem implements Subject {
 
 	@Override
 	public void notifySubscribers(String title, String body) throws SQLException {
-		ExecutorService mailService = Executors.newSingleThreadExecutor();
+//		ExecutorService mailService = Executors.newSingleThreadExecutor();
+		ExecutorService mailService = Executors.newFixedThreadPool(10);
+//		ExecutorService mailService = Executors.newVirtualThreadPerTaskExecutor(); // Java 21
 		// reference: https://stackoverflow.com/questions/49672140/java-sending-multiple-mails-in-parallel
 		for (Observer subscriber : subscribers) {
 			mailService.submit(() -> subscriber.update(title, body));

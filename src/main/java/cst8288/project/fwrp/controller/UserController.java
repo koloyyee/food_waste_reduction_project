@@ -65,6 +65,16 @@ public class UserController extends HttpServlet {
 		}
 	}
 
+	
+	/**
+	 * Update user profile
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 * @throws SQLException
+	 * */
 	private void handleUpdate(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			Long id = Long.parseLong(request.getParameter("id"));
@@ -165,10 +175,6 @@ public class UserController extends HttpServlet {
 
 		} catch (SQLException | RuntimeException e) {
 			log.warn(e.getLocalizedMessage());
-			// return failed snippet?
-//			PrintWriter writer = response.getWriter();
-//			writer.print(e.getLocalizedMessage());
-//
 			response.setContentType("text/html");
 			request.setAttribute("errMsg", e.getLocalizedMessage());
 			response.sendRedirect(request.getContextPath() + "/pages/register.jsp");

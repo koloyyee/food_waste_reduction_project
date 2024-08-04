@@ -20,7 +20,7 @@ import cst8288.project.fwrp.utils.LoggerFactory;
 /**
  * Servlet implementation class AuthController user login, logout P@$$word123
  */
-/*************************************************************************************************************
+/**
  * File Name: AuthController.java 
  * Description: This file contains the AuthController class. This class is used to handle authentication 
  * operations such as login and logout.
@@ -31,7 +31,7 @@ import cst8288.project.fwrp.utils.LoggerFactory;
  * Charitable Organization allowed methods: login, logout <br>
  * Retailer allowed methods: login, logout <br>
  * 
- ************************************************************************************************************/
+ **/
 @WebServlet(name = "AuthController", urlPatterns = "/auth/*")
 public class AuthController extends HttpServlet {
 	private static Logger log = LoggerFactory.getLogger();

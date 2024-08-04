@@ -67,6 +67,7 @@ public class RetailerController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
+	 *     
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -122,7 +123,15 @@ public class RetailerController extends HttpServlet {
 		}
 	}
 
-	// handle GET
+	/**
+	 * Get all the items
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 * @throws ServletException
+	 * 
+	 * */
 	private void handleGetAllItems(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			request.getSession().setAttribute("items", itemService.getItems());
@@ -133,6 +142,15 @@ public class RetailerController extends HttpServlet {
 
 	}
 
+	/**
+	 * Get item by id
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 * @throws ServletException
+	 * 
+	 */
 	private void handleGetItem(HttpServletRequest request, HttpServletResponse response) {
 		long id = Long.parseLong(request.getParameter("id"));
 
@@ -140,7 +158,6 @@ public class RetailerController extends HttpServlet {
 			Optional<Item> item = itemService.getItemById(id);
 			if (item.isPresent()) {
 				request.setAttribute("item", item.get());
-//				log.info(item.get().toString());
 				request.getRequestDispatcher("/pages/retailer/item.jsp").forward(request, response);
 			} else {
 				log.warn("Item not found");
@@ -153,7 +170,13 @@ public class RetailerController extends HttpServlet {
 
 	}
 
-	// handle POST
+	/**
+	 * Handle marking and unmarking an item as donation.
+	 * 
+	 * @param request
+	 * @param response
+	 * 
+	 * */
 	private void toggleDontation(HttpServletRequest request, HttpServletResponse response) {
 		long id = Long.parseLong(request.getParameter("id"));
 		try {
@@ -170,6 +193,15 @@ public class RetailerController extends HttpServlet {
 		}
 	}
 
+	/**
+	 * Handling marking and unmarking an item as surplus.
+	 *
+	 * When marking as surplus, it will trigger a notification to the consumer with JavaMail
+	 * 
+	 * @param request
+	 * @param response
+	 * 
+	 * */
 	private void toggleSurplus(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		long id = Long.parseLong(request.getParameter("id"));
@@ -203,6 +235,13 @@ public class RetailerController extends HttpServlet {
 		}
 	}
 
+	/**
+	 * Handling marking and unmarking an item as available.
+	 * 
+	 * @param request
+	 * @param response
+	 * 
+	 * */
 	private void toggleAvailable(HttpServletRequest request, HttpServletResponse response) {
 		long id = Long.parseLong(request.getParameter("id"));
 		try {
@@ -219,6 +258,13 @@ public class RetailerController extends HttpServlet {
 		}
 	}
 
+	/**
+     * Rerender the item list for page refresh
+     * 
+     * @param request
+     * @param response
+     * 
+     */
 	private void rerenderItemList(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			request.getSession().setAttribute("items", itemService.getItems());
@@ -227,7 +273,13 @@ public class RetailerController extends HttpServlet {
 			log.warn(e.getLocalizedMessage());
 		}
 	}
-
+	
+	/**
+     * Handle delete item
+     * 
+     * @param request
+     * @param response
+     */
 	private void handleDelete(HttpServletRequest request, HttpServletResponse response) {
 		Long itemId = Long.parseLong(request.getParameter("id"));
 		try {

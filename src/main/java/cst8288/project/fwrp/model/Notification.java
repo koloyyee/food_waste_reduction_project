@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 
 /**
  * Subject - Notification
- * Observer - User????
  * */
 @Deprecated
 public class Notification {

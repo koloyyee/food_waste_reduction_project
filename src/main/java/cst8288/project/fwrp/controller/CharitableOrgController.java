@@ -15,6 +15,9 @@ import cst8288.project.fwrp.utils.LoggerFactory;
 
 /**
  * Servlet implementation class CharitableOrgController
+ *
+ * Charitable Organization allowed methods: getItems, getItemById
+ *  
  */
 @WebServlet(name = "CharitableOrgController", urlPatterns = { "/charitable_orgs/*", "/charitable_orgs" })
 public class CharitableOrgController extends HttpServlet {
@@ -58,7 +61,6 @@ public class CharitableOrgController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	// TODO: needs testing
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String path = request.getPathInfo();
 		switch (path) {
@@ -71,7 +73,11 @@ public class CharitableOrgController extends HttpServlet {
 		}
 	}
 
-	// TODO: needs testing
+	/**
+     * Handle claim item with user id, item id and quantity
+     * 
+     * @param request
+     */
 	private void handleClaimItem(HttpServletRequest request, HttpServletResponse response) {
 		try {
             Long itemId = Long.parseLong(request.getParameter("id"));
@@ -91,13 +97,16 @@ public class CharitableOrgController extends HttpServlet {
         }
 	}
 
+	/**
+	 * Handle get item request by id
+	 * 
+	 * @param request
+	 * @param response
+	 */
 	private void handleGetItem(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			Long itemId = Long.parseLong(request.getParameter("id"));
 			var item = itemService.getItemById(itemId);
-//  				if(!item.isPresent()) {
-//					response.sendRedirect("/pages/charity/index.jsp");
-//  				}  else {
 			request.setAttribute("item", item.get());
 			request.getRequestDispatcher("/pages/charity/item.jsp").forward(request, response);
 //  				}

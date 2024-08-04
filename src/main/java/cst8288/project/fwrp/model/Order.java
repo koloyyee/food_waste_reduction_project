@@ -4,6 +4,10 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+
+/**
+ * Used by Consumer order and Charitable claim donation
+ * */
 public class Order {
 	private Long id;
 	private User user;

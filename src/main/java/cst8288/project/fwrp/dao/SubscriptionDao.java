@@ -51,9 +51,9 @@ public class SubscriptionDao {
 		}
 	}
 
-	public SubscribedItem save(SubscribedItem object) throws SQLException {
-		return null;
-	}
+//	public SubscribedItem save(SubscribedItem object) throws SQLException {
+//		return null;
+//	}
 
 	public Optional<SubscribedItem> find(Long itemId) throws SQLException {
 		String sql = """

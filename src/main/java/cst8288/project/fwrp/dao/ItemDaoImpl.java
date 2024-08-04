@@ -388,13 +388,20 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 			stat.setLong(1, userId);
 			var rs = stat.executeQuery();
 			while (rs.next()) {
-				OrderedItem item = new OrderedItem();
-				item.setId(rs.getLong("id"));
-				item.setName(rs.getString("name"));
-				item.setDescription(rs.getString("description"));
-				item.setPrice(new BigDecimal(rs.getDouble("price")));
-				item.setQuantity(rs.getInt("quantity"));
-				item.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+				OrderedItem item = new OrderedItem(
+						rs.getLong("id"),
+						rs.getString("name"),
+						rs.getString("description"),
+						new BigDecimal(rs.getDouble("price")),
+						rs.getInt("quantity"),
+						rs.getTimestamp("created_at").toLocalDateTime()
+						);
+//				item.setId(rs.getLong("id"));
+//				item.setName(rs.getString("name"));
+//				item.setDescription(rs.getString("description"));
+//				item.setPrice(new BigDecimal(rs.getDouble("price")));
+//				item.setQuantity(rs.getInt("quantity"));
+//				item.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
 				items.add(item);
 
 			}

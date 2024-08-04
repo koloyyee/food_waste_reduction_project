@@ -5,7 +5,6 @@ package cst8288.project.fwrp.model;
  *
  */
 public interface Observer {
-//	CommMethodType getCommMethodType();
 	void update(String title, String body); 
 	User getUser();
 }
