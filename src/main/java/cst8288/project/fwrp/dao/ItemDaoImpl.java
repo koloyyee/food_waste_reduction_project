@@ -91,7 +91,10 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 				item.setQuantity(result.getInt("quantity"));
 				item.setAvailable(result.getBoolean("is_available"));
 				item.setCreatedAt(result.getTimestamp("created_at").toLocalDateTime());
-				item.setUpdatedAt(result.getTimestamp("updated_at").toLocalDateTime());
+				var updatedAt = result.getTimestamp("updated_at");
+				if (updatedAt != null) {
+					item.setUpdatedAt(updatedAt.toLocalDateTime());
+				}
 				return Optional.of(item);
 			}
 		}

@@ -7,6 +7,7 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Optional;
 
 /**
  * Item class represents the item in the store.
@@ -45,8 +46,8 @@ public class Item {
         this.createdAt = createdAt;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
+    public Optional<LocalDateTime> getUpdatedAt() {
+        return Optional.of( updatedAt);
     }
 
     public String getName() {
