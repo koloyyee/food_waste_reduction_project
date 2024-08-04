@@ -31,9 +31,9 @@ if (items != null && items.size() > 0) {
 	%>
 	<tr>
 
-		<td><%=item.getName()%></td>
-		<td><%=item.getDescription()%></td>
-		<td><%=item.getQuantity()%></td>
+		<td><%=item.name()%></td>
+		<td><%=item.description()%></td>
+		<td><%=item.quantity()%></td>
 		<td><%= item.getCreatedAtStr() %>
 		</td>
 		<%--         
@@ -49,7 +49,7 @@ if (items != null && items.size() > 0) {
 				<form
 					action="${pageContext.request.contextPath}/charitable_orgs/items"
 					method="GET">
-					<input type="hidden" name="id" value="<%=item.getId()%>">
+					<input type="hidden" name="id" value="<%=item.id()%>">
 					<button type="submit" class="btn btn-primary">Get Detail</button>
 				</form>
 <%-- 						<form

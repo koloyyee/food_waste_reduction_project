@@ -32,9 +32,9 @@ if (items != null && items.size() > 0) {
 	%>
 	<tr>
 
-		<td><%=item.getName()%></td>
-		<td><%=item.getDescription()%></td>
-		<td><%=item.getQuantity()%></td>
+		<td><%=item.name()%></td>
+		<td><%=item.description()%></td>
+		<td><%=item.quantity()%></td>
 		<td>$<%=item.getPrice()%>
 		<td><%= item.getCreatedAtStr() %>
 		</td>
@@ -49,17 +49,17 @@ if (items != null && items.size() > 0) {
 		<td>
 			<!-- Button trigger modal -->
 			<button type="button" class="btn btn-primary" data-bs-toggle="modal"
-				data-bs-target="#<%="for_sub_" + item.getId()%>">Subscribe</button>
+				data-bs-target="#<%="for_sub_" + item.id()%>">Subscribe</button>
 			<!-- Modal -->
-			<div class="modal fade" id="<%="for_sub_" + item.getId()%>"
+			<div class="modal fade" id="<%="for_sub_" + item.id()%>"
 				tabindex="-1"
-				aria-labelledby="<%="for_sub_" + item.getId() + "_label"%>"
+				aria-labelledby="<%="for_sub_" + item.id() + "_label"%>"
 				aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title"
-								id="<%="for_sub" + item.getId() + "_lablel"%>">Modal title</h5>
+								id="<%="for_sub" + item.id() + "_lablel"%>">Modal title</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal"
 								aria-label="Close"></button>
 						</div>
@@ -68,8 +68,8 @@ if (items != null && items.size() > 0) {
 							method="POST">
 							<div class="modal-body">
 								Subscribe to item
-								<%=item.getName()%>
-								<input type="hidden" name="item_id" value="<%=item.getId()%>">
+								<%=item.name()%>
+								<input type="hidden" name="item_id" value="<%=item.id()%>">
 								<input type="hidden" name="user_id" value="<%=user.getId()%>">
 							</div>
 							<div class="modal-footer">
