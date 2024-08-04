@@ -3,6 +3,10 @@ package cst8288.project.fwrp.service;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import cst8288.project.fwrp.dao.ItemDaoImpl;
 import cst8288.project.fwrp.dao.SubscriptionDao;
@@ -32,12 +36,11 @@ public class ItemService {
 	private ItemDaoImpl itemDaoImpl;
 	private SubscriptionDao subscriptionDao;
 
-
 	public ItemService() {
 		this.itemDaoImpl = new ItemDaoImpl();
 		this.subscriptionDao = new SubscriptionDao();
 	}
-	
+
 	/**
 	 * Get all items
 	 * 
@@ -51,6 +54,7 @@ public class ItemService {
 	public List<Item> getConsumerItems() throws SQLException {
 		return itemDaoImpl.findAllNonDontation();
 	}
+
 	/**
 	 * Get all surplus items
 	 * 
@@ -105,13 +109,13 @@ public class ItemService {
 
 		int updatedRow = itemDaoImpl.update(item.getId(), item);
 
-
 		if (updatedRow == 1) {
-			Optional<SubscribedItem> items =  subscriptionDao.find(item.getId());
+			Optional<SubscribedItem> items = subscriptionDao.find(item.getId());
 			if (items.isPresent()) {
 //			 send email notification to consumer
 //			 email successfully sent update notification table
-				items.get().notifySubscribers("Discounted Item", "Discounted Item: " + item.getName() + " is now on sale at " + item.getDiscountRate() * 100 + "% off.");
+				items.get().notifySubscribers("Discounted Item", "Discounted Item: " + item.getName()
+						+ " is now on sale at " + item.getDiscountRate() * 100 + "% off.");
 
 			}
 
@@ -135,28 +139,28 @@ public class ItemService {
 	}
 
 	public int subscribeItem(Long itemId, Long userId) throws SQLException {
-			var item = itemDaoImpl.find(itemId).orElse(null);
-				if (item == null) {
-					throw new RuntimeException("User or Item not found");
-				} 
-				return subscriptionDao.save(item.getId(), userId);
+		var item = itemDaoImpl.find(itemId).orElse(null);
+		if (item == null) {
+			throw new RuntimeException("User or Item not found");
+		}
+		return subscriptionDao.save(item.getId(), userId);
 	}
 
 	public int unsubscribeItem(Long itemId, Long userId) throws SQLException {
-			var item = itemDaoImpl.find(itemId).orElse(null);
-				if (item == null) {
-					throw new RuntimeException("User or Item not found");
-				} 
-				return subscriptionDao.delete(item.getId(), userId);
+		var item = itemDaoImpl.find(itemId).orElse(null);
+		if (item == null) {
+			throw new RuntimeException("User or Item not found");
+		}
+		return subscriptionDao.delete(item.getId(), userId);
 	}
 
 	public SubscribedItem findSubscribedItem(Long itemId) throws SQLException {
-		var item =  subscriptionDao.find(itemId);
+		var item = subscriptionDao.find(itemId);
 		return item.orElseThrow(() -> new RuntimeException("Item not found"));
 	}
 
 	public List<Item> getSubscribedItems(Long userId) throws SQLException {
-		return	subscriptionDao.findUserSubcribed(userId);
+		return subscriptionDao.findUserSubcribed(userId);
 	}
 
 	public int deleteItem(Long itemId) throws SQLException {
@@ -164,7 +168,7 @@ public class ItemService {
 	}
 
 	public Item create(Item item) throws SQLException {
-        return itemDaoImpl.save(item);
+		return itemDaoImpl.save(item);
 	}
 
 	public int updateItem(Item item) throws SQLException {

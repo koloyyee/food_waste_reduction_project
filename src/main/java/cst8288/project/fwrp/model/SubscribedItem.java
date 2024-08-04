@@ -2,6 +2,8 @@ package cst8288.project.fwrp.model;
 
 import java.sql.SQLException;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import cst8288.project.fwrp.dao.NotificationDao;
 import org.jetbrains.annotations.NotNull;
@@ -48,13 +50,12 @@ public class SubscribedItem implements Subject {
 
 	@Override
 	public void notifySubscribers(String title, String body) throws SQLException {
+		ExecutorService mailService = Executors.newSingleThreadExecutor();
+		// reference: https://stackoverflow.com/questions/49672140/java-sending-multiple-mails-in-parallel
 		for (Observer subscriber : subscribers) {
-			subscriber.update(title, body);
-			// insert in notification table
-//			    notificationDao.save(subscriber.getUser().getId(), item.getId(), subscriber.getUser().getCommMethod(),
-//			    title + "\n" + body);
+			mailService.submit(() -> subscriber.update(title, body));
 		}
-
+			mailService.shutdown();
 	}
 
 	@Override
