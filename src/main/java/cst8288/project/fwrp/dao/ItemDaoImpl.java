@@ -107,7 +107,7 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 	@Override
 	public List<Item> findAll() throws SQLException {
 
-		String sql = "SELECT * FROM item ";
+		String sql = "SELECT * FROM item  ORDER BY expiry_date ASC";
 		List<Item> items = new ArrayList<>();
 		try (var statement = connection.prepareStatement(sql)) {
 			var result = statement.executeQuery();
@@ -222,6 +222,8 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 				is_available = true AND
 				expiry_date > CURDATE() AND
 				quantity > 0
+				ORDER BY
+				expiry_date ASC
 				""";
 		List<Item> items = new ArrayList<>();
 		try (var statement = connection.prepareStatement(sql)) {
@@ -258,6 +260,8 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 				is_available = true AND
 				expiry_date > CURDATE() AND
 				quantity > 0
+				ORDER BY
+				expiry_date ASC
 				""";
 		List<Item> items = new ArrayList<>();
 		try (var statement = connection.prepareStatement(sql)) {
@@ -294,6 +298,8 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 				is_available = true AND
 				expiry_date > CURDATE() AND
 				quantity > 0
+				ORDER BY
+				expiry_date ASC
 				""";
 		List<Item> items = new ArrayList<>();
 		try (var statement = connection.prepareStatement(sql)) {
