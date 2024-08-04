@@ -98,7 +98,6 @@ public class RetailerController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String path = request.getPathInfo();
-		log.info("Path: " + path);
 		switch (path) {
 		case "/items/toggle_donation":
 			toggleDontation(request, response);
@@ -247,9 +246,7 @@ public class RetailerController extends HttpServlet {
 		try {
 			Optional<Item> item = itemService.getItemById(id);
 			if (item.isPresent()) {
-				log.info("Item: " + item.get().toString());
 				item.get().setAvailable(!item.get().isAvailable());
-				log.info("Item: " + item.get().toString());
 				itemService.toggleAvailableItem(item.get());
 			}
 
@@ -329,7 +326,6 @@ public class RetailerController extends HttpServlet {
 				break;
 			}
 		}
-		log.info(item.toString());
 		try {
 			Item newItem = itemService.create(item);
 			if (newItem.getId() != null) {
@@ -376,7 +372,6 @@ public class RetailerController extends HttpServlet {
 						break;
 					}
 				}
-				log.info(item.toString());
 				int updatedRow = itemService.updateItem(item.get());
 				if (updatedRow == 1) {
 					rerenderItemList(request, response);

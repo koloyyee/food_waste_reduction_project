@@ -40,7 +40,6 @@ public class ConsumerController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String path = request.getPathInfo();
-		log.info("Path: " + path);
 		switch (path) {
 		case "/items/all":
 			handleGetAllItems(request, response);
@@ -69,7 +68,6 @@ public class ConsumerController extends HttpServlet {
 			throws ServletException, IOException {
 		// handle post request to order the surplus items
 		String path = request.getPathInfo();
-		log.info("Path: " + path);
 		switch (path) {
 		case "/items/order":
 			handleOrder(request, response);

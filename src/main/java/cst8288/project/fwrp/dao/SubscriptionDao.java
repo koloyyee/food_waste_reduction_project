@@ -142,7 +142,8 @@ public class SubscriptionDao {
 		return List.of();
 	}
 
-	public List<Item> findUserSubcribed(Long id) throws SQLException {
+
+	public List<Item> findUserSubscribed(Long id) throws SQLException {
 		String sql = """
 				   SELECT
 				  	*
@@ -169,7 +170,6 @@ public class SubscriptionDao {
 				item.setAvailable(rs.getBoolean("is_available"));
 				item.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
 				item.setUpdatedAt(rs.getTimestamp("updated_at").toLocalDateTime());
-				log.info("Item found: " + item);
 				items.add(item);
 			}
 			return items;
@@ -185,7 +185,6 @@ public class SubscriptionDao {
 			stat.setLong(1, itemId);
 			stat.setLong(2, userId);
 			int result = stat.executeUpdate();
-			log.info("Subscription deleted: " + itemId + " " + userId);
 			return result;
 		}
 	}

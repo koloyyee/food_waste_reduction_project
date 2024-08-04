@@ -97,7 +97,6 @@ public class AuthController extends HttpServlet {
 				userTypeJsp += "/charity/index.jsp";
 				List<Item> donations = itemDao.findDonations();
 				request.getSession().setAttribute("items", donations);
-				log.info(donations);
 				break;
 			default:
 				userTypeJsp += "/consumer/index.jsp";

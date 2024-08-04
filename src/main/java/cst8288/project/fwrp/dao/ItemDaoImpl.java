@@ -139,7 +139,6 @@ public class ItemDaoImpl implements DBDao<Item, Long> {
 	 */
 	@Override
 	public int update(Long id, Item object) throws SQLException {
-		log.info(("Updating item: " + object));
 		String sql = """
 				UPDATE Item
 				SET

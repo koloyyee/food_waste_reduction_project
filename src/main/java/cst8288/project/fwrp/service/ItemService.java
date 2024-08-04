@@ -160,7 +160,7 @@ public class ItemService {
 	}
 
 	public List<Item> getSubscribedItems(Long userId) throws SQLException {
-		return subscriptionDao.findUserSubcribed(userId);
+		return subscriptionDao.findUserSubscribed(userId);
 	}
 
 	public int deleteItem(Long itemId) throws SQLException {
