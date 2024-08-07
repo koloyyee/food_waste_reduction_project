@@ -6,7 +6,7 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <c:import url="/includes/header.jsp" />
-<c:import url="/includes/consumer_nav.jsp" />
+<c:import url="/includes/charity_nav.jsp" />
 
 <%
 User user = (User) request.getSession().getAttribute("user");
