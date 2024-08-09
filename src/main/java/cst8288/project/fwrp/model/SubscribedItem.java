@@ -6,6 +6,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import cst8288.project.fwrp.dao.NotificationDao;
+import cst8288.project.fwrp.utils.Logger;
+import cst8288.project.fwrp.utils.LoggerFactory;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -21,6 +24,7 @@ public class SubscribedItem implements Subject {
 	private Item item;
 	private Set<Observer> subscribers = new HashSet<>();
 	private NotificationDao notificationDao;
+	private static Logger log = LoggerFactory.getLogger();
 
 	public SubscribedItem(Item item) {
 		this.item = item;
@@ -55,7 +59,16 @@ public class SubscribedItem implements Subject {
 //		ExecutorService mailService = Executors.newVirtualThreadPerTaskExecutor(); // Java 21
 		// reference: https://stackoverflow.com/questions/49672140/java-sending-multiple-mails-in-parallel
 		for (Observer subscriber : subscribers) {
-			mailService.submit(() -> subscriber.update(title, body));
+			mailService.submit(() -> {
+				subscriber.update(title, body);
+				log.info("Notification sent to user: " + subscriber.getUser().getEmail());
+		        try {
+					notificationDao.save(subscriber.getUser().getId(), item.getId(), subscriber.getUser().getCommMethod(), title + " " +  body);
+				} catch (SQLException e) {
+					log.warn("Failed to save notification for user: " + subscriber.getUser().getEmail());
+				}
+			});
+			
 		}
 			mailService.shutdown();
 	}

@@ -104,12 +104,12 @@ public class ConsumerController extends HttpServlet {
 	 * @throws IOException
 	 * @throws ServletException
      */
-	private void handleGetAllItems(HttpServletRequest request, HttpServletResponse response) {
+	private void handleGetAllItems(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 		try {
 			var items = itemService.getConsumerItems();
 			request.getSession().setAttribute("items", items);
-			response.sendRedirect(request.getContextPath() + "/pages/consumer/index.jsp");
-//            request.getRequestDispatcher("/pages/consumer/index.jsp").forward(request, response);
+//			response.sendRedirect(request.getContextPath() + "/pages/consumer/index.jsp");
+            request.getRequestDispatcher("/pages/consumer/index.jsp").forward(request, response);
 		} catch (SQLException | IOException e) {
 			log.warn(e.getLocalizedMessage());
 		}

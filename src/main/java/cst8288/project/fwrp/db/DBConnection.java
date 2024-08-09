@@ -39,7 +39,7 @@ public class DBConnection {
 
 		user = properties.getProperty("user");
 		pass = properties.getProperty("pass");
-		url = "jdbc:%s://%s:%s/%s".formatted(db, host, port, dbname);
+		url = "jdbc:%s://%s:%s/%s?autoReconnect=true".formatted(db, host, port, dbname);
 		
 		log.info("DBConnection: %s".formatted(url));
 		try {

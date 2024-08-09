@@ -30,13 +30,28 @@ response.sendRedirect(request.getContextPath() + "/index.jsp");
 %> --%>
 
 <main>
-<% String msg = (String)  request.getAttribute("msg"); %>
-<% if (msg != null && msg.contains("successfully")) {%> 
-<p class="text-success"> <%= msg %></p>
-<% } else { %>
-
-<p class="text-danger"> <%= msg %></p>
-<%} %> 
+	<%
+	String msg = (String) request.getAttribute("msg");
+	%>
+	<%
+	if (msg != null) {
+	%>
+	<%
+	if (msg.contains("success")) {
+	%>
+	<p class="text-success">
+		<%=msg%></p>
+	<%
+	} else {
+	%>
+	<p class="text-danger">
+		<%=msg%></p>
+	<%
+	}
+	%>
+	<%
+	}
+	%>
 	<form class="card wx-75 mx-auto py-2 px-5" style=""
 		action="${pageContext.request.contextPath}/users/update" method="POST"
 		id="login-form">
@@ -88,18 +103,18 @@ response.sendRedirect(request.getContextPath() + "/index.jsp");
 			</div>
 		</div>
 	</form>
-<%-- 	<%
+	<%-- 	<%
 	}
 	%> --%>
 </main>
 
 
-	<div class="back-btn">
-		<a href="${pageContext.request.contextPath}/pages/consumer/index.jsp">
-			<button class="btn btn-primary">Back</button>
-		</a>
+<div class="back-btn">
+	<a href="${pageContext.request.contextPath}/pages/consumer/index.jsp">
+		<button class="btn btn-primary">Back</button>
+	</a>
 
-	</div>
+</div>
 
 
 
